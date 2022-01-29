@@ -22,8 +22,8 @@
         <link href="https://fonts.googleapis.com/css2?family=Genos:wght@400;500;600;700&display=swap" rel="stylesheet">
 
         <!-- Styles -->
-        <!-- <link rel="stylesheet" href="{{ mix('css/app.css') }}"> -->
-        <link rel="stylesheet" href="{{ URL::asset('css/slick.css') }}">
+        <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+        <!-- <link rel="stylesheet" href="{{ asset('css/slick.css') }}"> -->
 
         <!-- FONTAWESOME -->
         <script src="https://kit.fontawesome.com/17005ae465.js" crossorigin="anonymous"></script>
