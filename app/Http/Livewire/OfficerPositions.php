@@ -155,8 +155,7 @@ class OfficerPositions extends Component
      */
     public function getOfficerPositionData()
     {
-        return DB::table('officer_positions')
-                    ->where('status','=','1')
+        return DB::table('position_categories')
                     ->paginate(10);
     }
     

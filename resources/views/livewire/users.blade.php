@@ -50,6 +50,9 @@
                                             <x-jet-button wire:click="addShowRoleModel({{ $item->user_id }})">
                                                 {{__('Add Role')}}
                                             </x-jet-button>
+                                            <x-jet-button wire:click="generateKeyModal({{ $item->user_id }})">
+                                                {{__('Generate Key')}}
+                                            </x-jet-button>
                                         </td>
                                         <td class="px-6 py-4 text-sm whitespace-no-wrap"  style="
                                                                                             ">
@@ -275,6 +278,28 @@
 
 
 
+<!--==================================================
+=            Generate Key Section comment            =
+===================================================-->
+    <x-jet-dialog-modal wire:model="modelConfirmUserGenerateKeyVisible">
+        <x-slot name="title">
+            {{ __('Delete User') }}
+        </x-slot>
+        <x-slot name="content">
+            {{ __('Are you sure you want to generate key this user?.') }}
+        </x-slot>
+        <x-slot name="footer">
+            <x-jet-secondary-button wire:click="$toggle('modelConfirmUserGenerateKeyVisible')" wire:loading.attr="disabled">
+                {{ __('Cancel') }}
+            </x-jet-secondary-button>
+            <x-jet-secondary-button class="ml-2" wire:click="generateKey" wire:loading.attr="disabled">
+                {{ __('Generate Key') }}
+            </x-jet-secondary-button>
+        </x-slot>
+    </x-jet-dialog-modal>
+
+
+<!--====  End of Generate Key Section comment  ====-->
 
 
 

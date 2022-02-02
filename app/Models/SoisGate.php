@@ -5,14 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class OfficerPosition extends Model
+class SoisGate extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'position_category_id';
+    public $primaryKey = 'sois_gates_id';
 
     protected $fillable = [
-        'position_category',
+        'user_id',
+        'is_logged_in',
+        'gate_key',
+        'created_at',
+        'updated_at',
     ];
 
 }

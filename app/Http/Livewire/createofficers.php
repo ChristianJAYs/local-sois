@@ -403,7 +403,8 @@ class createofficers extends Component
     
     public function getOfficerPositionsFromDatabase()
     {
-        return DB::table('officer_positions')->where('status','=','1')->get();
+        // return DB::table('officer_positions')->where('status','=','1')->get();
+        return DB::table('position_categories')->get();
     }
     
     /*=====  End of Get Position Category Section  ======*/

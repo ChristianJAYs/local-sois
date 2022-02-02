@@ -77,7 +77,7 @@
                 <select wire:model="position_category" class="block appearance-none w-full bg-gray-100 border border-gray-200 text-gray-700 py-3 px-4 pr-8 round leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
                         <option default hidden>Choose Position Category</option>
                     @foreach($getOfficerPosition as $op)
-                        <option value="{{$op->officer_positions_id}}">{{$op->position_category}}</option>
+                        <option value="{{$op->position_category_id}}">{{$op->position_category}}</option>
                     @endforeach
                 </select>
                 @error('position_category') <span class="error">{{ $message }}</span> @enderror

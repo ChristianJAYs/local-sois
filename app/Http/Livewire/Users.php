@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Models\User;
+use App\Models\SoisGate;
 use App\Models\Organization;
 
 use Illuminate\Validation\Rule;
@@ -36,6 +37,7 @@ class Users extends Component
     public $modalCreateTeamsFormVisible = false;
     public $modalDeleteTeamsFormVisible = false;
     public $modalUpdateUserPasswordFormVisible = false;
+    public $modelConfirmUserGenerateKeyVisible = false;
 
 
     // variables
@@ -101,6 +103,8 @@ class Users extends Component
     
     public $userTeamDataForDeletionUserData;
 
+    public $secret_characters;
+    public $end_key;
 
     /*=========================================================
     =            Create User Section comment block            =
@@ -290,7 +294,44 @@ class Users extends Component
     }
 
 
+    /*====================================================================
+    =            Generate Logged in key Section comment block            =
+    ====================================================================*/
+    public function generateKeyModal($id)
+    {
+        $this->resetValidation();
+        $this->reset();
+        $this->userId = $id;
+        $this->modelConfirmUserGenerateKeyVisible = true;
+    }
+    public function generateKey()
+    {
+        $n=40;
+        $this->secret_characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $this->end_key = '';
+        for ($i = 0; $i < $n; $i++) {
+            $index = rand(0, strlen($this->secret_characters) - 1);
+            $this->end_key .= $this->secret_characters[$index];
+        }
+        // return $this->end_key;
+        // echo $this->end_key;
+        SoisGate::create($this->modelGenerateKey());
+        // dd($this->userId);
+        $this->modelConfirmUserGenerateKeyVisible = false;
+        $this->resetValidation();
+        $this->reset();
+    }
 
+    public function modelGenerateKey()
+    {
+        return [
+            'user_id' => $this->userId,
+            'gate_key' => $this->end_key,
+        ];
+    }
+    
+    /*=====  End of Generate Logged in key Section comment block  ======*/
+    
 
     /**
      *

@@ -6,6 +6,7 @@ use Closure;
 use App\Models\User;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 class isSuperAdminMiddleware
 {
     /**
@@ -29,6 +30,11 @@ class isSuperAdminMiddleware
         $this->hello = "hello";
     }
 
+
+
+
+
+
     /**
      * Handle an incoming request.
      *
@@ -36,10 +42,29 @@ class isSuperAdminMiddleware
      * @param  \Closure  $next
      * @return mixed
      */
+
     public function handle($request, Closure $next)
     {
         // dd(Auth::id());
         $this->userId = Auth::id();
+
+        // echo User::find($this->userId);
+        DB::table('sois_gates')->where('user_id','=',$this->userId)->update(['is_logged_in' => '1']);
+
+
+
+
+
+
+
+
+        // dd($this->userId);
+
+
+
+
+
+
         $this->userData = User::find($this->userId);
         // dd($this->userData);
         $this->role = $this->userData->roles->first();
