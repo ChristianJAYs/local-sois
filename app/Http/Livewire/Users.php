@@ -42,6 +42,12 @@ class Users extends Component
 
     // variables
     public $name;
+    public $first_name;
+    public $middle_name;
+    public $last_name;
+    public $date_of_birth;
+    public $address;
+    public $mobile_number;
     public $email;
     public $password;
     public $student_number;
@@ -118,6 +124,7 @@ class Users extends Component
 
     public function create()
     {
+        // dd($this);
         User::create($this->modelCreateUser());
         $this->modalFormVisible = false;
         $this->reset(); 
@@ -127,8 +134,13 @@ class Users extends Component
     public function modelCreateUser()
     {
         return [
-            'first_name' => $this->name,
+            'first_name' => $this->first_name,
+            'middle_name' => $this->middle_name,
+            'last_name' => $this->last_name,
+            'date_of_birth' => $this->date_of_birth,
+            'address' => $this->address,
             'email' => $this->email,
+            'mobile_number' => $this->mobile_number,
             'status' => '1',
             'student_number' => $this->student_number,
             'password' => Hash::make($this->password),
@@ -150,15 +162,25 @@ class Users extends Component
     public function modelUpdateUserDatas()
     {
         $data = User::find($this->userId);
-        $this->name = $data->first_name;
+        $this->first_name = $data->first_name;
+        $this->middle_name = $data->middle_name;
+        $this->last_name = $data->last_name;
+        $this->date_of_birth = $data->date_of_birth;
+        $this->address = $data->address;
         $this->email = $data->email;
+        $this->mobile_number = $data->mobile_number;
         $this->student_number = $data->student_number;
     }
     public function modelUpdateUser()
     {
         return [
-            'first_name' => $this->name,
+            'first_name' => $this->first_name,
+            'middle_name' => $this->middle_name,
+            'last_name' => $this->last_name,
+            'date_of_birth' => $this->date_of_birth,
+            'address' => $this->address,
             'email' => $this->email,
+            'mobile_number' => $this->mobile_number,
             'student_number' => $this->student_number,
         ];
     }
@@ -172,7 +194,9 @@ class Users extends Component
     }
     public function cleanUserDataVars()
     {
-        $this->name = null;
+        $this->first_name = null;
+        $this->middle_name = null;
+        $this->last_name = null;
         $this->email = null;
     }
     /*=====  End of Update User Section comment block  ======*/
@@ -342,7 +366,9 @@ class Users extends Component
     {
         return [
             'first_name' => 'required',
+            'last_name' => 'required',
             'email' => 'required',
+            'mobile_number' => 'required',
             'password' => 'required',
             'status' => 'required',
             'student_number' => 'required',

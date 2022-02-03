@@ -32,6 +32,9 @@
                                             {{ $item->first_name }}
                                         </td>
                                         <td class="px-6 py-4 text-sm whitespace-no-wrap">
+                                            {{ $item->last_name }}
+                                        </td>
+                                        <td class="px-6 py-4 text-sm whitespace-no-wrap">
                                             {{ $item->email }}
                                         </td>
                                         <td class="px-6 py-4 text-sm whitespace-no-wrap">
@@ -97,12 +100,32 @@
         </x-slot>
         <x-slot name="content">
             <div class="mt-4">
-                <x-jet-label for="name" value="{{ __('name') }}" />
-                <x-jet-input id="name" class="block mt-1 w-full" type="text" wire:model.debounce.800ms="name" required autofocus />
+                <x-jet-label for="first_name" value="{{ __('first name') }}" />
+                <x-jet-input id="first_name" class="block mt-1 w-full" type="text" wire:model.debounce.800ms="first_name" required autofocus />
+            </div>
+            <div class="mt-4">
+                <x-jet-label for="middle_name" value="{{ __('middle name') }}" />
+                <x-jet-input id="middle_name" class="block mt-1 w-full" type="text" wire:model.debounce.800ms="middle_name" required autofocus />
+            </div>
+            <div class="mt-4">
+                <x-jet-label for="last_name" value="{{ __('last name') }}" />
+                <x-jet-input id="last_name" class="block mt-1 w-full" type="text" wire:model.debounce.800ms="last_name" required autofocus />
             </div>
             <div class="mt-4">
                 <x-jet-label for="email" value="{{ __('email') }}" />
                 <x-jet-input id="email" class="block mt-1 w-full" type="email" wire:model.debounce.800ms="email" required autofocus />
+            </div>
+            <div class="mt-4">
+                <x-jet-label for="date_of_birth" value="{{ __('Birth Date') }}" />
+                <x-jet-input wire:model="date_of_birth" id="date_of_birth" class="block mt-1 w-full" type="date" required/>
+            </div>
+            <div class="mt-4">
+                <x-jet-label for="address" value="{{ __('address') }}" />
+                <x-jet-input id="address" class="block mt-1 w-full" type="text" wire:model.debounce.800ms="address" required autofocus />
+            </div>
+            <div class="mt-4">
+                <x-jet-label for="mobile_number" value="{{ __('Mobile Number') }}" />
+                <x-jet-input id="mobile_number" class="block mt-1 w-full" type="text" wire:model.debounce.800ms="mobile_number" required autofocus />
             </div>
             <div class="mt-4">
                 <x-jet-label for="password" value="{{ __('password') }}" />
