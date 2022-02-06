@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Http\Livewire\Objects;
 
 use Auth;
+use Illuminate\Support\Facades\DB;
 
 class AdminNavBars extends Component
 {
@@ -23,6 +24,13 @@ class AdminNavBars extends Component
         $this->userRole = $this->object->roles();
         // dd($this->userRole->role);
         return $this->userRole->role; 
+    }
+    public function logoutControll()
+    {
+        $this->userId = Auth::id();
+        // dd(DB::table('sois_gates')->where('user_id','=',$this->userId)->get());
+        DB::table('sois_gates')->where('user_id','=',$this->userId)->update(['is_logged_in' => '0']);
+        // dd("Hello");
     }
     public function render()
     {

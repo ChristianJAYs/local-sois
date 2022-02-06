@@ -18,7 +18,7 @@ class GenerateKeys extends Component
             $randomString .= $characters[$index];
         }
         // return $randomString;
-echo $randomString
+echo $randomString;
     }
 
     public function render()
