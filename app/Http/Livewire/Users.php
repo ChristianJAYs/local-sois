@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Models\User;
+use App\Models\Role;
 use App\Models\SoisGate;
 use App\Models\Organization;
 
@@ -375,6 +376,41 @@ class Users extends Component
         ];
     }
 
+    /*=======================================
+    =            Role Separation            =
+    =======================================*/
+    
+    public function AdminSpecificUsers()
+    {
+        return DB::table('users')
+            ->join('role_user', 'users.user_id', '=', 'role_user.user_id')
+            ->where('role_id','=','1')
+            ->orderBy('users.user_id','asc')
+            ->paginate(10);
+    }
+
+    public function HomepageAdminSpecificUsers()
+    {
+        return DB::table('users')
+            ->join('role_user', 'users.user_id', '=', 'role_user.user_id')
+            ->where('role_id','=','2')
+            ->orderBy('users.user_id','asc')
+            ->paginate(10);
+    }
+
+    public function UserSpecificUsers()
+    {
+        return DB::table('users')
+            ->join('role_user', 'users.user_id', '=', 'role_user.user_id')
+            ->where('role_id','!=','2')
+            ->where('role_id','!=','1')
+            ->orderBy('users.user_id','asc')
+            ->paginate(10);
+    }
+    
+    /*=====  End of Role Separation  ======*/
+    
+
 
     /**
      *
@@ -408,6 +444,9 @@ class Users extends Component
             'displayData' => $this->read(),
             'rolesList' => $this->listOfRoles(),
             'displayOrganizationData' => $this->displayOrganization(),
+            'HomepageAdminTable' => $this->HomepageAdminSpecificUsers(),
+            'AdminTable' => $this->AdminSpecificUsers(),
+            'UsersTable' => $this->UserSpecificUsers(),
         ]);
     }
 }

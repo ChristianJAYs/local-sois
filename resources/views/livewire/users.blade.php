@@ -8,6 +8,7 @@
             {{ __('Deleted Users') }}
         </x-jet-danger-button>
     </div>
+        <h3 class="title">Admin Users</h3>
         <div class="flex flex-col items-center">
         <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
@@ -16,7 +17,8 @@
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead>
                             <tr>
-                                <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                                <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">First Name</th>
+                                <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Last Name</th>
                                 <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Email</th>
                                 <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Action</th>
                                 <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Roles</th>
@@ -25,8 +27,90 @@
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
-                            @if($displayData->count())
-                                @foreach($displayData as $item)
+                            @if($AdminTable->count())
+                                @foreach($AdminTable as $item)
+                                     <tr>
+                                        <td class="px-6 py-4 text-sm whitespace-no-wrap">
+                                            {{ $item->first_name }}
+                                        </td>
+                                        <td class="px-6 py-4 text-sm whitespace-no-wrap">
+                                            {{ $item->last_name }}
+                                        </td>
+                                        <td class="px-6 py-4 text-sm whitespace-no-wrap">
+                                            {{ $item->email }}
+                                        </td>
+                                        <td class="px-6 py-4 text-sm whitespace-no-wrap">
+                                            <x-jet-button wire:click="updateUserModel({{ $item->user_id }})">
+                                                {{__('Update User')}}
+                                            </x-jet-button>
+                                            <x-jet-button wire:click="updateUserPasswordModel({{ $item->user_id }})">
+                                                {{__('Update Password User')}}
+                                            </x-jet-button>
+                                            <!-- <x-jet-danger-button wire:click="deleteShowUserModal({{ $item->user_id }})">
+                                                {{__('Delete')}}
+                                            </x-jet-danger-button> -->
+                                        </td>
+                                        <td class="px-6 py-4 text-sm whitespace-no-wrap"  style="
+                                                                                            ">
+                                            <x-jet-button wire:click="addShowRoleModel({{ $item->user_id }})">
+                                                {{__('Add Role')}}
+                                            </x-jet-button>
+                                            <x-jet-button wire:click="generateKeyModal({{ $item->user_id }})">
+                                                {{__('Generate Key')}}
+                                            </x-jet-button>
+                                        </td>
+                                        <td class="px-6 py-4 text-sm whitespace-no-wrap"  style="
+                                                                                            ">
+                                            <x-jet-button wire:click="addShowRoleModel({{ $item->user_id }})">
+                                                {{__('Add Permission')}}
+                                            </x-jet-button>
+                                        </td>
+
+                                        <td class="px-6 py-4 text-sm whitespace-no-wrap"  style="
+                                                                                            ">
+                                            <x-jet-button wire:click="addShowOrganizationModel({{ $item->user_id }})">
+                                                {{__('Add Organization')}}
+                                            </x-jet-button>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @else
+                                    <tr>
+                                        <td class="px-6 py-4 text-sm whitespace-no-wrap" colspan="4">
+                                            No Results Found
+                                        </td>
+                                    </tr>
+                            @endif
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{ $AdminTable->links() }}
+
+    <h3 class="title">Homepage Admin Users</h3>
+        <div class="flex flex-col items-center">
+        <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+            <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+                <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead>
+                            <tr>
+                                <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">First Name</th>
+                                <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Last Name</th>
+                                <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Email</th>
+                                <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Action</th>
+                                <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Roles</th>
+                                <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Permission Action</th>
+                                <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Connect User Organization</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            @if($HomepageAdminTable->count())
+                                @foreach($HomepageAdminTable as $item)
                                      <tr>
                                         <td class="px-6 py-4 text-sm whitespace-no-wrap">
                                             {{ $item->first_name }}
@@ -86,7 +170,89 @@
         </div>
     </div>
 
-    {{ $displayData->links() }}
+    {{ $HomepageAdminTable->links() }}
+
+    <h3 class="title">Users</h3>
+        <div class="flex flex-col items-center">
+        <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+            <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+                <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead>
+                            <tr>
+                                <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">First Name</th>
+                                <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Last Name</th>
+                                <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Email</th>
+                                <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Action</th>
+                                <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Roles</th>
+                                <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Permission Action</th>
+                                <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Connect User Organization</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            @if($UsersTable->count())
+                                @foreach($UsersTable as $item)
+                                     <tr>
+                                        <td class="px-6 py-4 text-sm whitespace-no-wrap">
+                                            {{ $item->first_name }}
+                                        </td>
+                                        <td class="px-6 py-4 text-sm whitespace-no-wrap">
+                                            {{ $item->last_name }}
+                                        </td>
+                                        <td class="px-6 py-4 text-sm whitespace-no-wrap">
+                                            {{ $item->email }}
+                                        </td>
+                                        <td class="px-6 py-4 text-sm whitespace-no-wrap">
+                                            <x-jet-button wire:click="updateUserModel({{ $item->user_id }})">
+                                                {{__('Update User')}}
+                                            </x-jet-button>
+                                            <x-jet-button wire:click="updateUserPasswordModel({{ $item->user_id }})">
+                                                {{__('Update Password User')}}
+                                            </x-jet-button>
+                                            <x-jet-danger-button wire:click="deleteShowUserModal({{ $item->user_id }})">
+                                                {{__('Delete')}}
+                                            </x-jet-danger-button>
+                                        </td>
+                                        <td class="px-6 py-4 text-sm whitespace-no-wrap"  style="
+                                                                                            ">
+                                            <x-jet-button wire:click="addShowRoleModel({{ $item->user_id }})">
+                                                {{__('Add Role')}}
+                                            </x-jet-button>
+                                            <x-jet-button wire:click="generateKeyModal({{ $item->user_id }})">
+                                                {{__('Generate Key')}}
+                                            </x-jet-button>
+                                        </td>
+                                        <td class="px-6 py-4 text-sm whitespace-no-wrap"  style="
+                                                                                            ">
+                                            <x-jet-button wire:click="addShowRoleModel({{ $item->user_id }})">
+                                                {{__('Add Permission')}}
+                                            </x-jet-button>
+                                        </td>
+
+                                        <td class="px-6 py-4 text-sm whitespace-no-wrap"  style="
+                                                                                            ">
+                                            <x-jet-button wire:click="addShowOrganizationModel({{ $item->user_id }})">
+                                                {{__('Add Organization')}}
+                                            </x-jet-button>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @else
+                                    <tr>
+                                        <td class="px-6 py-4 text-sm whitespace-no-wrap" colspan="4">
+                                            No Results Found
+                                        </td>
+                                    </tr>
+                            @endif
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{ $UsersTable->links() }}
 
 
 
