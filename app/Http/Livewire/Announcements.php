@@ -58,10 +58,11 @@ class Announcements extends Component
         public $date;
         private $data;
         public $param;
+        public $userroles;
 
         public $currentDate;
         public $newDate;
-        public $currentTime;
+        // public $currentTime;
 
         public $checkCurrentTime;
         public $checkCurrentDate;
@@ -259,7 +260,7 @@ class Announcements extends Component
     {
         date_default_timezone_set('Asia/Manila');
         $this->currentDate = date('d-m-y');
-        $this->currentTime = date('h:i:s');
+        // $this->currentTime = date('h:i:s');
         $this->newDate=date('d-m-y', strtotime("+2 months"));
 
     }
@@ -267,7 +268,7 @@ class Announcements extends Component
     {
         date_default_timezone_set('Asia/Manila');
         $this->currentDate = date('d-m-y');
-        $this->currentTime = date('h:i:s');
+        // $this->currentTime = date('h:i:s');
         $this->newDate=date('d-m-Y', strtotime("+2 months"));
         $this->changeAnnouncementStatusOnRefresh();
     }
@@ -276,18 +277,21 @@ class Announcements extends Component
     {
         date_default_timezone_set('Asia/Manila');
         $this->checkCurrentDate = date('Y-m-d');
-        $this->checkCurrentTime = date('H:i:s');
+        // $this->checkCurrentTime = date('H:i:s');
         $this->getAnnouncementDateFromDB = DB::table('announcements')->get();
         $this->countDBTable = DB::table('announcements')->count();
+        // dd($this->countDBTable);
         foreach ($this->getAnnouncementDateFromDB as $this->data) {
                     // echo $this->data;
                 if($this->data->exp_date < $this->checkCurrentDate){
                     $this->dateIDExpired = $this->data->announcements_id;
+                    // echo $this->data->exp_date;
+                    // dd($this->checkCurrentDate);
                     // if ($this->data->exp_time < $this->checkCurrentTime) {
                         Announcement::where('announcements_id', '=', $this->dateIDExpired)->update(['status' => '0']);
                     // }    
                 }
-                else{
+                elseif($this->data->exp_date > $this->checkCurrentDate){
                     $this->dateIDExpired = $this->data->announcements_id;
                     // if ($this->data->exp_time < $this->checkCurrentTime) {
                         Announcement::where('announcements_id', '=', $this->dateIDExpired)->update(['status' => '1']);
@@ -352,8 +356,9 @@ class Announcements extends Component
     {
         $this->object = new Objects();
         $this->userRole = $this->object->roles();
-        // dd($this->userRole);
-        return $this->userRole;
+        // dd($this->userRole->role);
+        $this->userroles = $this->userRole->role;
+        return $this->userroles;
 
         // dd($this->role->role_name);
     }
@@ -365,9 +370,11 @@ class Announcements extends Component
     public function getAnnouncements()
     {
         $this->user_id = Auth::id();
+        // dd($this->user_id);
         // if ($this->getAuthRoleUser() == 'Super Admin') {
             return DB::table('announcements')->where('status','=','1')->orderBy('created_at','desc')->paginate(5);
         // dd(DB::table('announcements')->where('status','=','1')->orderBy('created_at','desc')->paginate(5));
+        // dd(DB::table('announcements')->where('status','=','1')->paginate(5));
         // }elseif ($this->getAuthRoleUser() == 'Organization Admin') {
             // return DB::table('announcements')->where('status','=','1')->orWhere('user_id','=',Auth::id())->orderBy('created_at','desc')->paginate(5);
             // return DB::table('announcements')->where('status','=','1')->where('user_id','=',$this->user_id)->orderBy('created_at','desc')->paginate(5);
