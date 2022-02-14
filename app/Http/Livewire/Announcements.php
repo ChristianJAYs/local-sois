@@ -7,6 +7,7 @@ use Auth;
 use Storage;
 
 use App\Models\User;
+use App\Models\OrganizationAsset;
 use App\Models\Organization;
 use App\Models\Article;
 use App\Models\Announcement;
@@ -54,6 +55,20 @@ class Announcements extends Component
         public $status = true;
         public $announcement_image;
         public $fileName;
+
+        public $modelId;
+        public $userId;
+        public $asset_name;
+        public $asset_status;
+        public $asset_type_id;
+        public $is_latest_logo;
+        public $is_latest_banner;
+        public $is_latest_image;
+        public $page_type_id;
+        public $latestAnnouncementID;
+        public $userDataPivot;
+        public $userDataPivotOrganization;
+        public $latestOrganizationIDtoInsertToDB;
 
         public $date;
         private $data;
@@ -148,6 +163,49 @@ class Announcements extends Component
         $this->announcement_image->storeAs('files',$this->fileName, 'imgfolder');
 
         Announcement::create($this->createAnnouncementModel());
+
+        $this->asset_name = $this->fileName;
+
+        $this->user_id = Auth::id();
+
+        /* Get User ID */
+        $this->userDataPivot = User::find(Auth::id());
+        /* Get Organization ID from pivot table using USER ID */
+        $this->userDataPivotOrganization = $this->userDataPivot->organizations->first();
+        // $this->latestOrganizationIDtoInsertToDB = $this->userDataPivotOrganization->organization_id;
+        /* Asset Status is set to true */
+        $this->asset_status = 1;
+        /* Asset Type is set to Logo (Logo is 1 in Asset types table) */
+        $this->asset_type_id = 2;
+        /* Set image as latest organization asset logo */
+        $this->is_latest_logo = 0;
+        /* Unset image as image banenr */
+        $this->is_latest_banner = 0;
+        /* Page Type is set to Organization (Organization is id 4 in pagetypes table) */
+        $this->page_type_id = 4;
+
+        $this->latestAnnouncementID = Announcement::latest()->where('status','=','1')->pluck('announcements_id')->first();
+
+        $this->userId = Auth::user()->user_id;
+        $this->user = User::find($this->userId);
+        $this->va = $this->user->organizations->first();
+
+        $this->latestOrganizationIDtoInsertToDB = $this->va->organization_id;
+
+        OrganizationAsset::create([
+            'asset_type_id' => '5',
+            'asset_name' => $this->asset_name,
+            'file' => $this->asset_name,
+            'is_latest_logo' => '0',
+            'is_latest_banner' => '0',
+            'is_latest_image' => '0',
+            'user_id' => $this->userId,
+            'page_type_id' => '3',
+            'organization_id' => $this->latestOrganizationIDtoInsertToDB,
+            'status' => '1',
+            'announcement_id' => $this->latestAnnouncementID,
+        ]);
+
         $this->modalCreateAnnouncementFormVisible = false;
         $this->reset();
         $this->resetValidation();
@@ -157,7 +215,7 @@ class Announcements extends Component
         return [
             'announcement_title' => $this->announcements_title,
             'announcement_content' => $this->announcements_content,
-            'announcement_image' => $this->fileName,
+            // 'announcement_image' => $this->fileName,
             'signature' => $this->signature,
             'signer_position' => $this->signer_position,
             'status' => $this->status,
