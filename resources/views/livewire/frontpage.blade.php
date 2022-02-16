@@ -113,21 +113,33 @@
           </div>
           <div class="grid grid-cols-12">
                <div class="p-5 col-start-2 col-end-12 col-span-12 grid grid-cols-10">
+                    @foreach($getDisplayAnnouncementFeaturedHomepageLatestFirst as $HPLatestAnnouncementFirst)
                     <div class="col-span-10 xl:col-span-6 lg:col-span-6 md:col-span-10 sm:col-span-10">
-                         <img class="w-full" src="{{ asset('files/1govgeHbKRo2uk0YTOMg9bDJnTMlRFliaP6A7VLz.jpg') }}">
+                         @foreach($getDisplayAnnouncementImageFrontpage as $announcementImage)
+                             @if($announcementImage->announcement_id == $HPLatestAnnouncementFirst->announcements_id)
+                                 <img class="w-full" style="object-fit:cover;" src="{{ asset('files/'.$announcementImage->file) }}">
+                             @endif
+                         @endforeach
                     </div>
                     <div class="col-span-10 xl:col-span-4 lg:col-span-4 md:col-span-10 sm:col-span-10 flex flex-col">
                          <div class="justify-center items-center" style="color:white;">
-                              <h2 class="justify-center" style="color:white; font-family: 'Exo 2',sans-serif; font-size: 20px;">Announcement Title</h2>
+                              <h2 class="justify-center" style="color:white; font-family: 'Exo 2',sans-serif; font-size: 20px;">{{$HPLatestAnnouncementFirst->announcement_title}}</h2>
                          </div>
-                         <div style="color:white;">Announcement Content</div>
+                         <div style="color:white;"><p><?php echo htmlspecialchars_decode(stripslashes($HPLatestAnnouncementFirst->announcement_content));  ?></p></div>
                     </div>
+                    @endforeach
                </div>
           </div>
           <div class="grid grid-cols-12">
                <div class="p-5 col-start-2 sm:col-start-2 xs:col-start-2 md:col-start-2 lg:col-start-2 xl:col-start-2 col-span-3 xs:col-span-3 xl:col-span-3 lg:col-span-3 md:col-span-10 sm:col-span-10">
+                    @foreach($getDisplayAnnouncementImageFrontpageThree as $HPLatestAnnouncemeFirstThree)
                     <div class="col-span-10 xl:col-span-6 lg:col-span-6 md:col-span-10 sm:col-span-10">
-                         <img class="w-full" src="{{ asset('files/1govgeHbKRo2uk0YTOMg9bDJnTMlRFliaP6A7VLz.jpg') }}">
+                         <p>{{$HPLatestAnnouncemeFirstThree->announcements_id}}</p>
+                         @foreach($getDisplayAnnouncementImageFrontpage as $announcementImage)
+                             @if($announcementImage->announcement_id == $HPLatestAnnouncemeFirstThree->announcements_id)
+                                 <img class="w-full" style="object-fit:cover;" src="{{ asset('files/'.$announcementImage->file) }}">
+                             @endif
+                         @endforeach
                     </div>
                     <div class="col-span-10 xl:col-span-4 lg:col-span-4 md:col-span-10 sm:col-span-10 flex flex-col">
                          <div class=" ">
@@ -135,28 +147,7 @@
                          </div>
                          <div style="color:white;">Announcement Content</div>
                     </div>
-               </div>
-               <div class="p-5 col-start-2 sm:col-start-2 xs:col-start-2 md:col-start-2  xs:col-span-3 xl:col-span-3 lg:col-span-3 md:col-span-10 sm:col-span-10">
-                    <div class="col-span-10 xl:col-span-6 lg:col-span-6 md:col-span-10 sm:col-span-10">
-                         <img class="w-full" src="{{ asset('files/1govgeHbKRo2uk0YTOMg9bDJnTMlRFliaP6A7VLz.jpg') }}">
-                    </div>
-                    <div class="col-span-10 xl:col-span-4 lg:col-span-4 md:col-span-10 sm:col-span-10 flex flex-col">
-                         <div class=" ">
-                              <h2 class="justify-center" style="color:white; font-family: 'Exo 2',sans-serif; font-size: 20px;">Announcement Title</h2>
-                         </div>
-                         <div style="color:white;">Announcement Content</div>
-                    </div>
-               </div>
-               <div class="p-5 col-start-2 sm:col-start-2 xs:col-start-2 md:col-start-2  xs:col-span-3 xl:col-span-3 lg:col-span-3 md:col-span-10 sm:col-span-10 lg:col-end-11 xl:col-end-11">
-                    <div class="col-span-10 xl:col-span-6 lg:col-span-6 md:col-span-10 sm:col-span-10">
-                         <img class="w-full" src="{{ asset('files/1govgeHbKRo2uk0YTOMg9bDJnTMlRFliaP6A7VLz.jpg') }}">
-                    </div>
-                    <div class="col-span-10 xl:col-span-4 lg:col-span-4 md:col-span-10 sm:col-span-10 flex flex-col">
-                         <div class=" ">
-                              <h2 class="justify-center" style="color:white; font-family: 'Exo 2',sans-serif; font-size: 20px;">Announcement Title</h2>
-                         </div>
-                         <div style="color:white;">Announcement Content</div>
-                    </div>
+                    @endforeach
                </div>
           </div>
      </div>

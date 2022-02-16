@@ -198,7 +198,7 @@ class Announcements extends Component
             'file' => $this->asset_name,
             'is_latest_logo' => '0',
             'is_latest_banner' => '0',
-            'is_latest_image' => '0',
+            'is_latest_image' => '1',
             'user_id' => $this->userId,
             'page_type_id' => '3',
             'organization_id' => $this->latestOrganizationIDtoInsertToDB,

@@ -68,6 +68,8 @@ class Frontpage extends Component
 
     public $orgSocialSelectedOrganizationData;
     public $orgSocialSelectedOrganizationID;
+    public $hpLatestAnnouncementImageThree;
+    public $hpLatestAnnouncementThree;
 
     public $embedGrid;
 
@@ -344,6 +346,9 @@ class Frontpage extends Component
         // dd('hello');
         return $this->articlesImageArray;
     }
+
+
+
     public function getSelectedNewsImage()
     {
         // dd($this->urlslug);
@@ -487,6 +492,29 @@ class Frontpage extends Component
         // dd(Announcement::where('status','=','1')->orderBy('created_at','asc')->paginate(20));
         return Announcement::where('status','=','1')->orderBy('created_at','asc')->paginate(20);
     }
+    public function getAnnouncementsInDatabaseFeaturedHomepageLatestFirst()
+    {
+        // dd(Announcement::where('status','=','1')->orderBy('created_at','desc')->take(1)->get());
+        return Announcement::where('status','=','1')->orderBy('created_at','desc')->take(1)->get();
+    }
+    public function getSelectedAnnouncementImage()
+    {
+        $this->articlesImageID = DB::table('announcements')->where('status','=','1')->orderBy('created_at','desc')->take(1)->pluck('announcements_id');
+        // dd($this->articlesImageID);
+        $this->articlesImageArray = DB::table('organization_assets')->where('announcement_id','=',$this->articlesImageID)->where('status','=','1')->where('is_latest_image','=','1')->get();
+        // dd($this->articlesImageArray);
+        return $this->articlesImageArray;
+    }
+
+    public function getHPThreeAnnouncementLatestImage()
+    {
+        // $this->hpLatestAnnouncementThree = DB::table('announcements')->where('status','=','1')->orderBy('created_at','desc')->pluck('announcements_id');
+        // dd($this->hpLatestAnnouncementThree);
+        // $this->articlesImageArray = DB::table('organization_assets')->where('status','=','1')->where('is_latest_image','=','1')->skip(1)->take(3)->get();
+        // dd($this->articlesImageArray);
+        // return $this->articlesImageArray;
+        return Announcement::where('status','=','1')->orderBy('created_at','desc')->skip(1)->take(3)->get();
+    }
 
     public function getHomepageCarouselDataFromDatabase()
     {
@@ -502,7 +530,6 @@ class Frontpage extends Component
             $this->displayedOrganizationDataPassOnView =  DB::table('articles')->where('is_carousel_org_page','=','1')->where('organization_id','=',$this->displayedOrganizationDataID)->get();
             return $this->displayedOrganizationDataPassOnView;
         // dd($this->displayedOrganizationDataPassOnView);
-
         }
     }
 
@@ -593,6 +620,7 @@ class Frontpage extends Component
             'getDisplayCurrentWebPageOnHomepage' => $this->getSelectedCurrentWebPage(),
             'getDisplayOrganizationsLogoOnHomepage' => $this->getAllOrganizationLogo(),
             'getDisplayAnnouncementFeaturedHomepage' => $this->getAnnouncementsInDatabaseFeaturedHomepage(),
+            'getDisplayAnnouncementFeaturedHomepageLatestFirst' => $this->getAnnouncementsInDatabaseFeaturedHomepageLatestFirst(),
             'getDisplayArticlesOnHomepageCarousel' => $this->getHomepageCarouselDataFromDatabase(),
             'getDisplayArticlesOnOrganizationCarousel' => $this->getOrganizationCarouselDataFromDatabase(),
             'getDiplayLatestSixArticleOnNewsPage' => $this->getArticleLatestSix(),
@@ -603,7 +631,8 @@ class Frontpage extends Component
             'getDisplaySelectedAnnouncementsData' => $this->getSelectedAnnouncementsData(),
             'getDisplaySelectedOrganizationEmbedSocialData' => $this->getEmbedSocialOrgFromDB(),
             'getCountSelectedOrganizationEmbedSocialData' => $this->getCountOfEmbedSocialOrgFromDB(),
-         
+            'getDisplayAnnouncementImageFrontpage' => $this->getSelectedAnnouncementImage(),
+            'getDisplayAnnouncementImageFrontpageThree' => $this->getHPThreeAnnouncementLatestImage(),
             // 'IfAnnouncementActivated' => $this->getIsAnnouncementActivated(),
 
         ])->layout('layouts.frontpage');
