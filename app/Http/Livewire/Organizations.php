@@ -9,6 +9,7 @@ use Storage;
 use App\Models\Organization;
 use App\Models\User;
 use App\Models\SystemAsset;
+use App\Models\OrganizationAsset;
 use App\Models\PageType;
 use App\Http\Livewire\Objects;
 
@@ -53,8 +54,9 @@ class Organizations extends Component
     public $organization_carousel_image_2;
     public $organization_carousel_image_3;
     public $organization_slug;
-    public $organization_type;
+    public $organization_type_id;
     public $organization_banner;
+    public $organization_acronym;
     
     public $isSetToDefaultHomePage;
     public $isSetToDefaultNotFoundPage;
@@ -115,6 +117,15 @@ class Organizations extends Component
     public $latestSystemAssetForImageUpload;
     public $getSystemAssetData;
 
+
+
+    public function mount()
+    {
+        $this->organization_slug = $this->organization_name;
+
+    }
+
+
     /**
      *
      * Organization Rules
@@ -128,7 +139,7 @@ class Organizations extends Component
             'organization_primary_color' => 'required',
             'organization_secondary_color' => 'required',
             'organization_slug' => 'required',
-            'organization_type' => 'required',
+            'organization_type_id' => 'required',
             'status' => 'required',
         ];
     }
@@ -164,7 +175,7 @@ class Organizations extends Component
             'organization_primary_color' => 'required',
             'organization_secondary_color' => 'required',
             'organization_slug' => 'required',
-            'organization_type' => 'required',
+            'organization_type_id' => 'required',
             'organization_logo' => 'required|file|mimes:jpg,jpeg,bmp,png,doc,docx,csv,rtf,xlsx,xls,txt,pdf,zip',
         ]);
     
@@ -174,7 +185,7 @@ class Organizations extends Component
             'organization_primary_color' => 'required',
             'organization_secondary_color' => 'required',
             'organization_slug' => 'required',
-            'organization_type' => 'required',
+            'organization_type_id' => 'required',
             'organization_logo' => 'required|file|mimes:jpg,jpeg,bmp,png,doc,docx,csv,rtf,xlsx,xls,txt,pdf,zip', 
         ];
 
@@ -186,7 +197,7 @@ class Organizations extends Component
         $organization_secondary_color = $request->organization_secondary_color;
         $organization_slug = $request->organization_slug;
         $organization_logo = $request->organization_logo;
-        $organization_type = $request->organization_type;
+        $organization_type_id = $request->organization_type_id;
 
 
 
@@ -202,7 +213,7 @@ class Organizations extends Component
             'organization_primary_color' => $organization_primary_color,
             'organization_secondary_color' => $organization_secondary_color,
             'organization_slug' => $organization_slug,
-            'organization_type' => $organization_type,
+            'organization_type_id' => $organization_type_id,
         ]);
 
         $this->cleanVars();
@@ -231,10 +242,13 @@ class Organizations extends Component
             'organization_primary_color' => 'required',
             'organization_secondary_color' => 'required',
             'organization_slug' => 'required',
-            'organization_type' => 'required',
+            'organization_type_id' => 'required',
             'organization_logo' => 'file|mimes:jpg,jpeg,bmp,png,doc,docx,csv,rtf,xlsx,xls,txt,pdf,zip',
         ]);
     
+        if(preg_match_all('/\b(\w)/',strtoupper($this->organization_name),$m)) {
+            $this->organization_acronym = implode('',$m[1]); // $v is now SOQTU
+        }
 
         $this->fileName = time().'.'.$this->organization_logo->extension();  
         // dd($this->organization_name);
@@ -243,7 +257,7 @@ class Organizations extends Component
         $this->organization_primary_color = $this->organization_primary_color;
         $this->organization_secondary_color = $this->organization_secondary_color;
         $this->organization_slug = $this->organization_slug;
-        $this->organization_type = $this->organization_type;
+        $this->organization_type_id = $this->organization_type_id;
         $this->organization_logo = $this->organization_logo;
 
        
@@ -258,10 +272,11 @@ class Organizations extends Component
         Organization::create([
             'organization_details' => $this->organization_details,
             'organization_name' => $this->organization_name,
+            'organization_type_id' => $this->organization_type_id,
             'organization_primary_color' => $this->organization_primary_color,
             'organization_secondary_color' => $this->organization_secondary_color,
             'organization_slug' => $this->organization_slug,
-            'organization_type' => $this->organization_type,
+            'organization_acronym' => $this->organization_acronym,
             'status' => $this->status,
         ]);        
         $this->asset_name = $this->fileName;
@@ -281,9 +296,10 @@ class Organizations extends Component
         // $this->latestOrganizationID = (int)$this->organization_id; 
         // dd(gettype($this->latestOrganizationID));
         
-        SystemAsset::create([
+        OrganizationAsset::create([
             'asset_type_id' => $this->asset_type_id,
             'asset_name' => $this->fileName,
+            'file' => $this->fileName,
             'is_latest_logo' => $this->is_latest_logo,
             'is_latest_banner' => $this->is_latest_banner,
             'user_id' => $this->user_id,
@@ -295,10 +311,10 @@ class Organizations extends Component
 
 
 
+        $this->modalFormVisible = false;
         $this->reset();
         $this->resetValidation();
         $this->cleanVars();
-        $this->modalFormVisible = false;
 
     }
 
@@ -320,7 +336,7 @@ class Organizations extends Component
             'organization_primary_color' => $this->organization_primary_color,
             'organization_secondary_color' => $this->organization_secondary_color,
             'organization_slug' => $this->organization_slug,
-            'organization_type_id' => $this->organization_type,
+            'organization_type_id' => $this->organization_type_id,
             'status' => $this->status,
         ];
     }
@@ -350,8 +366,8 @@ class Organizations extends Component
         $this->organization_primary_color = $data->organization_primary_color;
         $this->organization_secondary_color = $data->organization_secondary_color;
         $this->organization_slug = $data->organization_slug;
-        $this->organization_type = $data->organization_type_id;
-        if($this->organization_type == '1'){
+        $this->organization_type_id = $data->organization_type_id;
+        if($this->organization_type_id == '1'){
             $this->orgtype = 1;
         }else{
             $this->orgtype = 2;
@@ -367,7 +383,7 @@ class Organizations extends Component
             'organization_primary_color' => 'required',
             'organization_secondary_color' => 'required',
             'organization_slug' => 'required',
-            'organization_type' => 'required',
+            'organization_type_id' => 'required',
         ]);
         Organization::find($this->modelId)->update($this->modelData());
         $this->updatemodalFormVisible = false;
@@ -393,7 +409,7 @@ class Organizations extends Component
             'organization_primary_color' => $this->organization_primary_color,
             'organization_secondary_color' => $this->organization_secondary_color,
             'organization_slug' => $this->organization_slug,
-            'organization_type' => $this->organization_type,
+            'organization_type_id' => $this->organization_type_id,
         ];
     }
 
@@ -415,7 +431,7 @@ class Organizations extends Component
         $this->organization_primary_color = $data->organization_primary_color;
         $this->organization_secondary_color = $data->organization_secondary_color;
         $this->organization_slug = $data->organization_slug;
-        $this->organization_type = $data->organization_type;
+        $this->organization_type_id = $data->organization_type_id;
         $this->organization_logo = $data->organization_logo;
     }
 
@@ -454,9 +470,10 @@ class Organizations extends Component
         /* Page Type is set to Organization (Organization is id 4 in pagetypes table) */
         $this->page_type_id = 4;
 
-        SystemAsset::create([
+        OrganizationAsset::create([
             'asset_type_id' => $this->asset_type_id,
             'asset_name' => $this->fileName,
+            'file' => $this->fileName,
             'is_latest_logo' => $this->is_latest_logo,
             'is_latest_banner' => $this->is_latest_banner,
             'user_id' => $this->user_id,
@@ -465,16 +482,16 @@ class Organizations extends Component
             'status' => $this->asset_status,
         ]);
         
-        $this->selectedOrganizationAssetDataIsLatestLogo = SystemAsset::latest()->where('organization_id','=',$this->modelId)->where('status','=','1')->first();
+        $this->selectedOrganizationAssetDataIsLatestLogo = OrganizationAsset::latest()->where('organization_id','=',$this->modelId)->where('status','=','1')->first();
         // dd($this->selectedOrganizationAssetDataIsLatestLogo);
         if ($this->selectedOrganizationAssetDataIsLatestLogo != null) {
-            $this->selectedOrganizationAssetDataID = $this->selectedOrganizationAssetDataIsLatestLogo->system_assets_id;
+            $this->selectedOrganizationAssetDataID = $this->selectedOrganizationAssetDataIsLatestLogo->organization_asset_id;
             // dd($this->selectedOrganizationAssetDataID);
-            // dd(SystemAsset::find('organization_id','=',$this->modelId)->where('is_latest_logo','=','1'));
-            SystemAsset::where('organization_id','=',$this->modelId)->where('is_latest_logo','=','1')->update([
+            // dd(OrganizationAsset::find('organization_id','=',$this->modelId)->where('is_latest_logo','=','1'));
+            OrganizationAsset::where('organization_id','=',$this->modelId)->where('is_latest_logo','=','1')->update([
                 'is_latest_logo' => '0',
             ]);
-            DB::table('system_assets')->where('system_assets_id','=',$this->selectedOrganizationAssetDataID)->update(['is_latest_logo'=>"1"]);
+            DB::table('organization_assets')->where('organization_asset_id','=',$this->selectedOrganizationAssetDataID)->update(['is_latest_logo'=>"1"]);
             $this->updateImagemodalFormVisible = false;
             $this->resetValidation();
             $this->reset();
@@ -575,9 +592,10 @@ class Organizations extends Component
         /* Page Type is set to Organization (Organization is id 4 in pagetypes table) */
         $this->page_type_id = 4;
 
-        SystemAsset::create([
+        OrganizationAsset::create([
             'asset_type_id' => $this->asset_type_id,
             'asset_name' => $this->fileNameBanner,
+            'file' => $this->fileNameBanner,
             'is_latest_logo' => $this->is_latest_logo,
             'is_latest_banner' => $this->is_latest_banner,
             'user_id' => $this->user_id,
@@ -586,16 +604,16 @@ class Organizations extends Component
             'status' => $this->asset_status,
         ]);
         
-        $this->selectedOrganizationAssetDataIsLatestLogo = SystemAsset::latest()->where('organization_id','=',$this->modelId)->where('status','=','1')->first();
+        $this->selectedOrganizationAssetDataIsLatestLogo = OrganizationAsset::latest()->where('organization_id','=',$this->modelId)->where('status','=','1')->first();
         // dd($this->selectedOrganizationAssetDataIsLatestLogo);
         if ($this->selectedOrganizationAssetDataIsLatestLogo != null) {
-            $this->selectedOrganizationAssetDataID = $this->selectedOrganizationAssetDataIsLatestLogo->system_assets_id;
+            $this->selectedOrganizationAssetDataID = $this->selectedOrganizationAssetDataIsLatestLogo->organization_asset_id;
             // dd($this->selectedOrganizationAssetDataID);
-            // dd(SystemAsset::find('organization_id','=',$this->modelId)->where('is_latest_logo','=','1'));
-            SystemAsset::where('organization_id','=',$this->modelId)->where('is_latest_banner','=','1')->update([
+            // dd(OrganizationAsset::find('organization_id','=',$this->modelId)->where('is_latest_logo','=','1'));
+            OrganizationAsset::where('organization_id','=',$this->modelId)->where('is_latest_banner','=','1')->update([
                 'is_latest_banner' => '0',
             ]);
-            DB::table('system_assets')->where('system_assets_id','=',$this->selectedOrganizationAssetDataID)->update(['is_latest_banner'=>"1"]);
+            DB::table('organization_assets')->where('organization_asset_id','=',$this->selectedOrganizationAssetDataID)->update(['is_latest_banner'=>"1"]);
             $this->updateBannermodalFormVisible = false;
             $this->clearInput();
             $this->reset();
@@ -623,7 +641,7 @@ class Organizations extends Component
         $this->organization_carousel_image_2 = null;
         $this->organization_carousel_image_3 = null;
         $this->organization_slug = null;
-        $this->organization_type = null;
+        $this->organization_type_id = null;
     }
     /*=====  End of Update Organization Banner Section comment block  ======*/
     

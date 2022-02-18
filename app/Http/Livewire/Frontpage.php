@@ -501,9 +501,18 @@ class Frontpage extends Component
     {
         $this->articlesImageID = DB::table('announcements')->where('status','=','1')->orderBy('created_at','desc')->take(1)->pluck('announcements_id');
         // dd($this->articlesImageID);
-        $this->articlesImageArray = DB::table('organization_assets')->where('announcement_id','=',$this->articlesImageID)->where('status','=','1')->where('is_latest_image','=','1')->get();
+        // dd($this->articlesImageID);
+        if($this->articlesImageID->count() != '0'){
+            $this->articlesImageArray = DB::table('organization_assets')->where('announcement_id','=',$this->articlesImageID)->get();
+            return $this->articlesImageArray;
+        }else{
+            return 0;
+        }
+        // $this->articlesImageID = DB::table('announcements')->where('status','=','1')->orderBy('created_at','desc')->take(1)->pluck('announcements_id');
+        // dd($this->articlesImageID);
+        // $this->articlesImageArray = DB::table('organization_assets')->where('announcement_id','=',$this->articlesImageID)->where('status','=','1')->where('is_latest_image','=','1')->get();
         // dd($this->articlesImageArray);
-        return $this->articlesImageArray;
+        // return $this->articlesImageArray;
     }
 
     public function getHPThreeAnnouncementLatestImage()

@@ -14,32 +14,41 @@ class SoisGates extends Component
     public $soisar;
     public $userId;
 
+    private $getKey;
+    private $gateKey;
+
     public function mount()
     {
         $this->userId = Auth::id();
 
         // echo User::find($this->userId);
         DB::table('sois_gates')->where('user_id','=',$this->userId)->update(['is_logged_in' => '1']);
+        
+        $this->getKey = DB::table('sois_gates')->where('user_id','=',$this->userId)->first();
+
+        $this->gateKey = $this->getKey->gate_key;
+
+        // dd($this->gateKey);
     }
 
     public function sois2Function()
     {
-        $this->sois2 = 'sois2.puptaguigcs.net'; 
+        $this->sois2 = 'http://sois2.puptaguigcs.net/'.$this->gateKey; 
         return $this->sois2;
     }
     public function gpoaFunction()
     {
-        $this->gpoa = 'sois-gpoa.puptaguigcs.net'; 
+        $this->gpoa = 'http://sois-gpoa.puptaguigcs.net/'; 
         return $this->gpoa;
     }
     public function membershipFunction()
     {
-        $this->membership = 'sois-membership.puptaguigcs.net'; 
+        $this->membership = 'http://sois-membership.puptaguigcs.net/'; 
         return $this->membership;
     }
     public function soisarFunction()
     {
-        $this->soisar = 'sois-ar.puptaguigcs.net'; 
+        $this->soisar = 'http://sois-ar.puptaguigcs.net/'; 
         return $this->soisar;
     }
 

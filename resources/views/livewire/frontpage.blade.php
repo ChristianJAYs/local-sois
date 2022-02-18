@@ -172,10 +172,10 @@
                     @foreach($getDsiplayArticleLatestOnCreatedPage as $homepageLatestNews)
                          <div class="article-newspage p-3 flex flex-col">
                              <a href="{{$homepageLatestNews->article_slug}}">
-                                 <div class="" style="width: 100%;">
+                                 <div class="items-center justify-center" style="width: 100%;">
                                      @foreach($getDisplaySelectedNewsImageData as $newsImage)
                                          @if($newsImage->articles_id == $homepageLatestNews->articles_id)
-                                             <img style="object-fit:cover" src="{{ asset('files/'.$newsImage->asset_name) }}">
+                                             <img style="object-fit:cover; height:50vh;" src="{{ asset('files/'.$newsImage->asset_name) }}">
                                          @endif
                                      @endforeach
                                  </div>
@@ -196,7 +196,7 @@
                                  <div class="" style="width: 100%;">
                                      @foreach($getDisplaySelectedNewsImageData as $newsImage)
                                          @if($newsImage->articles_id == $featuredNewspage->articles_id)
-                                             <img style="object-fit:cover" src="{{ asset('files/'.$newsImage->asset_name) }}">
+                                             <img style="object-fit:cover;  height:50vh;" src="{{ asset('files/'.$newsImage->asset_name) }}">
                                          @endif
                                      @endforeach
                                  </div>

@@ -20,6 +20,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+// use Illuminate\Support\Str;
 
 use Auth;
 
@@ -28,6 +29,7 @@ class Users extends Component
     use WithPagination;
 
     public $modalFormVisible = false;
+    public $UpdatemodalFormVisible = false;
     public $modalUpdateUser = false;
     public $modelUpdateUserData = false;
     public $modaladdPermissionModel = false;
@@ -112,6 +114,10 @@ class Users extends Component
 
     public $secret_characters;
     public $end_key;
+    
+
+    public $RoleUSerChecker;
+    public $latestID;
 
     /*=========================================================
     =            Create User Section comment block            =
@@ -127,6 +133,11 @@ class Users extends Component
     {
         // dd($this);
         User::create($this->modelCreateUser());
+        // dd();
+        $this->latestID = DB::table('users')->orderBy('user_id', 'desc')->first();
+        DB::table('role_user')->insert([
+                ['role_id' => '8', 'user_id' => $this->latestID->user_id, 'organization_id' => null],
+            ]);
         $this->modalFormVisible = false;
         $this->reset(); 
         $this->resetValidation(); 
@@ -156,7 +167,7 @@ class Users extends Component
     public function updateUserModel($id)
     {
         $this->userId = $id;
-        $this->modalFormVisible = true;
+        $this->UpdatemodalFormVisible = true;
         $this->modelUpdateUserDatas();
     }
 
@@ -188,7 +199,7 @@ class Users extends Component
     public function update()
     {
         User::find($this->userId)->update($this->modelUpdateUser());
-        $this->modalFormVisible = false;
+        $this->UpdatemodalFormVisible = false;
         $this->resetValidation();
         $this->reset();
         $this->cleanUserDataVars();
@@ -257,11 +268,24 @@ class Users extends Component
     }
     public function addRoleToUser()
     {
-        $user = User::find($this->userId);
-        $user->roles()->sync($this->roleModel);
-        $this->modalAddRoleFormVisible = false;
-        $this->reset();
-        $this->resetAddRoleUserValidation();
+        $this->user = User::find($this->userId);
+        $this->RoleUSerChecker = DB::table('role_user')->where('user_id','=',$this->userId)->first();
+        if($this->RoleUSerChecker){
+            DB::table('role_user')->where('user_id','=',$this->userId)->delete();
+            DB::table('role_user')->insert([
+                ['role_id' => $this->roleModel, 'user_id' => $this->userId, 'organization_id' => null],
+            ]);
+            $this->modalAddRoleFormVisible = false;
+            $this->resetAddRoleUserValidation();
+            $this->reset();
+        }else{
+            DB::table('role_user')->insert([
+                ['role_id' => $this->roleModel, 'user_id' => $this->userId, 'organization_id' => null],
+            ]);
+            $this->modalAddRoleFormVisible = false;
+            $this->resetAddRoleUserValidation();
+            $this->reset();
+        }
     }
     public function resetAddRoleUserValidation()
     {
@@ -331,7 +355,10 @@ class Users extends Component
     }
     public function generateKey()
     {
-        $n=40;
+        echo Str::uuid();
+        // dd("hello");
+        // $this->end_key =  Str::uuid();
+        $n=60;
         $this->secret_characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $this->end_key = '';
         for ($i = 0; $i < $n; $i++) {
@@ -339,7 +366,7 @@ class Users extends Component
             $this->end_key .= $this->secret_characters[$index];
         }
         // return $this->end_key;
-        // echo $this->end_key;
+        // // echo $this->end_key;
         SoisGate::create($this->modelGenerateKey());
         // dd($this->userId);
         $this->modelConfirmUserGenerateKeyVisible = false;
@@ -386,7 +413,7 @@ class Users extends Component
             ->join('role_user', 'users.user_id', '=', 'role_user.user_id')
             ->where('role_id','=','1')
             ->orderBy('users.user_id','asc')
-            ->paginate(10);
+            ->paginate(20);
     }
 
     public function HomepageAdminSpecificUsers()
@@ -405,7 +432,7 @@ class Users extends Component
             ->where('role_id','!=','2')
             ->where('role_id','!=','1')
             ->orderBy('users.user_id','asc')
-            ->paginate(10);
+            ->paginate(20);
     }
     
     /*=====  End of Role Separation  ======*/
