@@ -22,7 +22,8 @@ class Officer extends Model
         'school_year',
         'semester',
         'position_title_id',
-        'exp_date',
+        'term_end',
+        'term_start',
         'status',
         'officer_signature',
     ];

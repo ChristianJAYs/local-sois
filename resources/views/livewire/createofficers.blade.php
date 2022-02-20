@@ -53,8 +53,8 @@
                 @error('semester') <span class="error">{{ $message }}</span> @enderror
             </div>
             <div class="mt-4">
-                <x-jet-label for="position" value="{{ __('Position') }}" />
-                <select wire:model="position" class="block appearance-none w-full bg-gray-100 border border-gray-200 text-gray-700 py-3 px-4 pr-8 round leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                <x-jet-label for="position_title_id" value="{{ __('Position') }}" />
+                <select wire:model="position_title_id" class="block appearance-none w-full bg-gray-100 border border-gray-200 text-gray-700 py-3 px-4 pr-8 round leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
                         <option default hidden>Choose Position</option>
                     @foreach($PositionTitlesData as $pos)
                         <option value="{{$pos->position_title_id}}">{{$pos->position_title}}</option>
@@ -63,9 +63,14 @@
                 @error('position') <span class="error">{{ $message }}</span> @enderror
             </div>
             <div class="mt-4">
-                <x-jet-label for="exp_date" value="{{ __('Exp Date') }}" />
-                <x-jet-input wire:model="exp_date" id="exp_date" class="block mt-1 w-full" type="date" required/>
-                @error('exp_date') <span class="error">{{ $message }}</span> @enderror
+                <x-jet-label for="term_start" value="{{ __('Start Term') }}" />
+                <x-jet-input wire:model="term_start" id="term_start" class="block mt-1 w-full" type="date" required/>
+                @error('term_start') <span class="error">{{ $message }}</span> @enderror
+            </div>
+            <div class="mt-4">
+                <x-jet-label for="term_end" value="{{ __('End Term') }}" />
+                <x-jet-input wire:model="term_end" id="term_end" class="block mt-1 w-full" type="date" required/>
+                @error('term_end') <span class="error">{{ $message }}</span> @enderror
             </div>
             <!-- <div class="mt-4">
                 <x-jet-label for="officer_signature" value="{{ __('Officer Signature') }}" />
