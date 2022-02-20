@@ -84,7 +84,7 @@ class createofficers extends Component
             'semester' => 'required',
             'position' => 'required',
             'exp_date' => 'required',
-            'position_category' => 'required',
+            'position_category' => 'nullable',
             'officer_signature' => 'nullable',
         ];
     }

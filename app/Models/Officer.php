@@ -11,7 +11,7 @@ class Officer extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'officers_id';
+    protected $primaryKey = 'officer_id';
 
     protected $fillable = [
         'first_name',
@@ -21,9 +21,8 @@ class Officer extends Model
         'organization_id',
         'school_year',
         'semester',
-        'position',
+        'position_title_id',
         'exp_date',
-        'position_category',
         'status',
         'officer_signature',
     ];
