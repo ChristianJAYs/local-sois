@@ -95,6 +95,10 @@ Route::group(['middleware' => [
         Route::get('/users/deleted-users', function(){
             return view('admin.deleted-users');
         })->name('users/deleted-users');
+
+        Route::get('/admin/membership', function(){
+            return view('admin.membership');
+        })->name('admin/membership');
         
         // Route::get('/announcements/view-selected-announcements/{$announcement_id}', function(){
         //     return view('admin.view-selected-announcements');

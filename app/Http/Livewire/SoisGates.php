@@ -33,7 +33,7 @@ class SoisGates extends Component
 
     public function sois2Function()
     {
-        $this->sois2 = 'http://sois2.puptaguigcs.net/'.$this->gateKey; 
+        $this->sois2 = 'http://sois2.puptaguigcs.net/$0lsL0gIn/idem/'.$this->userId.'/gateportal/'.$this->gateKey;
         return $this->sois2;
     }
     public function gpoaFunction()
