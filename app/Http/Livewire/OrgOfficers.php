@@ -89,10 +89,10 @@ class OrgOfficers extends LivewireDatatable
         return[
             // Column::checkbox('officers_id'),
 
-            NumberColumn::name('officers_id')
+            NumberColumn::name('officer_id')
                 ->label('ID')
                 ->defaultSort('asc')
-                ->sortBy('officers_id'),
+                ->sortBy('officer_id'),
 
             Column::name('first_name')
                 ->label('First Name')
