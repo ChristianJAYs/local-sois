@@ -159,7 +159,7 @@ class Organizations extends Component
     public function getSelectedOrganizationLogo()
     {
         $this->systemAssetDataFromDB = SystemAsset::where('organization_id','=',$this->modelId)->get();
-        dd($this->systemAssetDataFromDB->asset_name);
+        // dd($this->systemAssetDataFromDB->asset_name);
     }
     /*=====  End of View Organization Section  ======*/
     

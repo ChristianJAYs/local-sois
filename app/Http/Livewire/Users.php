@@ -61,6 +61,7 @@ class Users extends Component
     public $role_type;
     public $roleModel=null;
     public $organizationModel=null;
+    public $permissionModel=null;
 
     public $user;
 
@@ -116,8 +117,28 @@ class Users extends Component
     public $end_key;
     
 
-    public $RoleUSerChecker;
+    private $RoleUSerChecker;
     public $latestID;
+    private $userOrgData;
+    public $userOrgDataInt;
+    private $userRoleData;
+    public $userRoleDataInt;
+
+
+    public $testButton;
+    public $testButtonArray = [];
+
+    public function mount()
+    {
+        // return $this->selectedPermsList();
+    }
+
+    public function selectedPermsList()
+    {
+
+        return $this->permissionModel;
+        // dd("HEllo");
+    }
 
     /*=========================================================
     =            Create User Section comment block            =
@@ -314,13 +335,45 @@ class Users extends Component
     }
     public function addOrganizationToUser()
     {
-        $user = User::find($this->userId);
+        $this->user = User::find($this->userId);
         // dd($this->user);
         // dd($this->organizationModel);
-        $user->organizations()->sync($this->organizationModel);
-        $this->modalAddOrganizationFormVisible = false;
-        $this->reset();
-        $this->resetAddRoleUserValidation();
+        // $this->userOrgData = DB::table('role_user')->where('user_id','=',$this->userId)->pluck('organization_id');
+        $this->userOrgData = DB::table('role_user')->where('user_id','=',$this->userId)->first();
+        $this->userOrgDataInt = $this->userOrgData->organization_id;
+        // dd($this->userOrgDataInt);
+        // DB::table('role_user')->where('user_id','=','4')->where('organization_id','=','9')->delete();
+        $this->userRoleData = DB::table('role_user')->where('user_id','=',$this->userId)->first();
+        $this->userRoleDataInt = $this->userRoleData->role_id;
+        // dd($this->userRoleDataInt);
+        // dd(gettype($this->userRoleData));
+        // dd(DB::table('role_user')->get());
+        $this->RoleUSerChecker = DB::table('role_user')->where('user_id','=',$this->userId)->where('organization_id','=',$this->userOrgDataInt)->first();
+        // dd($this->RoleUSerChecker);
+        // dd($this->RoleUSerChecker);
+        if($this->RoleUSerChecker){
+            // dd("Hello");
+            // dd(DB::table('role_user')->where('user_id','=',$this->userId));
+            DB::table('role_user')->where('user_id','=',$this->userId)->delete();
+            DB::table('role_user')->insert([
+                ['organization_id' => $this->organizationModel,'role_id' => $this->userRoleDataInt, 'user_id' => $this->userId],
+            ]);
+        // //     $this->modalAddRoleFormVisible = false;
+        // //     $this->resetAddRoleUserValidation();
+        // //     $this->reset();
+        }else{
+            dd("world");
+        //     DB::table('role_user')->insert([
+        //         ['organization_id' => $this->organizationModel,'role_id' => $this->userRoleDataInt, 'user_id' => $this->userId],
+        //     ]);
+        // //     $this->modalAddRoleFormVisible = false;
+        // //     $this->resetAddRoleUserValidation();
+        // //     $this->reset();
+        }
+        // $user->organizations()->sync($this->organizationModel);
+        // $this->modalAddOrganizationFormVisible = false;
+        // $this->reset();
+        // $this->resetAddRoleUserValidation();
     }
     
     
@@ -384,6 +437,29 @@ class Users extends Component
     
     /*=====  End of Generate Logged in key Section comment block  ======*/
     
+    /*============================================================
+    =            Add Permission Section comment block            =
+    ============================================================*/
+    public function addShowPermissionModel($id)
+    {
+        $this->resetValidation();
+        $this->reset();
+        $this->userId = $id;
+        $this->modaladdPermissionModel = true;
+    }
+
+    public function addPermissionToUser()
+    {
+        $this->user = User::find($this->userId);
+        // dd(gettype($this->testButtonArray));
+        $this->user->permissions()->sync($this->permissionModel);
+        // dd($this->permissionModel);
+    }
+    
+    
+    /*=====  End of Add Permission Section comment block  ======*/
+    
+
 
     /**
      *
@@ -437,7 +513,16 @@ class Users extends Component
     
     /*=====  End of Role Separation  ======*/
     
-
+    /**
+     *
+     * Get Permission List
+     *
+     */
+    public function listofPermissions()
+    {
+        // dd(DB::table('permissions')->orderBy('permission_id','asc')->get());
+        return DB::table('permissions')->orderBy('permission_id','asc')->get();
+    }
 
     /**
      *
@@ -470,10 +555,12 @@ class Users extends Component
         return view('livewire.users',[
             'displayData' => $this->read(),
             'rolesList' => $this->listOfRoles(),
+            'permsList' => $this->listofPermissions(),
             'displayOrganizationData' => $this->displayOrganization(),
             'HomepageAdminTable' => $this->HomepageAdminSpecificUsers(),
             'AdminTable' => $this->AdminSpecificUsers(),
             'UsersTable' => $this->UserSpecificUsers(),
+            'displaySelectedUserPermission' => $this->selectedPermsList(),
         ]);
     }
 }

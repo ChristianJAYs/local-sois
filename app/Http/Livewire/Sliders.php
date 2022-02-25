@@ -10,7 +10,7 @@ use App\Http\Livewire\Objects;
 
 
 use Illuminate\Validation\Rule;
-use Livewire\withPagination;
+use Livewire\WithPagination;
 
 use Illuminate\Support\STR;
 
@@ -27,7 +27,7 @@ use Auth;
 class Sliders extends Component
 {
     /* Traits */
-    use withPagination;
+    use WithPagination;
     
     private $object;
     public $userRole;
@@ -71,6 +71,11 @@ class Sliders extends Component
         $this->modalAddNewsFormVisible = false;
         $this->reset();
         $this->resetValidation();
+        $this->red();
+    }
+    public function red()
+    {
+        return redirect('/default-interfaces');
     }
 
 

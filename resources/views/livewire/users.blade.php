@@ -52,7 +52,7 @@
                                         </td>
                                         <td class="px-6 py-4 text-sm whitespace-no-wrap"  style="
                                                                                             ">
-                                            <x-jet-button wire:click="addShowRoleModel({{ $item->user_id }})">
+                                            <x-jet-button wire:click="addShowPermissionModel({{ $item->user_id }})">
                                                 {{__('Add Role')}}
                                             </x-jet-button>
                                             <x-jet-button wire:click="generateKeyModal({{ $item->user_id }})">
@@ -61,7 +61,7 @@
                                         </td>
                                         <td class="px-6 py-4 text-sm whitespace-no-wrap"  style="
                                                                                             ">
-                                            <x-jet-button wire:click="addShowRoleModel({{ $item->user_id }})">
+                                            <x-jet-button wire:click="addShowPermissionModel({{ $item->user_id }})">
                                                 {{__('Add Permission')}}
                                             </x-jet-button>
                                         </td>
@@ -134,7 +134,7 @@
                                         </td>
                                         <td class="px-6 py-4 text-sm whitespace-no-wrap"  style="
                                                                                             ">
-                                            <x-jet-button wire:click="addShowRoleModel({{ $item->user_id }})">
+                                            <x-jet-button wire:click="addShowPermissionModel({{ $item->user_id }})">
                                                 {{__('Add Role')}}
                                             </x-jet-button>
                                             <x-jet-button wire:click="generateKeyModal({{ $item->user_id }})">
@@ -143,7 +143,7 @@
                                         </td>
                                         <td class="px-6 py-4 text-sm whitespace-no-wrap"  style="
                                                                                             ">
-                                            <x-jet-button wire:click="addShowRoleModel({{ $item->user_id }})">
+                                            <x-jet-button wire:click="addShowPermissionModel({{ $item->user_id }})">
                                                 {{__('Add Permission')}}
                                             </x-jet-button>
                                         </td>
@@ -216,7 +216,7 @@
                                         </td>
                                         <td class="px-6 py-4 text-sm whitespace-no-wrap"  style="
                                                                                             ">
-                                            <x-jet-button wire:click="addShowRoleModel({{ $item->user_id }})">
+                                            <x-jet-button wire:click="addShowPermissionModel({{ $item->user_id }})">
                                                 {{__('Add Role')}}
                                             </x-jet-button>
                                             <x-jet-button wire:click="generateKeyModal({{ $item->user_id }})">
@@ -225,7 +225,7 @@
                                         </td>
                                         <td class="px-6 py-4 text-sm whitespace-no-wrap"  style="
                                                                                             ">
-                                            <x-jet-button wire:click="addShowRoleModel({{ $item->user_id }})">
+                                            <x-jet-button wire:click="addShowPermissionModel({{ $item->user_id }})">
                                                 {{__('Add Permission')}}
                                             </x-jet-button>
                                         </td>
@@ -550,7 +550,52 @@
 <!--====  End of Generate Key Section comment  ====-->
 
 
+<!--====================================================
+=            Add Permission Section comment            =
+=====================================================-->
+<x-jet-dialog-modal wire:model="modaladdPermissionModel">
+            <x-slot name="title" >
+                <p class="modalTitle">
+                    
+                {{ __('Add Role To User') }} {{$userId}}
+                </p>
+            </x-slot>
 
+            <x-slot name="content">
+                <div class="mb-4 grid grid-cols-1">
+                    <div class="" style="height: 50vh; overflow: auto; background: red;">
+                        <div>
+                            <form>
+                                @foreach($permsList as $perms)
+                                    <div class="mt-1">
+                                        <label class="inline-flex items-center">
+                                        <input type="checkbox" value="{{ $perms->permission_id }}" wire:model="permissionModel.{{ $perms->permission_id }}" class="form-checkbox h-6 w-6 text-green-500">
+                                            <span class="ml-3 text-sm">{{ $perms->name }}</span>
+                                        </label>
+                                    </div>
+                                @endforeach
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </x-slot>
+
+            <x-slot name="footer">
+                <x-jet-secondary-button wire:click="$toggle('modaladdPermissionModel')" wire:loading.attr="disabled">
+                    {{ __('Cancel') }}
+                </x-jet-secondary-button>
+
+                @if($userId)
+                    <x-jet-secondary-button class="ml-2" wire:click="addPermissionToUser" wire:loading.attr="disabled">
+                        {{ __('Sync Permission') }}
+                    </x-jet-secondary-button>                    
+                @endif
+            </x-slot>
+        </x-jet-dialog-modal>
+
+
+<!--====  End of Add Permission Section comment  ====-->
 
 
 
