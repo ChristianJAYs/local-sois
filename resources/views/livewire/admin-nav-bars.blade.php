@@ -80,7 +80,10 @@
                                 <x-slot name="content">
                                     <!-- Account Management -->
                                     <x-jet-dropdown-link href="{{ route('admin/membership') }}">
-                                        {{ __('Membership') }}
+                                        {{ __('Academic Membership') }}
+                                    </x-jet-dropdown-link>
+                                    <x-jet-dropdown-link href="{{ route('admin/nonacads') }}">
+                                        {{ __('Non-Academic Membership') }}
                                     </x-jet-dropdown-link>
                                     <x-jet-dropdown-link href="{{ route('events') }}" :active="request()->routeIs('events')">
                                         {{ __('Events') }}

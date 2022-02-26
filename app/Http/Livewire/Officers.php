@@ -371,16 +371,16 @@ class Officers extends LivewireDatatable
                 ->label('Position Name')
                 ->filterable($this->position_titles),
 
-            Column::name('school_year')
-                ->label('School Year')
-                ->filterable()
-                ->editable(),
+            // Column::name('school_year')
+            //     ->label('School Year')
+            //     ->filterable()
+            //     ->editable(),
                 // ->searchable(),
 
-            Column::name('semester')
-                ->label('Semester')
-                ->filterable()
-                ->editable(),
+            // Column::name('semester')
+            //     ->label('Semester')
+            //     ->filterable()
+            //     ->editable(),
                 // ->searchable(),
 
             // Column::name('position')
@@ -389,9 +389,9 @@ class Officers extends LivewireDatatable
             //     ->editable(),
                 // ->searchable(),
 
-            DateColumn::name('exp_date')
-                ->label('Retirement')
-                ->filterable(),
+            // DateColumn::name('exp_date')
+            //     ->label('Retirement')
+            //     ->filterable(),
                 // ->editable(),
                 // ->searchable(),
 

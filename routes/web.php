@@ -100,6 +100,11 @@ Route::group(['middleware' => [
             return view('admin.membership');
         })->name('admin/membership');
         
+
+        Route::get('/admin/nonacads', function(){
+            return view('admin.nonacademic');
+        })->name('admin/nonacads');
+        
         // Route::get('/announcements/view-selected-announcements/{$announcement_id}', function(){
         //     return view('admin.view-selected-announcements');
         // })->name('announcements/view-selected-announcements');
