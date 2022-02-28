@@ -71,6 +71,7 @@
                                             <x-jet-button wire:click="addShowOrganizationModel({{ $item->user_id }})">
                                                 {{__('Add Organization')}}
                                             </x-jet-button>
+                                            
                                         </td>
                                     </tr>
                                 @endforeach
@@ -153,6 +154,11 @@
                                             <x-jet-button wire:click="addShowOrganizationModel({{ $item->user_id }})">
                                                 {{__('Add Organization')}}
                                             </x-jet-button>
+                                            <a href="{{ route('user/selected-user', ['id'=> $item->user_id ]) }}">
+                                                <x-jet-button>
+                                                    {{__('Selected User')}}
+                                                </x-jet-button>
+                                            </a>
                                         </td>
                                     </tr>
                                 @endforeach

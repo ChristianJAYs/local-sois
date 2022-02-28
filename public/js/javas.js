@@ -93,10 +93,17 @@ function openAllNewsNewsPage() {
 
 function onloadOrgFunctions() {
 	console.log('2');
+    console.log("authOnload");
 }
 
-
-
+function updateSelectedUserData() {
+    var selectedUserUpdateModal = document.getElementById("SelectedUserUpdateData");
+    selectedUserUpdateModal.style.display="block";
+}
+function authOnload() {
+    var selectedUserUpdateModal = document.getElementById("SelectedUserUpdateData");
+    selectedUserUpdateModal.style.display="none";
+}
 
 function hello() {
 	console.log('hello world');

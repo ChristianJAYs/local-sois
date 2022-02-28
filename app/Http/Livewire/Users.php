@@ -513,6 +513,18 @@ class Users extends Component
     
     /*=====  End of Role Separation  ======*/
     
+    public function selecteduser($id)
+    {
+        $this->userId = $id;
+        // return route
+        // return redirect()->route('users.selected-users.', ['id' => $this->userId]);
+        // return redirect('/users/'.$this->userId);
+                // dd($this->userId);
+    }
+
+
+
+
     /**
      *
      * Get Permission List

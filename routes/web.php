@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Frontpage;
 use App\Http\Contollers\AuthRolePermsController;
 use App\Http\Contollers\CookieController;
+use App\Http\Livewire\Users;
+use App\Http\Livewire\SelectedUser;
 use App\Http\Livewire\OrganizationPages;
 use App\Http\Livewire\PagesUpdateProcess;
 use App\Http\Livewire\ViewAnnouncement;
@@ -104,6 +106,14 @@ Route::group(['middleware' => [
         Route::get('/admin/nonacads', function(){
             return view('admin.nonacademic');
         })->name('admin/nonacads');
+// 
+        // Route::get('users/selected-user/{id}', [App\Http\Livewire\SelectedUser::class, 'edit'])->name('user/selected-user');
+        
+        Route::get('/users/selected-user/{id}', function(){
+            return view('admin.selected-users');
+        })->name('user/selected-user');
+        // Route::get('/', function () {
+        // });
         
         // Route::get('/announcements/view-selected-announcements/{$announcement_id}', function(){
         //     return view('admin.view-selected-announcements');
