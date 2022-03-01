@@ -23,16 +23,10 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
-
-class SelectedUser extends Component
+class UpdateUser extends Component
 {
     use withPagination;
- 
-    public $modalUpdateUserPasswordFormVisible = false;
-
-
     public $userInt;
-    public $userId;
     public $explodedLink;
     public $actual_link;
 
@@ -40,7 +34,6 @@ class SelectedUser extends Component
     public $SelectedUserCourse;
     public $SelectedUserGender;
 
-    public $name;
     public $first_name;
     public $middle_name;
     public $last_name;
@@ -67,45 +60,12 @@ class SelectedUser extends Component
     public $course_id_DB;
     public $gender_id_DB;
 
-    public $data;
-    public $course_type = '0';
-    public $displayCourseName;
-
-    private $UserRoleOrgData;
-    public $UserRole;
-
-    private $UserOrgData;
-    public $UserOrg;
-
-    private $UserGateData;
-    private $UserGate;
-    public $UserGateKey;
-    public $UserGateErrorLog;
-
-    private $UserPermsissionData;
-    public $UserPermsission;
-
-    private $current_password_data;
-    public $current_password_1;
-    public $current_password_1_DB;
-    public $new_password_1;
-    public $new_password_1_DB;
-
-    private $RoleUSerChecker;
-    public $latestID;
-    private $userOrgData;
-    public $userOrgDataInt;
-    private $userRoleData;
-    public $userRoleDataInt;
-    public $roleModel=null;
-
     public function mount()
     {
         $this->actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
         $this->explodedLink = explode("/",$this->actual_link);
-        $this->userInt = (int) $this->explodedLink[5];
+        $this->userInt = (int) $this->explodedLink[6];
     }
-
     public function getUserData()
     {
         return DB::table('users')->where('user_id','=',$this->userInt)->paginate(1);
@@ -120,18 +80,14 @@ class SelectedUser extends Component
         $this->SelectedUserGender = DB::table('users')->where('user_id','=',$this->userInt)->pluck('gender_id');
         return DB::table('genders')->where('gender_id','=',$this->SelectedUserGender)->get();
     }
-    public function getCourseData()
-    {
-        return DB::table('courses')->get();
-    }
     public function getUserCourseFromDatabaseForUpdateSelection()
     {
         $this->SelectedUserCourse = DB::table('users')->where('user_id','=',$this->userInt)->pluck('course_id');
         return DB::table('courses')->where('course_id','=',$this->SelectedUserCourse)->get();
     }
-    public function getGenderData()
+    public function getCourseData()
     {
-        return DB::table('genders')->get();
+        return DB::table('courses')->get();
     }
     public function getUserGenderFromDatabaseForUpdateSelection()
     {
@@ -140,73 +96,10 @@ class SelectedUser extends Component
         // $this->SelectedUserGender = $this->SelectedUserData->gender_id;
         return DB::table('genders')->where('gender_id','=',$this->SelectedUserGender)->get();
     }
-    public function getUserRole()
+    public function getGenderData()
     {
-        $this->UserRoleOrgData = DB::table('role_user')->where('user_id','=',$this->userInt)->first();
-        $this->UserRole = $this->UserRoleOrgData->role_id;
-        // print_r(DB::table('role_user')->where('user_id','=',$this->userInt)->get());
-        // dd(DB::table('roles')->where('role_id','=',$this->UserRole)->get());
-        // dd($this->UserRoleOrgData);
-        return DB::table('roles')->where('role_id','=',$this->UserRole)->get();
+        return DB::table('genders')->get();
     }
-    public function getUserOrganization()
-    {
-        $this->UserOrgData = DB::table('role_user')->where('user_id','=',$this->userInt)->first();
-        $this->UserOrg = $this->UserOrgData->organization_id;
-        // dd($this->UserOrg);
-        return DB::table('organizations')->where('organization_id','=',$this->UserOrg)->get();
-    }
-    public function getUserSoisGate()
-    {
-        $this->UserGateData = DB::table('sois_gates')->where('user_id','=',$this->userInt)->first();
-        if($this->UserGateData){
-            $this->UserGateErrorLog = "Exists";
-            $this->UserGate = DB::table('sois_gates')->where('user_id','=',$this->userInt)->first();
-            $this->UserGateKey = $this->UserGate->gate_key;
-            // dd($this->UserGateKey);
-            return DB::table('sois_gates')->where('user_id','=',$this->userInt)->get();
-        }else{
-            $this->UserGateErrorLog = "Doesn't Exists";
-            // return $this->UserGateErrorLog;
-            return DB::table('sois_gates')->where('user_id','=',$this->userInt)->get();
-        }
-        // dd($this->UserGateData);
-    }
-
-    public function getUserPermission()
-    {
-        // $this->UserPermsissionData = DB::table('permission_user')->where('user_id','=',)
-        // dd(User::find($this->userInt)->permissions()->get());
-        // dd("Hello");
-        return User::find($this->userInt)->permissions()->get();
-    }
-
-    /*=============================================================
-    =            Update Password Section comment block            =
-    =============================================================*/
-    public function updateUserPasswordModel($id)
-    {
-        // $this->resetValidation();
-        // $this->reset();
-        $this->userId = $id;
-        // dd($this->userId);
-        $this->modalUpdateUserPasswordFormVisible = true;
-    }
-    public function updateUserPassword()
-    {
-        User::find($this->userId)->update(['password'=>Hash::make($this->password)]);
-        $this->modalUpdateUserPasswordFormVisible = false;
-        $this->resetValidation();
-        $this->reset();
-        $this->password = null;
-        $this->redirector();
-
-    }
-    
-    
-    /*=====  End of Update Password Section comment block  ======*/
-    
-
 
     /*=========================================================
     =            Update User Section comment block            =
@@ -317,121 +210,35 @@ class SelectedUser extends Component
         }
         public function redirector()
         {
-            // return redirect()->route('id', $this->userId);
-            return redirect()->route('/user/selected-user', ['id' => $this->userId]);
-            // return redirect('/users/selected-user/'.$this->userId);
+            return redirect('/users/selected-user/'.$this->userInt);
         }
         public function updateRedirect()
         {
             // code...
         }
     /*=====  End of Update User Section comment block  ======*/
-    
-    /*=============================================================
-    =            Update Password Section comment block            =
-    =============================================================*/
-        public function getUserPassword()
-        {
-        //     User::find($this->userId)->update(['password'=>Hash::make($this->password)]);
-        // $this->modalUpdateUserPasswordFormVisible = false;
-        // $this->resetValidation();
-        // $this->reset();
-        // $this->password = null;
-            // dd(DB::table('users')->where('user_id','=',$this->userInt)->get());
-        }
-        public function updatePassword()
-        {
-            $this->current_password_data = DB::table('users')->where('user_id','=',$this->userInt)->first();
-            if($this->new_password_1 != null){
-                User::find($this->userInt)->update(['password'=> $this->current_password_data->password]);
-                $this->resetValidation();
-                $this->reset();
-            }else{
-                User::find($this->userInt)->update(['password'=>Hash::make($this->new_password_1)]);
-                $this->resetValidation();
-                $this->reset();
-                $this->new_password_1 = null;
-            }
-            $this->redirector();
-        }
-    
-    
-    /*=====  End of Update Password Section comment block  ======*/
-    
-
-    /*=========================================================
-    =            Update Role Section comment block            =
-    =========================================================*/
-    public function test()
-    {
-        dd("heyllo");
-    }
-    public function addRoleToUser()
-    {
-        // $this->user = User::find($this->userInt);
-        // $this->RoleUSerChecker = DB::table('role_user')->where('user_id','=',$this->userInt)->first();
-        // dd($this->RoleUSerChecker);
-        dd("Hello");
-        // if($this->RoleUSerChecker){
-        //     DB::table('role_user')->where('user_id','=',$this->userInt)->delete();
-        //     DB::table('role_user')->insert([
-        //         ['role_id' => $this->roleModel, 'user_id' => $this->userInt, 'organization_id' => null],
-        //     ]);
-        //     $this->modalAddRoleFormVisible = false;
-        //     $this->resetAddRoleUserValidation();
-        //     $this->reset();
-        // }else{
-        //     DB::table('role_user')->insert([
-        //         ['role_id' => $this->roleModel, 'user_id' => $this->userInt, 'organization_id' => null],
-        //     ]);
-        //     $this->resetAddRoleUserValidation();
-        //     $this->reset();
-        // }
-    }
-    public function resetAddRoleUserValidation()
-    {
-        $this->roleModel = null;
-        $this->userInt = null;
-    }
-    
-    
-    /*=====  End of Update Role Section comment block  ======*/
-    
 
 
 
 
-    /**
-     *
-     * Get Role List
-     *
-     */
-    public function listOfRoles()
-    {
-        return DB::table('roles')
-            ->orderBy('role_id','asc')
-            ->get();
-    }
+
+
+
+
+
+
 
     public function render()
     {
-        return view('livewire.selected-user',[
-            'displayRoleData' => $this->listOfRoles(),
-            // 'displayAddRoleData' => $this->addRoleToUser(),
-
+        return view('livewire.update-user',[
             'displayUserSelectedData' => $this->getUserData(),
             'displayUserCourseData' => $this->getUserCourse(),
             'displayUserGendereData' => $this->getUserGender(),
-            'displayUserRoleData' => $this->getUserRole(),
-            'displayUserGateData' => $this->getUserSoisGate(),
-            'displayUserPermsData' => $this->getUserPermission(),
-            'displayUserPasswordData' => $this->getUserPassword(),
-            'displayUserOrganizationData' => $this->getUserOrganization(),
-            'displayUserDromDB' => $this->getUserDataFromDatabase(),
-            'displayCourseDromDB' => $this->getCourseData(),
             'displayCourseDromDBForUpdateSelect' => $this->getUserCourseFromDatabaseForUpdateSelection(),
-            'displayGenderDromDB' => $this->getGenderData(),
+            'displayCourseDromDB' => $this->getCourseData(),
             'displayGenderDromDBForUpdateSelect' => $this->getUserGenderFromDatabaseForUpdateSelection(),
+            'displayGenderDromDB' => $this->getGenderData(),
+
         ]);
     }
 }

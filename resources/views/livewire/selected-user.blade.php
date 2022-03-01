@@ -192,16 +192,46 @@
             <div>
                 <table style="width:100%">
                     <tr>
-                        <td class="px-6 py-4 text-sm whitespace-no-wrap">Organization</td>
+                        <td class="px-6 py-4 text-sm whitespace-no-wrap">
+                            @foreach($displayUserOrganizationData as $viewOrganization)
+                                @if($viewOrganization->organization_name != null)
+                                    {{ $viewOrganization->organization_name }}
+                                @else
+                                    <p>Data Unavailable</p>
+                                @endif
+                            @endforeach
+                        </td>
                     </tr>
                     <tr>
-                        <td class="px-6 py-4 text-sm whitespace-no-wrap">SOIS Key</td>
+                        <td class="px-6 py-4 text-sm whitespace-no-wrap">
+                            @foreach($displayUserRoleData as $viewRole)
+                                @if($viewRole->role != null)
+                                    {{ $viewRole->role }}
+                                @else
+                                    <p>Data Unavailable</p>
+                                @endif
+                            @endforeach
+                        </td>
                     </tr>
                     <tr>
-                        <td class="px-6 py-4 text-sm whitespace-no-wrap">Role</td>
+                        <td class="px-6 py-4 text-sm whitespace-no-wrap">
+                            @if($displayUserGateData->count() > 0)
+                                <p>{{ $UserGateKey }}</p>
+                            @else
+                                <p>Data Unavailable</p>
+                            @endif
+                        </td>
                     </tr>
                     <tr>
-                        <td class="px-6 py-4 text-sm whitespace-no-wrap">Permissions</td>
+                        <td class="px-6 py-4 text-sm whitespace-no-wrap">
+                            <div style="overflow: auto; height: 20rem; background:red;">
+                                @foreach($displayUserPermsData as $perms)
+                                    <div class="pl-5 pr-5 pt-2">
+                                        <p>{{$perms->name}}</p>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </td>
                     </tr>
                 </table>
             </div>
@@ -209,88 +239,83 @@
     </div>
     <div class="flex flex-col">
         <div class="p-3">
-            <x-jet-secondary-button class="ml-2" onclick="updateSelectedUserData()">
+            @foreach($displayUserSelectedData as $item)
+            <a href="{{ route('user/selected-user/update', ['id'=> $item->user_id ]) }}">
+            <x-jet-secondary-button class="ml-2" wire:click="updateRedirect">
                 Update User Data
             </x-jet-secondary-button>
-            <x-jet-secondary-button class="ml-2" onclick="updateSelectedUserData()">
-                Update User Password
-            </x-jet-secondary-button>
-            <x-jet-secondary-button class="ml-2" onclick="updateSelectedUserData()">
-                Add Role
-            </x-jet-secondary-button>
-            <x-jet-secondary-button class="ml-2" onclick="updateSelectedUserData()">
+            </a>
+            <x-jet-button wire:click="updateUserPasswordModel({{ $item->user_id }})">
+                {{__('Update Password User')}}
+            </x-jet-button>
+            @if($displayUserRoleData->count() > 0)
+            <x-jet-secondary-button class="ml-2">
                 Change Role
             </x-jet-secondary-button>
-            <x-jet-secondary-button class="ml-2" onclick="updateSelectedUserData()">
+            @else
+            <x-jet-secondary-button class="ml-2">
+                Add Role
+            </x-jet-secondary-button>
+            @endif
+            <x-jet-secondary-button class="ml-2">
                 Generate Key
             </x-jet-secondary-button>
-            <x-jet-secondary-button class="ml-2" onclick="updateSelectedUserData()">
+            <x-jet-secondary-button class="ml-2">
                 Add Permission
             </x-jet-secondary-button>
-            <x-jet-secondary-button class="ml-2" onclick="updateSelectedUserData()">
+            <x-jet-secondary-button class="ml-2">
                 Add Organization
             </x-jet-secondary-button>
+            @endforeach
         </div>
     </div>
-    <div id="SelectedUserUpdateData" class="pt-5">
-        <div>
-            <div class="mt-4">
-                <x-jet-label for="first_name" value="{{ __('first name') }}" />
-                <x-jet-input id="first_name" class="block mt-1 w-full" type="text" wire:model.debounce.800ms="first_name_DB" required autofocus />
-            </div>
-            <div class="mt-4">
-                <x-jet-label for="middle_name" value="{{ __('first name') }}" />
-                <x-jet-input id="middle_name" class="block mt-1 w-full" type="text" wire:model.debounce.800ms="middle_name_DB" required autofocus />
-            </div>
-            <div class="mt-4">
-                <x-jet-label for="last_name" value="{{ __('last name') }}" />
-                <x-jet-input id="last_name" class="block mt-1 w-full" type="text" wire:model="last_name_DB" required autofocus />
-            </div>
-            <div class="mt-4">
-                <x-jet-label for="email" value="{{ __('email') }}" />
-                <x-jet-input id="email" class="block mt-1 w-full" type="email" wire:model="email_DB" required autofocus />
-            </div>
-            <div class="mt-4">
-                <x-jet-label value="{{ __('Course') }}" />
-                <select wire:model="course_id_DB" class="block appearance-none w-full bg-gray-100 border border-gray-200 text-gray-700 py-3 px-4 pr-8 round leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
-                            @foreach($displayCourseDromDBForUpdateSelect as $selectedCouse)
-                                <option default hidden value="{{$selectedCouse->course_id}}">{{$selectedCouse->course_name}}</option>
-                            @endforeach
-                            @foreach($displayCourseDromDB as $courses)
-                                <option value="{{$courses->course_id}}">{{$courses->course_name}}</option>
-                            @endforeach
-                </select>
-            </div>
-            <div class="mt-4">
-                <x-jet-label value="{{ __('Gender') }}" />
-                <select wire:model="gender_id_DB" class="block appearance-none w-full bg-gray-100 border border-gray-200 text-gray-700 py-3 px-4 pr-8 round leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
-                            @foreach($displayGenderDromDBForUpdateSelect as $selectedGender)
-                                <option default hidden value="{{$selectedGender->gender_id}}">{{$selectedGender->gender}}</option>
-                            @endforeach
-                            @foreach($displayGenderDromDB as $genders)
-                                <option value="{{$genders->gender_id}}">{{$genders->gender}}</option>
-                            @endforeach
-                </select>
-            </div>
-            <div class="mt-4">
-                <x-jet-label for="date_of_birth" value="{{ __('Birth Date') }}" />
-                <x-jet-input wire:model="date_of_birth_DB" id="date_of_birth" class="block mt-1 w-full" type="date" required/>
-            </div>
-            <div class="mt-4">
-                <x-jet-label for="address" value="{{ __('address') }}" />
-                <x-jet-input id="address" class="block mt-1 w-full" type="text" wire:model="address_DB" required autofocus />
-            </div>
-            <div class="mt-4">
-                <x-jet-label for="mobile_number" value="{{ __('Mobile Number') }}" />
-                <x-jet-input id="mobile_number" class="block mt-1 w-full" type="text" wire:model="mobile_number_DB" required autofocus />
-            </div>
-            <div class="mt-4">
-                <x-jet-label for="student_number" value="{{ __('student_number') }}" />
-                <x-jet-input id="student_number" class="block mt-1 w-full" type="text" wire:model="student_number_DB" required autofocus />
-            </div>
-            <button class="ml-2" wire:click="update" onclick="authOnload()">
-                {{ __('Update User') }}
-            </button>  
-        </div>
-    </div>
+
+
+
+
+
+
+
+
+
+<x-jet-dialog-modal wire:model="modalUpdateUserPasswordFormVisible">
+            <x-slot name="title">
+                {{ __('Update password of User:') }}
+            </x-slot>
+
+            <x-slot name="content">
+               <div class="mb-4">
+                    <x-jet-label for="password" value="{{ __('password') }}" />
+                    <x-jet-input id="password" class="block mt-1 w-full" type="password" wire:model.debounce.800ms="password" required autofocus />
+                </div>
+            </x-slot>
+
+            <x-slot name="footer">
+                <x-jet-secondary-button wire:click="$toggle('modalUpdateUserPasswordFormVisible')" wire:loading.attr="disabled">
+                    {{ __('Cancel') }}
+                </x-jet-secondary-button>
+
+                @if($userId)
+                    <x-jet-secondary-button class="ml-2" wire:click="updateUserPassword" wire:loading.attr="disabled">
+                        {{ __('Update Password') }}
+                    </x-jet-secondary-button>                    
+                @endif
+            </x-slot>
+        </x-jet-dialog-modal>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </div>

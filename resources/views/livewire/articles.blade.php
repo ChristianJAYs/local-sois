@@ -15,9 +15,12 @@
     </style>
     <h2 class="table-title">News Articles</h2>
     <div class="flex items-center justify-end px-4 py-3 text-right sm:px-6">
-        <x-jet-button wire:click="createNews">
+        <a href="{{ route('articles/create') }}">
+            
+        <x-jet-button>
             {{ __('Create News') }}
         </x-jet-button>
+        </a>
     </div>
 
     <div class="flex flex-col items-center">
@@ -500,33 +503,7 @@
 
 
     
-<!--==============================================
-=            Add Tags Section comment            =
-===============================================-->
-<x-jet-dialog-modal wire:model="modalAddTagsFormVisible">
-            <x-slot name="title">
-                {{ __('Available Tags') }}
-            </x-slot>
-            <x-slot name="content">
-                <div class="mt-4">
-                    @foreach($displayTagsData as $tagsData)
-                    <input class="form-checkbox" type="checkbox" value="{{$tagsData->tags_id}}" wire:model="articleTags"/>
-                    <span class="ml-2 text-sm text-gray-600">{{$tagsData->tags_name}}</span>
-                    @endforeach
-                </div>
-            </x-slot>
-            <x-slot name="footer">
-                <x-jet-secondary-button wire:click="$toggle('modalAddTagsFormVisible')" wire:loading.attr="disabled">
-                    {{ __('Cancel') }}
-                </x-jet-secondary-button>
-                <x-jet-secondary-button class="ml-2" wire:click="AddTagsToArticles" wire:loading.attr="disabled">
-                    {{ __('Add Tags') }}
-                </x-jet-secondary-button>
-            </x-slot>
-        </x-jet-dialog-modal>
 
-
-<!--====  End of Add Tags Section comment  ====-->
 
 
 

@@ -177,7 +177,7 @@ class Articles extends Component
         if($this->latestOrganizationIDtoInsertToDB == null){
             $this->convertedArticleSlug = str_replace(' ', '-', $this->article_title);
 
-            Article::create($this->createModelWithoutOrg());
+            // Article::create($this->createModelWithoutOrg());
         // $this->syncArticleOrganization();
 
             $this->latestNewsID = Article::latest()->where('status','=','1')->pluck('articles_id')->first();
@@ -613,7 +613,7 @@ class Articles extends Component
 
     public function getTagsDataFromDatabase()
     {
-        return DB::table('tags')->where('status','=','1')->get();
+        // return DB::table('tags')->where('status','=','1')->get();
     }
 
     public function getArticleType()

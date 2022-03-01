@@ -62,6 +62,12 @@ Route::group(['middleware' => [
             return view('admin.articles');
         })->name('articles');
 
+        Route::get('/articles/create', function(){
+            return view('admin.article-create');
+        })->name('articles/create');
+
+
+
         Route::get('/organizations', function(){
             return view('admin.organizations');
         })->name('organizations');
@@ -112,9 +118,15 @@ Route::group(['middleware' => [
         Route::get('/users/selected-user/{id}', function(){
             return view('admin.selected-users');
         })->name('user/selected-user');
+
+        Route::get('/users/selected-user/update/{id}', function(){
+            return view('admin.update-user');
+        })->name('user/selected-user/update');
         // Route::get('/', function () {
         // });
-        
+
+
+
         // Route::get('/announcements/view-selected-announcements/{$announcement_id}', function(){
         //     return view('admin.view-selected-announcements');
         // })->name('announcements/view-selected-announcements');
