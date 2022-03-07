@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Frontpage;
 use App\Http\Contollers\AuthRolePermsController;
+use App\Http\Contollers\CreationTest;
 use App\Http\Contollers\CookieController;
 use App\Http\Livewire\Users;
 use App\Http\Livewire\SelectedUser;
@@ -66,6 +67,10 @@ Route::group(['middleware' => [
             return view('admin.article-create');
         })->name('articles/create');
 
+        Route::get('/articles/view/{id}', function(){
+            return view('admin.article-update');
+        })->name('articles/view');
+
 
 
         Route::get('/organizations', function(){
@@ -112,7 +117,13 @@ Route::group(['middleware' => [
         Route::get('/admin/nonacads', function(){
             return view('admin.nonacademic');
         })->name('admin/nonacads');
+
+        Route::get('/test', function(){
+            return view('livewire.testl-livewire');
+        })->name('test');
 // 
+
+
         // Route::get('users/selected-user/{id}', [App\Http\Livewire\SelectedUser::class, 'edit'])->name('user/selected-user');
         
         Route::get('/users/selected-user/{id}', function(){

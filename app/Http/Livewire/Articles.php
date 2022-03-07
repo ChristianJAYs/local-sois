@@ -14,7 +14,7 @@ use App\Models\AssetType;
 use App\Models\OrganizationAsset;
 use App\Models\SystemAsset;
 
-use Livewire\withPagination;
+use Livewire\WithPagination;
 use Illuminate\Support\STR;
 use Illuminate\Validation\Rule;
 use Livewire\WithFileUploads;
@@ -105,6 +105,7 @@ class Articles extends Component
     public $convertedArticleSlug;
     public $articleTags = [];
     public $article_type_id;
+    public $selected_article_id;
 
 
     /*======================================================
@@ -580,6 +581,28 @@ class Articles extends Component
             ->where('user_id', '=', $this->userId)
             ->paginate(3);
     }
+
+
+
+
+
+
+    public function articleUpdate($id)
+    {
+        // dd($id);
+        $this->selected_article_id = $id;
+        // return view('admin.view-selected-announcements', ['announcement_id' -> $id]);
+        return redirect()->route('articles/view', ['id' => $this->selected_article_id]);
+        // return redirect()->route('articles/view')->with('id',$id);
+        // return redirect()->route('/announcements/view-selected-announcements/');
+    }
+
+
+
+
+
+
+
 
     /**
      *

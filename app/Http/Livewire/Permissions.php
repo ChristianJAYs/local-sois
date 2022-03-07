@@ -8,7 +8,7 @@ use App\Models\Permission;
 use App\Models\Role;
 
 use Illuminate\Validation\Rule;
-use Livewire\withPagination;
+use Livewire\WithPagination;
 
 use Illuminate\Support\STR;
 
@@ -41,12 +41,15 @@ class Permissions extends Component
     public $create;
     public $permsId;
 
-    public $permission_name;
-    public $guard_name;
-    public $permission_description;
-    public $status;
+    public $name;
+    // public $guard_name;
+    public $description;
+    // public $status;
     public $created_at;
     public $updated_at;
+
+    public $permission_id;
+    private $data;
 
     /*================================================================
     =            Create Permissions Section comment block            =
@@ -67,34 +70,34 @@ class Permissions extends Component
         // dd(date('Y-m-d H:i:s')); 
         DB::table('permissions')->insert([
             [
-                'permission_name' => $this->permission.'-list',
-                'guard_name' => 'web',
-                'permission_description' => 'list permission enables the | '. $this->permission .' | permission to list data',
-                'status' => '1',
+                'name' => $this->permission.'-list',
+                // 'guard_name' => 'web',
+                'description' => 'list permission enables the | '. $this->permission .' | permission to list data',
+                // 'status' => '1',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
-                'permission_name' => $this->permission.'-create',
-                'guard_name' => 'web',
-                'permission_description' => 'create permission enables the | '.$this->permission.' | permission to create data',
-                'status' => '1',
+                'name' => $this->permission.'-create',
+                // 'guard_name' => 'web',
+                'description' => 'create permission enables the | '.$this->permission.' | permission to create data',
+                // 'status' => '1',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
-                'permission_name' => $this->permission.'-edit',
-                'guard_name' => 'web',
-                'permission_description' => 'edit permission enables the | '.$this->permission.' | permission to edit data',
-                'status' => '1',
+                'name' => $this->permission.'-edit',
+                // 'guard_name' => 'web',
+                'description' => 'edit permission enables the | '.$this->permission.' | permission to edit data',
+                // 'status' => '1',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
-                'permission_name' => $this->permission.'-delete',
-                'guard_name' => 'web',
-                'permission_description' => 'delete permission enables the | '.$this->permission.' | permission to delete data',
-                'status' => '1',
+                'name' => $this->permission.'-delete',
+                // 'guard_name' => 'web',
+                'description' => 'delete permission enables the | '.$this->permission.' | permission to delete data',
+                // 'status' => '1',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
@@ -107,14 +110,67 @@ class Permissions extends Component
     /*=====  End of Create Permissions Section comment block  ======*/
     
 
+    /*==============================================================
+    =            Update PermissionSection comment block            =
+    ==============================================================*/
+        public function updatehowPermissionModel($id)
+        {
+            $this->resetValidation();
+            $this->reset();
+            $this->modalUpdatePermissionFormVisible = true;
+
+            $this->permission_id = $id;
+            $this->loadSelectedPermission();
+            // dd($id);
+        }
+        public function loadSelectedPermission()
+        {
+            $this->data = DB::table('permissions')->where('permission_id','=',$this->permission_id)->first();
+            // dd($this->data);
+            $this->permission = $this->data->name;
+        }
+
+        public function update()
+        {
+            Permission::find($this->permission_id)->update($this->modelData());
+            $this->modalUpdatePermissionFormVisible = false;
+            $this->reset();
+            $this->resetValidation();
+        }
+        public function modelData()
+        {
+            return [
+                'name' => $this->permission,
+            ];
+        }
+    
+    
+    /*=====  End of Update PermissionSection comment block  ======*/
+    
+
+    public function deleteShowPermissionModal($id)
+    {
+        $this->resetValidation();
+        $this->reset();
+        $this->permission_id = $id;
+        $this->modelConfirmPermissionDeleteVisible = true;
+    }
+    public function delete()
+    {
+        Permission::find($this->permission_id)->delete();
+        $this->modelConfirmPermissionDeleteVisible = false;
+        $this->reset();
+        $this->resetValidation();
+    }
+
 
     public function rules()
     {
         return [
-            'permission_name' => 'required',
-            'guard_name' => 'required',
-            'permission_description' => 'required',
-            'status' => 'required',
+            'name' => 'required',
+            // 'guard_name' => 'required',
+            'description' => 'required',
+            // 'status' => 'required',
             'created_at' => 'required',
             'updated_at' => 'required',
         ];
@@ -129,7 +185,6 @@ class Permissions extends Component
     public function getPermissionDataFromDatabase()
     {
         return DB::table('permissions')->paginate(5);
-        // return DB::table('permissions')->where('status','=','1')->paginate(5);
     }
 
     public function render()

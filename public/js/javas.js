@@ -98,13 +98,13 @@ function onloadOrgFunctions() {
 
 function updateSelectedPasswordUserData() {
     var selected_User_Update_Modal = document.getElementById("SelectedUserUpdateData");
-    selected_User_Update_Modal.style.display="none";
-
     var selected_User_Pass_Update_Modal = document.getElementById("SelectedUserPasswordUpdateData");
-    selected_User_Pass_Update_Modal.style.display = "block";
-
     var selected_User_Role_Update_Modal = document.getElementById("SelectedUserRoleUpdateData");
+
+    selected_User_Update_Modal.style.display="none";
+    selected_User_Pass_Update_Modal.style.display = "block";
     selected_User_Role_Update_Modal.style.display = "none";
+
 }
 
 function updateSelectedRoleUserData() {

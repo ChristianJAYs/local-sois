@@ -13,7 +13,7 @@ use App\Models\OrganizationAsset;
 use App\Models\PageType;
 use App\Http\Livewire\Objects;
 
-use Livewire\withPagination;
+use Livewire\WithPagination;
 
 use Illuminate\Support\STR;
 
@@ -105,7 +105,7 @@ class Organizations extends Component
 
     public $loadDataVarsFromDB;
 
-    public $systemAssetDataFromDB;
+    private $systemAssetDataFromDB;
     public $userDataPivot;
     public $userDataPivotOrganization;
     
@@ -154,12 +154,15 @@ class Organizations extends Component
         $this->viewmodalFormVisible = true;
         $this->modelId = $id;
         $this->loadImageModel();
-        // $this->getSelectedOrganizationLogo();
+        $this->getSelectedOrganizationLogo();
     }
     public function getSelectedOrganizationLogo()
     {
-        $this->systemAssetDataFromDB = SystemAsset::where('organization_id','=',$this->modelId)->get();
-        // dd($this->systemAssetDataFromDB->asset_name);
+        // $this->systemAssetDataFromDB = SystemAsset::where('organization_id','=',$this->modelId)->get();
+        $this->systemAssetDataFromDB = DB::table('organization_assets')->where('organization_id','=',$this->modelId)->where('is_latest_logo','=','1')->first();
+        $this->organization_logo = $this->systemAssetDataFromDB->file; 
+        // return $this->organization_logo;
+        // dd($this->systemAssetDataFromDB->file);
     }
     /*=====  End of View Organization Section  ======*/
     
