@@ -122,6 +122,8 @@ Route::group(['middleware' => [
             return view('livewire.testl-livewire');
         })->name('test');
 // 
+        Route::get('/test/normal/controller', 'App\Http\Controllers\CreationTest@index')->name('test/normal/controller');
+        Route::post('/store-form', 'App\Http\Controllers\CreationTest@store');
 
 
         // Route::get('users/selected-user/{id}', [App\Http\Livewire\SelectedUser::class, 'edit'])->name('user/selected-user');
