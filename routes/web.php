@@ -8,6 +8,7 @@ use App\Http\Contollers\CookieController;
 use App\Http\Contollers\ArticleCreate;
 use App\Http\Contollers\OrganizationCRUD;
 use App\Http\Contollers\AnouncementCRUD;
+use App\Http\Contollers\UserCRUD;
 
 
 
@@ -52,6 +53,7 @@ Route::group(['middleware' => [
         Route::resource('articles', 'App\Http\Controllers\ArticleCreate');
         Route::resource('organization', 'App\Http\Controllers\OrganizationCRUD');
         Route::resource('announcement', 'App\Http\Controllers\AnouncementCRUD');
+        Route::resource('users', 'App\Http\Controllers\UserCRUD');
         // Route::resource('articles', ArticleCreate::class);
 
         Route::get('/dashboard', function(){
