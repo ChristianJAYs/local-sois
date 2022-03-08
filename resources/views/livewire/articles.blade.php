@@ -21,11 +21,10 @@
             {{ __('Test Form') }}
         </x-jet-button>
         </a>
-        <a href="{{ route('articles/create') }}">
-            
-        <x-jet-button>
-            {{ __('Create News') }}
-        </x-jet-button>
+        <a href="{{ route('articles.create') }}">
+            <x-jet-button>
+                {{ __('Create News') }}
+            </x-jet-button>
         </a>
     </div>
 
@@ -69,12 +68,21 @@
                                                 </a>
                                             </td>
                                             <td class="px-6 py-4 text-sm whitespace-no-wrap">
+                                                <!-- <form action="{{ route('articles.destroy',$item->articles_id) }}" method="POST">
+                                                    <a class="btn btn-info" href="{{ route('articles.update',$item->articles_id) }}">Show</a>
+                                                    <a class="btn btn-primary" href="{{ route('articles.edit',$item->articles_id) }}">Edit</a>
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                                </form> -->
+                                                <a href="{{ route('articles.edit',$item->articles_id) }}">
+                                                    <x-jet-button>
+                                                        {{__('Update Article')}}
+                                                    </x-jet-button>
+                                                </a>
                                                 <!-- <x-jet-button wire:click="updateNewsShowModal({{ $item->articles_id }})">
-                                                    {{__('Update')}}
-                                                </x-jet-button> -->
-                                                <x-jet-button wire:click="articleUpdate({{ $item->articles_id }})">
                                                     {{__('Update Article')}}
-                                                </x-jet-button>
+                                                </x-jet-button> -->
                                                 <x-jet-danger-button wire:click="deleteNewsShowModal({{ $item->articles_id }})">
                                                     {{__('Delete')}}
                                                 </x-jet-danger-button>

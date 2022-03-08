@@ -95,6 +95,7 @@ class Articles extends Component
     public $latestOrganizationIDtoInsertToDB;
     public $latestNewsID;
     public $va;
+    public $vaHolder;
     public $article_id;
 
     public $article_image_view;
@@ -494,6 +495,7 @@ class Articles extends Component
         $this->newsId = $id;
         $this->viewImage();
         $this->modalEditNewsImageFormVisible = true;
+        
     }
     public function editNewsImage()
     {
@@ -509,9 +511,9 @@ class Articles extends Component
 
         $this->userId = Auth::user()->user_id;
         $this->user = User::find($this->userId);
-        $this->va = $this->user->organizations->first();
-        // dd($this->va);
-        $this->latestOrganizationIDtoInsertToDB = $this->va->organization_id;
+        $this->va = DB::table('role_user')->where('user_id','=',$this->userId)->first();
+        $this->vaHolder = $this->va->organization_id;
+        $this->latestOrganizationIDtoInsertToDB = (int) $this->vaHolder;
         // dd($this->latestOrganizationIDtoInsertToDB);
 
         // $this->OrgDataFromUser = $this->user->organization->first();

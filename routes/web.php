@@ -5,6 +5,12 @@ use App\Http\Livewire\Frontpage;
 use App\Http\Contollers\AuthRolePermsController;
 use App\Http\Contollers\CreationTest;
 use App\Http\Contollers\CookieController;
+use App\Http\Contollers\ArticleCreate;
+use App\Http\Contollers\OrganizationCRUD;
+use App\Http\Contollers\AnouncementCRUD;
+
+
+
 use App\Http\Livewire\Users;
 use App\Http\Livewire\SelectedUser;
 use App\Http\Livewire\OrganizationPages;
@@ -35,6 +41,19 @@ Route::group(['middleware' => [
             'auth:sanctum',
             'verified',
 ]], function(){
+
+        Route::get('/test/normal/controller', 'App\Http\Controllers\CreationTest@index')->name('test/normal/controller');
+        Route::post('/store-form', 'App\Http\Controllers\CreationTest@store');
+
+        Route::get('/article/create', 'App\Http\Controllers\ArticleCreate@index')->name('article/create');
+        // Route::get('/article/update/{id}', 'App\Http\Controllers\ArticleCreate@edit')->name('article/update');
+        Route::post('/store-article', 'App\Http\Controllers\ArticleCreate@store');
+
+        Route::resource('articles', 'App\Http\Controllers\ArticleCreate');
+        Route::resource('organization', 'App\Http\Controllers\OrganizationCRUD');
+        Route::resource('announcement', 'App\Http\Controllers\AnouncementCRUD');
+        // Route::resource('articles', ArticleCreate::class);
+
         Route::get('/dashboard', function(){
             return view('admin.dashboards');
         })->name('dashboard');
@@ -63,9 +82,9 @@ Route::group(['middleware' => [
             return view('admin.articles');
         })->name('articles');
 
-        Route::get('/articles/create', function(){
-            return view('admin.article-create');
-        })->name('articles/create');
+        // Route::get('/articles/create', function(){
+        //     return view('admin.article-create');
+        // })->name('articles/create');
 
         Route::get('/articles/view/{id}', function(){
             return view('admin.article-update');
@@ -121,10 +140,9 @@ Route::group(['middleware' => [
         Route::get('/test', function(){
             return view('livewire.testl-livewire');
         })->name('test');
-// 
-        Route::get('/test/normal/controller', 'App\Http\Controllers\CreationTest@index')->name('test/normal/controller');
-        Route::post('/store-form', 'App\Http\Controllers\CreationTest@store');
 
+// 
+        
 
         // Route::get('users/selected-user/{id}', [App\Http\Livewire\SelectedUser::class, 'edit'])->name('user/selected-user');
         

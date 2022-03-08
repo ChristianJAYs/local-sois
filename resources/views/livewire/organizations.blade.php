@@ -3,9 +3,11 @@
 
     <div class="flex items-center justify-end px-4 py-3 text-right sm:px-6">
         @if($userAuthRole == 'Super Admin')
-            <x-jet-button wire:click="createOrganization">
+            <a href="{{route('organization.create')}}">
+            <x-jet-button>
                 {{ __('Create Organization') }}
             </x-jet-button>
+            </a>
         @endif
     </div>
 
