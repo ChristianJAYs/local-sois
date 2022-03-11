@@ -6,6 +6,7 @@ use App\Http\Contollers\AuthRolePermsController;
 use App\Http\Contollers\CreationTest;
 use App\Http\Contollers\CookieController;
 use App\Http\Contollers\ArticleCreate;
+use App\Http\Contollers\OrgAccArticleCreate;
 use App\Http\Contollers\OrganizationCRUD;
 use App\Http\Contollers\AnouncementCRUD;
 use App\Http\Contollers\UserCRUD;
@@ -180,6 +181,10 @@ Route::group(['middleware' => [
         Route::get('/Organization/dashboard', function(){
             return view('orgAdmin.dashboards');
         })->name('Organization/dashboard');
+
+
+        Route::resource('org-articles', 'App\Http\Controllers\OrgAccArticleCreate');
+
         
         Route::get('/Organization/articles', function(){
             return view('orgAdmin.articles');

@@ -15,6 +15,7 @@ class SoisGate extends Model
         'user_id',
         'is_logged_in',
         'gate_key',
+        'hash_key',
         'created_at',
         'updated_at',
     ];

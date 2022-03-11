@@ -408,23 +408,29 @@ class Users extends Component
     }
     public function generateKey()
     {
-        echo Str::uuid();
-        // dd("hello");
-        // $this->end_key =  Str::uuid();
-        $n=60;
-        $this->secret_characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        $this->end_key = '';
-        for ($i = 0; $i < $n; $i++) {
-            $index = rand(0, strlen($this->secret_characters) - 1);
-            $this->end_key .= $this->secret_characters[$index];
-        }
-        // return $this->end_key;
-        // // echo $this->end_key;
-        SoisGate::create($this->modelGenerateKey());
-        // dd($this->userId);
-        $this->modelConfirmUserGenerateKeyVisible = false;
-        $this->resetValidation();
-        $this->reset();
+         $random = '';
+  for ($i = 0; $i < 20; $i++) {
+    $random .= rand(0, 1) ? rand(0, 9) : chr(rand(ord('a'), ord('z')));
+  }
+  dd($random);
+  // return $random;
+        // echo Str::uuid();
+        // // dd("hello");
+        // // $this->end_key =  Str::uuid();
+        // $n=60;
+        // $this->secret_characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        // $this->end_key = '';
+        // for ($i = 0; $i < $n; $i++) {
+        //     $index = rand(0, strlen($this->secret_characters) - 1);
+        //     $this->end_key .= $this->secret_characters[$index];
+        // }
+        // // return $this->end_key;
+        // // // echo $this->end_key;
+        // SoisGate::create($this->modelGenerateKey());
+        // // dd($this->userId);
+        // $this->modelConfirmUserGenerateKeyVisible = false;
+        // $this->resetValidation();
+        // $this->reset();
     }
 
     public function modelGenerateKey()

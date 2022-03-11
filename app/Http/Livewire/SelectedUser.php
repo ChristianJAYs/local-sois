@@ -24,6 +24,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
+use Illuminate\Support\Facades\Crypt;
 
 class SelectedUser extends Component
 {
@@ -111,7 +112,15 @@ class SelectedUser extends Component
     public $userRoleDataInt;
     public $roleModel=null;
 
+    private $RoleSignatureChecker;
+    public $latestSignatureID;
 
+    private $uuid;
+    private $uuidExplodedArray;
+    private $uuidArray;
+    private $selected_key;
+ 
+    private $encrypted;
 
     public function mount()
     {
@@ -119,6 +128,64 @@ class SelectedUser extends Component
         $this->explodedLink = explode("/",$this->actual_link);
         $this->userInt = (int) $this->explodedLink[5];
     }
+
+     /*====================================================================
+    =            Generate Logged in key Section comment block            =
+    ====================================================================*/
+    public function generateKeyModal($id)
+    {
+        // $this->resetValidation();
+        // $this->reset();
+        $this->userId = $id;
+        $this->modelConfirmUserGenerateKeyVisible = true;
+    }
+    public function generateKey()
+    {
+        echo Str::uuid();
+        $this->uuid = Str::uuid();
+        echo "<br><br>";
+        echo Hash::make($this->uuid);
+        $this->encrypted =  Hash::make($this->uuid);
+        echo "<br><br>";
+        // dd(DB::table('sois_gates')->where('user_id','=',$this->userInt)->first());
+        $this->selected_key = DB::table('sois_gates')->where('user_id','=',$this->userInt)->first();
+        // dd($this->selected_key);
+        if ($this->selected_key) {
+            DB::table('sois_gates')->where('user_id','=',$this->userInt)->delete();
+            SoisGate::where('user_id','=',$this->userInt)->update($this->modelUpdateGenerateKey());
+            // dd($this->userId);
+            $this->modelConfirmUserGenerateKeyVisible = false;
+            $this->redirector($this->userInt);
+            $this->resetValidation();
+            $this->reset();
+        }else{
+            SoisGate::create($this->modelGenerateKey());
+            $this->modelConfirmUserGenerateKeyVisible = false;
+            $this->redirector($this->userInt);
+            $this->resetValidation();
+            $this->reset();
+        }
+        // DD("Hello");
+    }
+
+    public function modelUpdateGenerateKey()
+    {
+        return [
+            'gate_key' => $this->uuid,
+            'hash_key' => $this->encrypted,
+        ];
+    }
+
+    public function modelGenerateKey()
+    {
+        return [
+            'user_id' => $this->userId,
+            'gate_key' => $this->uuid,
+            'hash_key' => $this->encrypted,
+        ];
+    }
+    
+    /*=====  End of Generate Logged in key Section comment block  ======*/
 
     public function getUserData()
     {
@@ -397,24 +464,41 @@ class SelectedUser extends Component
     {
         $this->user = User::find($this->userInt);
         $this->RoleUSerChecker = DB::table('role_user')->where('user_id','=',$this->userInt)->first();
+        $this->RoleSignatureChecker = DB::table('event_signatures')->where('user_id','=',$this->userInt)->first();
+        
+        // dd($this->RoleSignatureChecker);
         if($this->RoleUSerChecker){
             DB::table('role_user')->where('user_id','=',$this->userInt)->delete();
             DB::table('role_user')->insert([
                 ['role_id' => $this->roleModel, 'user_id' => $this->userInt, 'organization_id' => null],
             ]);
-            $this->modalAddRoleFormVisible = false;
-            $this->redirector($this->userInt);
-            $this->resetAddRoleUserValidation();
-            $this->reset();
+            // $this->modalAddRoleFormVisible = false;
+            // $this->redirector($this->userInt);
+            // $this->resetAddRoleUserValidation();
+            // $this->reset();
         }else{
             DB::table('role_user')->insert([
                 ['role_id' => $this->roleModel, 'user_id' => $this->userInt, 'organization_id' => null],
             ]);
-            $this->modalAddRoleFormVisible = false;
-            $this->redirector($this->userInt);
-            $this->resetAddRoleUserValidation();
-            $this->reset();
+            // $this->modalAddRoleFormVisible = false;
+            // $this->redirector($this->userInt);
+            // $this->resetAddRoleUserValidation();
+            // $this->reset();
         }
+        if ($this->RoleSignatureChecker) {
+            DB::table('event_signatures')->where('user_id','=',$this->userInt)->delete();
+            DB::table('event_signatures')->insert([
+                ['role_id' => $this->roleModel, 'user_id' => $this->userInt, 'organization_id' => null],
+            ]);
+        }else{
+            DB::table('event_signatures')->insert([
+                ['role_id' => $this->roleModel, 'user_id' => $this->userInt, 'organization_id' => null],
+            ]);
+        }
+        $this->modalAddRoleFormVisible = false;
+        $this->redirector($this->userInt);
+        $this->resetAddRoleUserValidation();
+        $this->reset();
     }
     public function resetAddRoleUserValidation()
     {
@@ -425,47 +509,7 @@ class SelectedUser extends Component
     
     /*=====  End of Sync Role To UserSection comment block  ======*/
     
-    /*====================================================================
-    =            Generate Logged in key Section comment block            =
-    ====================================================================*/
-    public function generateKeyModal($id)
-    {
-        // $this->resetValidation();
-        // $this->reset();
-        $this->userId = $id;
-        $this->modelConfirmUserGenerateKeyVisible = true;
-    }
-    public function generateKey()
-    {
-        // echo Str::uuid();
-        // dd("hello");
-        // $this->end_key =  Str::uuid();
-        $n=60;
-        $this->secret_characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        $this->end_key = '';
-        for ($i = 0; $i < $n; $i++) {
-            $index = rand(0, strlen($this->secret_characters) - 1);
-            $this->end_key .= $this->secret_characters[$index];
-        }
-        // return $this->end_key;
-        // // echo $this->end_key;
-        SoisGate::create($this->modelGenerateKey());
-        // dd($this->userId);
-        $this->modelConfirmUserGenerateKeyVisible = false;
-        $this->redirector($this->userInt);
-        $this->resetValidation();
-        $this->reset();
-    }
-
-    public function modelGenerateKey()
-    {
-        return [
-            'user_id' => $this->userId,
-            'gate_key' => $this->end_key,
-        ];
-    }
-    
-    /*=====  End of Generate Logged in key Section comment block  ======*/
+   
 
 
     /*============================================================
@@ -534,25 +578,41 @@ class SelectedUser extends Component
             DB::table('role_user')->insert([
                 ['organization_id' => $this->organizationModel,'role_id' => $this->userRoleDataInt, 'user_id' => $this->userInt],
             ]);
-            $this->modalAddRoleFormVisible = false;
-            $this->redirector($this->userInt);
-            $this->resetValidation();
-            $this->reset();
+            // $this->modalAddRoleFormVisible = false;
+            // $this->redirector($this->userInt);
+            // $this->resetValidation();
+            // $this->reset();
         // //     $this->resetAddRoleUserValidation();
         // //     $this->reset();
         }else{
-            $this->modalAddRoleFormVisible = false;
-            $this->redirector($this->userInt);
-            $this->resetValidation();
-            $this->reset();
+            // $this->modalAddRoleFormVisible = false;
+            // $this->redirector($this->userInt);
+            // $this->resetValidation();
+            // $this->reset();
             // dd("world");
-        //     DB::table('role_user')->insert([
-        //         ['organization_id' => $this->organizationModel,'role_id' => $this->userRoleDataInt, 'user_id' => $this->userInt],
-        //     ]);
+            DB::table('role_user')->insert([
+                ['organization_id' => $this->organizationModel,'role_id' => $this->userRoleDataInt, 'user_id' => $this->userInt],
+            ]);
         // //     $this->modalAddRoleFormVisible = false;
         // //     $this->resetAddRoleUserValidation();
         // //     $this->reset();
         }
+        $this->RoleSignatureChecker = DB::table('event_signatures')->where('user_id','=',$this->userInt)->first();
+        
+        if ($this->RoleSignatureChecker) {
+            DB::table('event_signatures')->where('user_id','=',$this->userInt)->delete();
+            DB::table('event_signatures')->insert([
+                ['organization_id' => $this->organizationModel,'role_id' => $this->userRoleDataInt, 'user_id' => $this->userInt],
+            ]);
+        }else{
+            DB::table('event_signatures')->insert([
+                ['organization_id' => $this->organizationModel,'role_id' => $this->userRoleDataInt, 'user_id' => $this->userInt],
+            ]);
+        }
+        $this->modalAddRoleFormVisible = false;
+            $this->redirector($this->userInt);
+            $this->resetValidation();
+            $this->reset();
         // $user->organizations()->sync($this->organizationModel);
         // $this->modalAddOrganizationFormVisible = false;
         // $this->reset();

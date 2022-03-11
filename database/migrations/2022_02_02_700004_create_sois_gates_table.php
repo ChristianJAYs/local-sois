@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateOrganizationsUsersTable extends Migration
+class CreateSoisGatesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,14 @@ class CreateOrganizationsUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('organizations_users', function (Blueprint $table) {
-            $table->id('organizations_users_id');
+        Schema::create('sois_gates', function (Blueprint $table) {
+            $table->id('sois_gates_id');
 
-            $table->unsignedBigInteger('organization_id')->nullable();
-            $table->foreign('organization_id')->references('organization_id')->on('organizations');
-
-            $table->unsignedBigInteger('user_id');
+            $table->foreignId('user_id');
             $table->foreign('user_id')->references('user_id')->on('users');
+
+            $table->boolean('is_logged_in')->nullable();
+            $table->string('gate_key')->unique();
 
             $table->timestamps();
         });
@@ -33,6 +33,6 @@ class CreateOrganizationsUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('organizations_users');
+        Schema::dropIfExists('sois_gates');
     }
 }

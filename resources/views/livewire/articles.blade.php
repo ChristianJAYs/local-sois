@@ -21,11 +21,19 @@
             {{ __('Test Form') }}
         </x-jet-button>
         </a>
-        <a href="{{ route('articles.create') }}">
-            <x-jet-button>
-                {{ __('Create News') }}
+        @if($RoleUSerString == 'Super Admin')
+            <a href="{{ route('articles.create') }}">
+            <x-jet-button wire:click="createNews">
+                {{ __('Create School News') }}
             </x-jet-button>
-        </a>
+            </a>
+            @else
+            <a href="{{ route('org-articles.create') }}">
+            <x-jet-button wire:click="createNews">
+                {{ __('Create Org News') }}
+            </x-jet-button>
+            </a>
+            @endif
     </div>
 
     <div class="flex flex-col items-center">
