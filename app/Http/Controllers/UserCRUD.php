@@ -34,6 +34,139 @@ class UserCRUD extends Controller
     public $student_number;
     public $latestID;
     public $user_id;
+    public $id;
+
+    public $getUserData;
+    public $store_New_user_data;
+    public $validatedData;
+
+    public $SelectedUserCourse;
+    public $SelectedUserCourseHolder;
+
+    public $SelectedUserGender;
+    public $SelectedUserGenderHolder;
+
+    public $getCourseData;
+    public $getGenderData;
+
+    public $get_user_data_from_database;
+
+    public $first_name_DB;
+    public $middle_name_DB;
+    public $last_name_DB;
+    public $date_of_birth_DB;
+    public $address_DB;
+    public $mobile_number_DB;
+    public $email_DB;
+    public $password_DB;
+    public $student_number_DB;
+    public $course_id_DB;
+    public $gender_id_DB;
+
+    public $role_id;
+
+    public $UserOrgData;
+    public $UserOrgDataFromDB;
+    public $UserOrg;
+
+    public $UserRoleOrgData;
+    public $UserRole;
+
+    public $UserGateData;
+    public $UserGateErrorLog;
+    public $UserGate;
+
+    public $permissionDataFromDB;
+
+    public function accessControl($id)
+    {
+        $getUserData = DB::table('users')->where('user_id','=',$id)->get();
+        // dd(DB::table('users')->where('user_id','=',$id)->get());
+        // return view('normLaravel/users-update',compact('getUserData'));
+        $SelectedUserCourseHolder = DB::table('users')->where('user_id','=',$id)->pluck('course_id');
+        $SelectedUserCourse = DB::table('courses')->where('course_id','=',$SelectedUserCourseHolder)->get();
+        // dd($SelectedUserCourse);
+
+        $SelectedUserGenderHolder = DB::table('users')->where('user_id','=',$id)->pluck('gender_id');
+        // $this->SelectedUserGender = $this->SelectedUserData->gender_id;
+        $SelectedUserGender = DB::table('genders')->where('gender_id','=',$SelectedUserGenderHolder)->get();
+
+        //             'displayUserOrganizationData' => $this->getUserOrganization(),
+        $UserOrgData = DB::table('role_user')->where('user_id','=',$id)->first();
+        // dd($UserOrgData);
+        $UserOrg = $UserOrgData->organization_id;
+        // dd($UserOrg);
+        if (DB::table('organizations')->where('organization_id','=',$this->UserOrg)->get() != null) {
+            echo "Not";
+        }else{
+            echo "Yes;";
+        }
+        // DB::table('organizations')->where('organization_id','=',$this->UserOrg)->get();
+        // dd(DB::table('organizations')->where('organization_id','=',$this->UserOrg)->get());
+
+            // 'displayUserRoleData' => $this->getUserRole(),
+        $UserRoleOrgData = DB::table('role_user')->where('user_id','=',$id)->first();
+        $UserRole = $UserRoleOrgData->role_id;
+        // dd($UserRole);
+
+            // 'displayUserGateData' => $this->getUserSoisGate(),
+        $UserGateData = DB::table('sois_gates')->where('user_id','=',$id)->get();
+        if($UserGateData){
+            $UserGateErrorLog = "Exists";
+            $UserGate = DB::table('sois_gates')->where('user_id','=',$id)->first();
+            // $UserGateKey = $UserGate->gate_key;
+            // dd($UserGateKey);
+            // return DB::table('sois_gates')->where('user_id','=',$id)->get();
+        }else{
+            $UserGateErrorLog = "Doesn't Exists";
+            // return $UserGateErrorLog;
+            // return DB::table('sois_gates')->where('user_id','=',$id)->get();
+        }
+
+            // 'displayUserPermsData' => $getUserPermission(),
+        $permissionDataFromDB = User::find($id)->permissions()->get();
+
+
+
+        $getCourseData = DB::table('courses')->get();
+        $getGenderData = DB::table('genders')->get();
+        $getRolesData = DB::table('roles')->get();
+        // dd($getRolesData);
+        // return view('normLaravel/users-update');
+        return view('normLaravel\users-update-access')
+                ->with('displayUserSelectedData', $getUserData)
+                ->with('rolesList', $getRolesData)
+                ->with('displayCourseDromDBForUpdateSelect', $SelectedUserCourse)
+                ->with('displayGenderDromDBForUpdateSelect', $SelectedUserGender)
+                ->with('displayCourseDromDB',$getCourseData)
+                ->with('displayGenderDromDB',$getGenderData)
+                // ->with('displayUserOrganizationData',$UserOrgData)
+                ->with('displayUserOrganizationData',DB::table('organizations')->where('organization_id','=',$UserOrg)->get())
+                ->with('displayUserRoleData',DB::table('roles')->where('role_id','=',$UserRole)->get())
+                ->with('displayUserGateData',DB::table('sois_gates')->where('user_id','=',$id)->get())
+                ->with('displayUserPermsData',$permissionDataFromDB);
+    }
+
+    public function addRole(Request $request, $id)
+    {
+        $role_id = $request->role_id;
+        // echo $role_id;
+        if (DB::table('role_user')->where('user_id','=',$id)->pluck('role_id') != null) {
+            DB::table('role_user')->where('user_id','=',$id)->delete();
+            DB::table('role_user')->insert([
+                 'role_id' => $role_id, 'user_id' => $id, 'organization_id' => null,   
+            ]);
+            // echo "Exists";
+        }else{
+            DB::table('role_user')->insert([
+                 'role_id' => $role_id, 'user_id' => $id, 'organization_id' => null,   
+            ]);
+            // echo "Not Exists";
+        }
+        // echo "Hello";
+        return $this->accessControl($id);
+        // return redirect()->route('user-selected-user', ['id' => $id]);
+    }
 
     public function index()
     {
@@ -105,6 +238,7 @@ class UserCRUD extends Controller
         //
     }
 
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -113,7 +247,31 @@ class UserCRUD extends Controller
      */
     public function edit($id)
     {
-        //
+        $getUserData = DB::table('users')->where('user_id','=',$id)->get();
+        // dd(DB::table('users')->where('user_id','=',$id)->get());
+        // return view('normLaravel/users-update',compact('getUserData'));
+        $SelectedUserCourseHolder = DB::table('users')->where('user_id','=',$id)->pluck('course_id');
+        $SelectedUserCourse = DB::table('courses')->where('course_id','=',$SelectedUserCourseHolder)->get();
+        // dd($SelectedUserCourse);
+
+        $SelectedUserGenderHolder = DB::table('users')->where('user_id','=',$id)->pluck('gender_id');
+        // $this->SelectedUserGender = $this->SelectedUserData->gender_id;
+        $SelectedUserGender = DB::table('genders')->where('gender_id','=',$SelectedUserGenderHolder)->get();
+
+
+        $getCourseData = DB::table('courses')->get();
+        $getGenderData = DB::table('genders')->get();
+
+        return view('normLaravel/users-update')->with('displayUserSelectedData', $getUserData)->with('displayCourseDromDBForUpdateSelect', $SelectedUserCourse)->with('displayGenderDromDBForUpdateSelect', $SelectedUserGender)->with('displayCourseDromDB',$getCourseData)->with('displayGenderDromDB',$getGenderData);
+        // return view('normLaravel/users-update',[
+        //     'displayUserSelectedData' => $getUserData,
+        //     'displayCourseDromDBForUpdateSelect' => $SelectedUserCourse,
+        //     'displayCourseDromDBForUpdateSelect' => DB::table('courses')->where('course_id','=',$SelectedUserCourseHolder)->get(),
+        //     'displayGenderDromDBForUpdateSelect' => $SelectedUserGender,
+        //     'displayCourseDromDB' =>$getCourseData,
+        //     'displayGenderDromDB' =>$getGenderData,
+        // ]);
+        // return view('normLaravel/users-update')
     }
 
     /**
@@ -125,8 +283,181 @@ class UserCRUD extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // $validatedData = $request->validate([
+        //     'first_name' => 'required',
+        // ]);
+        $get_user_data_from_database = User::find($id);
+        // Start of if
+        // $first_name_DB = $get_user_data_from_database->first_name;
+        // $middle_name_DB = $get_user_data_from_database->middle_name;
+        // $last_name_DB = $get_user_data_from_database->last_name;
+        // $date_of_birth_DB = $get_user_data_from_database->date_of_birth;
+        // $course_id_DB = $get_user_data_from_database->course_id;
+        // $address_DB = $get_user_data_from_database->address;
+        // $gender_id_DB = $get_user_data_from_database->gender_id;
+        // $email_DB = $get_user_data_from_database->email;
+        // $mobile_number_DB = $get_user_data_from_database->mobile_number;
+        // $student_number_DB = $get_user_data_from_database->student_number;
+            /*==========================================================================
+            =            Selector if data is inputted Section comment block            =
+            ==========================================================================*/
+                // first name
+        $first_name = $request->first_name;
+        $middle_name = $request->middle_name;
+        $last_name = $request->last_name;
+        $date_of_birth = $request->date_of_birth;
+        $address = $request->address;
+        $email = $request->email;
+        $course_id = $request->course_id;
+        $gender_id = $request->gender_id;
+        $mobile_number = $request->mobile_number;
+        $student_number = $request->student_number;
+        
+        echo "first_name: ".$first_name;
+        echo "<br><br>";
+        echo "middle_name: ".$middle_name;
+        echo "<br><br>";
+        echo "last_name: ".$last_name;
+        echo "<br><br>";
+        echo "date_of_birth: ".$date_of_birth;
+        echo "<br><br>";
+        echo "address: ".$address;
+        echo "<br><br>";
+        echo "email: ".$email;
+        echo "<br><br>";
+        echo "course_id: ".$course_id;
+        echo "<br><br>";
+        echo "gender_id: ".$gender_id;
+        echo "<br><br>";
+        echo "mobile_number: ".$mobile_number;
+        echo "<br><br>";
+        echo "student_number: ".$student_number;
+        echo "<br><br>";
+                    if($first_name != null){
+                        $first_name_DB = $first_name;
+                        echo "first_name_DB: ".$first_name_DB." : This is not null"; 
+                        echo "<br><br>";
+                    }else{
+                        $first_name_DB= $get_user_data_from_database->first_name;
+                        echo "first_name_DB: ".$first_name_DB." : This is null";
+                        echo "<br><br>";
+                    }
+                    // middle_name_DB,
+                    if($middle_name != null){
+                        $middle_name_DB = $middle_name;
+                        echo "middle_name_DB: ".$middle_name_DB." : This is not null";
+                        echo "<br><br>"; 
+                    }else{
+                        $middle_name_DB= $get_user_data_from_database->middle_name;
+                        echo "middle_name_DB: ".$middle_name_DB." : This is null";
+                        echo "<br><br>";
+                    }
+                // last_name_DB,
+                    if($last_name != null){
+                        $last_name_DB = $last_name;
+                        echo "last_name_DB: ".$last_name_DB." : This is not null";
+                        echo "<br><br>"; 
+                    }else{
+                        $last_name_DB= $get_user_data_from_database->last_name;
+                        echo "last_name_DB: ".$last_name_DB." : This is null";
+                        echo "<br><br>";
+                    }
+                // date_of_birth_DB,
+                    if($date_of_birth != null){
+                        $date_of_birth_DB = $date_of_birth;
+                        echo "date_of_birth_DB: ".$date_of_birth_DB." : This is not null";
+                        echo "<br><br>"; 
+                    }else{
+                        $date_of_birth_DB= $get_user_data_from_database->date_of_birth;
+                        echo "date_of_birth_DB: ".$date_of_birth_DB." : This is null";
+                        echo "<br><br>";
+                    }
+                // course_id_DB,
+                    if($course_id != null){
+                        $course_id_DB = $course_id;
+                        echo "course_id_DB: ".$course_id_DB." : This is not null";
+                        echo "<br><br>"; 
+                    }else{
+                        $course_id_DB= $get_user_data_from_database->course_id;
+                        echo "course_id_DB: ".$course_id_DB." : This is null";
+                        echo "<br><br>";
+                    }
+                // address_DB,
+                    if($address != null){
+                        $address_DB = $address;
+                        echo "address_DB: ".$address_DB." : This is not null";
+                        echo "<br><br>"; 
+                    }else{
+                        $address_DB= $get_user_data_from_database->address;
+                        echo "address_DB: ".$address_DB." : This is null";
+                        echo "<br><br>";
+                    }
+                // gender_id_DB,
+                    if($gender_id != null){
+                        $gender_id_DB = $gender_id;
+                        echo "gender_id_DB: ".$gender_id_DB." : This is not null";
+                        echo "<br><br>"; 
+                    }else{
+                        $gender_id_DB= $get_user_data_from_database->gender_id;
+                        echo "gender_id_DB: ".$gender_id_DB." : This is null";
+                        echo "<br><br>";
+                    }
+                // email_DB,
+                    if($email != null){
+                        $email_DB = $email;
+                        echo "email_DB: ".$email_DB." : This is not null";
+                        echo "<br><br>"; 
+                    }else{
+                        $email_DB= $get_user_data_from_database->email;
+                        echo "email_DB: ".$email_DB." : This is null";
+                        echo "<br><br>";
+                    }
+                // mobile_number_DB,
+                    if($mobile_number != null){
+                        $mobile_number_DB = $mobile_number;
+                        echo "mobile_number_DB: ".$mobile_number_DB." : This is not null";
+                        echo "<br><br>"; 
+                    }else{
+                        $mobile_number_DB= $get_user_data_from_database->mobile_number;
+                        echo "mobile_number_DB: ".$mobile_number_DB." : This is null";
+                        echo "<br><br>";
+                    }
+                // student_number_DB,            
+                    if($student_number != null){
+                        $student_number_DB = $student_number;
+                        echo "student_number_DB: ".$student_number_DB." : This is not null";
+                        echo "<br><br>"; 
+                    }else{
+                        $student_number_DB= $get_user_data_from_database->student_number;
+                        echo "student_number_DB: ".$student_number_DB." : This is null";
+                        echo "<br><br>";
+                    }
+        //     /*=====  End of Selector if data is inputted Section comment block  ======*/
+
+        User::find($id)->update($this->modelUpdateUser($first_name_DB,$middle_name_DB,$last_name_DB,$date_of_birth_DB,$address_DB,$email_DB,$mobile_number_DB,$student_number_DB,$course_id_DB,$gender_id_DB));
+            // $this->reset(['first_name','middle_name','last_name','date_of_birth','address','mobile_number','email','password','student_number','course_id','course_ids','gender_id','gender_ids','first_name_DB','middle_name_DB','last_name_DB','date_of_birth_DB','address_DB','mobile_number_DB','email_DB','password_DB','student_number_DB','course_id_DB','gender_id_DB',]);
+            // $this->redirector();
+        // return redirect('user-selected-user', ['id' => $id]);
+        return redirect()->route('user-selected-user', ['id' => $id]);
+            // return view('normLaravel/users-update');
+        // dd("Hello");
+
     }
+    public function modelUpdateUser($first_name_DB,$middle_name_DB,$last_name_DB,$date_of_birth_DB,$address_DB,$email_DB,$mobile_number_DB,$student_number_DB,$course_id_DB,$gender_id_DB)
+        {
+            return [
+                'first_name' => $first_name_DB,
+                'middle_name' => $middle_name_DB,
+                'last_name' => $last_name_DB,
+                'date_of_birth' => $date_of_birth_DB,
+                'course_id' => $course_id_DB,
+                'address' => $address_DB,
+                'gender_id' => $gender_id_DB,
+                'email' => $email_DB,
+                'mobile_number' => $mobile_number_DB,
+                'student_number' => $student_number_DB,
+            ];
+        }
 
     /**
      * Remove the specified resource from storage.

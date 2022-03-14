@@ -155,7 +155,7 @@ class ArticleCreate extends Controller
     public function edit($id)
     {
         $artData = Article::findOrFail($id);
-        $selectedArticle = DB::table('articles')->where('articles_id','=',$id)->get();
+        $selectedArticle = 
         // dd($artData);
         return view('normLaravel.article-update', compact('artData'), compact('selectedArticle'));
         // return view('normLaravel.article-update',[

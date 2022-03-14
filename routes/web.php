@@ -57,6 +57,9 @@ Route::group(['middleware' => [
         Route::resource('users', 'App\Http\Controllers\UserCRUD');
         // Route::resource('articles', ArticleCreate::class);
 
+        Route::put('users/addRoleToUser/{id}','App\Http\Controllers\UserCRUD@addRole')->name('users/addRoleToUser');
+        Route::get('users/access-control/{id}','App\Http\Controllers\UserCRUD@accessControl')->name('users/access-control');
+
         Route::get('/dashboard', function(){
             return view('admin.dashboards');
         })->name('dashboard');
@@ -149,13 +152,13 @@ Route::group(['middleware' => [
 
         // Route::get('users/selected-user/{id}', [App\Http\Livewire\SelectedUser::class, 'edit'])->name('user/selected-user');
         
-        Route::get('/users/selected-user/{id}', function(){
+        Route::get('/users-selected-user-{id}', function(){
             return view('admin.selected-users');
-        })->name('user/selected-user');
+        })->name('user-selected-user');
 
-        Route::get('/users/selected-user/update/{id}', function(){
+        Route::get('/users-selected-update-{id}', function(){
             return view('admin.update-user');
-        })->name('user/selected-user/update');
+        })->name('user-selected-update');
         // Route::get('/', function () {
         // });
 

@@ -125,8 +125,9 @@ class SelectedUser extends Component
     public function mount()
     {
         $this->actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-        $this->explodedLink = explode("/",$this->actual_link);
-        $this->userInt = (int) $this->explodedLink[5];
+        $this->explodedLink = explode("-",$this->actual_link);
+        $this->userInt = (int) $this->explodedLink[3];
+        // dd($this->userInt);
     }
 
      /*====================================================================
@@ -144,20 +145,28 @@ class SelectedUser extends Component
         echo Str::uuid();
         $this->uuid = Str::uuid();
         echo "<br><br>";
-        echo Hash::make($this->uuid);
         $this->encrypted =  Hash::make($this->uuid);
         echo "<br><br>";
         // dd(DB::table('sois_gates')->where('user_id','=',$this->userInt)->first());
         $this->selected_key = DB::table('sois_gates')->where('user_id','=',$this->userInt)->first();
         // dd($this->selected_key);
         if ($this->selected_key) {
-            DB::table('sois_gates')->where('user_id','=',$this->userInt)->delete();
-            SoisGate::where('user_id','=',$this->userInt)->update($this->modelUpdateGenerateKey());
+            // DB::table('sois_gates')->where('user_id','=',$this->userInt)->delete();
+            // DB::table('sois_gates')->inse
+            // dd(SoisGate::where('gate_key','=',$this->encrypted)->exists());
+            if (SoisGate::where('gate_key','=',$this->encrypted)->exists()) {
+                echo 1;
+            }else{
+                echo 2;
+            }
+            dd("Hello");
+            // SoisGate::where('user_id','=',$this->userInt)->update($this->modelUpdateGenerateKey());
+            // SoisGate::create($this->modelGenerateKey());
             // dd($this->userId);
-            $this->modelConfirmUserGenerateKeyVisible = false;
-            $this->redirector($this->userInt);
-            $this->resetValidation();
-            $this->reset();
+            // $this->modelConfirmUserGenerateKeyVisible = false;
+            // $this->redirector($this->userInt);
+            // $this->resetValidation();
+            // $this->reset();
         }else{
             SoisGate::create($this->modelGenerateKey());
             $this->modelConfirmUserGenerateKeyVisible = false;

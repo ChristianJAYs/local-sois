@@ -41,7 +41,7 @@
                                         </td>
                                         <td class="px-6 py-4 text-sm whitespace-no-wrap">
                                             
-                                            <a href="{{ route('user/selected-user', ['id'=> $item->user_id ]) }}">
+                                            <a href="{{ route('user-selected-user', ['id'=> $item->user_id ]) }}">
                                                 <x-jet-button>
                                                     {{__('Selected User')}}
                                                 </x-jet-button>
@@ -97,7 +97,7 @@
                                             {{ $item->email }}
                                         </td>
                                         <td class="px-6 py-4 text-sm whitespace-no-wrap">
-                                           <a href="{{ route('user/selected-user', ['id'=> $item->user_id ]) }}">
+                                           <a href="{{ route('user-selected-user', ['id'=> $item->user_id ]) }}">
                                                 <x-jet-button>
                                                     {{__('Selected User')}}
                                                 </x-jet-button>
@@ -153,7 +153,7 @@
                                             {{ $item->email }}
                                         </td>
                                         <td class="px-6 py-4 text-sm whitespace-no-wrap">
-                                           <a href="{{ route('user/selected-user', ['id'=> $item->user_id ]) }}">
+                                           <a href="{{ route('user-selected-user', ['id'=> $item->user_id ]) }}">
                                                 <x-jet-button>
                                                     {{__('Selected User')}}
                                                 </x-jet-button>

@@ -23,13 +23,6 @@ class AuthRolePermsController extends Controller
     private $object;
     private $user_role_count;
 
-    public function __construct(Request $request){
-        $minutes = 1;
-        $response = new Response('Hello World');
-        // $cookie = Cookie::forever('name', 'virat');
-        // $response->withCookie($cookie);
-    }
-
     public function index()
     {
             $this->object = new Objects();
@@ -66,54 +59,5 @@ class AuthRolePermsController extends Controller
                 echo "Helo";
                 return redirect('/login');
             }
-
-
-        // dd(Auth::check());
-        //     // dd($this->userRole);
-        //     if($this->userRole != null){
-        //         if(Auth::check()){
-        //     if($this->user_role == 'Super Admin'){
-
-        //         // $minutes = 1;
-        //         // $response = new Response('Hello World');
-        //         // $response->withCookie(cookie('name', 'virat', $minutes));
-
-        //         // return $response;
-        //         return redirect('/default-interfaces');
-        //     }elseif ($this->user_role == 'Home Page Admin') {
-        //         // dd($this->user_role);
-        //         // $minutes = 1;
-        //         // $response = new Response('Hello World');
-        //         // $response->withCookie(cookie('name', 'virat', $minutes));
-        //         // return $response;
-        //         return redirect('/Organization/dashboard');
-        //     }
-        //     else{
-        //         echo "User";
-        //     }
-        //     // dd("break");
-        // // dd("Hello");
-        // }
-        // else{
-        //     // echo Auth::id();
-        //     // echo "\n";
-        //     // echo 1;
-        //     // echo "\n";
-        //     // echo User::find(11); 
-        //     // dd(User::find(11));
-        //     // dd("notlogin");
-        //     // return redirect('/dashboard');
-        //     return redirect('/login');
-        // }
-            //     echo "world";
-            // }else{
-            //     echo "this";
-            // return redirect('/login');
-            // }
-            // $this->user_role = $this->userRole->role;
-            // dd($this->user_role);
-            // dd("hello");
-            // echo $this->user_role;
-        // 
     }
 }

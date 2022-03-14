@@ -240,14 +240,19 @@
     <div class="flex flex-col">
         <div class="p-3">
             @foreach($displayUserSelectedData as $item)
-            <a href="{{ route('user/selected-user/update', ['id'=> $item->user_id ]) }}">
-            <x-jet-secondary-button class="ml-2" wire:click="updateRedirect">
-                Update User Data
-            </x-jet-secondary-button>
+            <a href="{{ route('users.edit', $item->user_id) }}">
+                <x-jet-secondary-button class="ml-2" wire:click="updateRedirect">
+                    Update User Data
+                </x-jet-secondary-button>
             </a>
             <x-jet-button wire:click="updateUserPasswordModel({{ $item->user_id }})">
                 {{__('Update Password User')}}
             </x-jet-button>
+            <a href="{{ route('users/access-control', $item->user_id) }}">
+                <x-jet-secondary-button class="ml-2">
+                    Update User Access
+                </x-jet-secondary-button>
+            </a>
             @if($displayUserRoleData->count() > 0)
             <x-jet-secondary-button wire:click="addShowRoleModel({{$item->user_id}})" class="ml-2">
                 Change Role
@@ -320,18 +325,29 @@
             <x-slot name="content">
                <div class="mb-4">
                     
-    <div class="form-group row">
-        <label for="role" class="col-md-4 col-form-label text-md-right">role</label>
-        <div class="col-md-6">
-            <select wire:model="roleModel" class="form-control">
-                <option value="" selected>Choose role</option>
-                @foreach($rolesList as $role)
-                    <option value="{{ $role->role_id }}">{{ $role->role }}</option>
-                @endforeach
-            </select>
-        </div>
+<div class="flex flex-col p-5">
+    <div class="max-w-lg rounded overflow-hidden shadow-lg">
+        @csrf
+        {{ csrf_field() }}
+        @foreach($displayUserSelectedData as $user)
+        <form name="add-role" id="add-role" method="post" action="{{ route('users/addRoleToUser', $user->user_id ) }}">
+            @csrf
+            @method('PUT')
+            <div class="mt-4">
+                <select name="role_id" id="role_id" class="form-control">
+                    <option value="" selected>Choose role</option>
+                    @foreach($rolesList as $role)
+                        <option value="{{ $role->role_id }}">{{ $role->role }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="px-6 pt-4 pb-2">
+                <button class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2" type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+        @endforeach
     </div>
-
+</div>
                 </div>
             </x-slot>
 
@@ -341,9 +357,11 @@
                 </x-jet-secondary-button>
 
                 @if($userId)
-                    <x-jet-secondary-button class="ml-2" wire:click="addRoleToUser" wire:loading.attr="disabled">
+                <a href="{{ route('users/addRoleToUser', ['id'=>$userId]) }}">
+                    <x-jet-secondary-button class="ml-2" type="submit">
                         {{ __('Sync Role') }}
                     </x-jet-secondary-button>                    
+                </a>
                 @endif
             </x-slot>
         </x-jet-dialog-modal>
