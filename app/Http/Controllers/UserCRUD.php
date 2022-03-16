@@ -13,6 +13,14 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 
 use App\Models\User;
+use App\Models\Organization;
+use App\Models\Article;
+use App\Models\AssetType;
+use App\Models\OrganizationAsset;
+use App\Models\SystemAsset;
+use App\Models\SoisGate;
+
+use Auth;
 
 class UserCRUD extends Controller
 {
@@ -64,6 +72,7 @@ class UserCRUD extends Controller
     public $gender_id_DB;
 
     public $role_id;
+    public $organization_id;
 
     public $UserOrgData;
     public $UserOrgDataFromDB;
@@ -78,8 +87,139 @@ class UserCRUD extends Controller
 
     public $permissionDataFromDB;
 
-    public function accessControl($id)
+    public $userOrgResultMessage;
+    public $userOrgPermsMessage;
+    public $userOrgDataInt;
+    public $userRoleData;
+    public $RoleUSerChecker;
+    public $RoleSignatureChecker;
+
+    public $uuid;
+    public $userData;
+    public $selectedPerms = [];
+
+    public $confirmable_password;
+    public $new_password;
+    public $old_password_1;
+    public $old_password_2;
+
+    public function addPassword(Request $request,$id)
     {
+        echo Auth::user()->password;
+        $old_password = DB::table('users')->where('user_id','=',$id)->pluck('password');
+        $old_password_1 = str_replace("[\"", '', $old_password);
+        $old_password_2 = str_replace("\"]", '', $old_password_1);
+        $confirmable_password =$request->confirmable_password;
+        $new_password =$request->new_password;
+        if (!Hash::check($new_password, Auth::user()->password)) {
+            if ($new_password != $confirmable_password) {
+                $error = 'new_pw_doest_match_confrimable_pass';
+                return $this->accessControl($id,$error);
+            }else{
+                User::find($id)->update(['password'=>Hash::make($new_password)]);
+                // dd(User::find($id));
+                return $this->accessControl($id);
+            }
+        }else{
+            $error = 'same_password_From_last_pw';
+            return $this->accessControl($id,$error);
+        }
+        // dd($id);
+    }
+
+    public function addPerms(Request $request,$id)
+    {
+        $selectedPerms = $request->selectedPerms;
+        $userData = User::find($id);
+         $userData->permissions()->sync($selectedPerms);
+        return $this->accessControl($id);
+    }
+
+    public function addKey($id)
+    {
+        // echo Str::uuid();
+        $uuid = Str::uuid();
+        // echo "<br><br>";
+        // $this->encrypted =  Hash::make($this->uuid);
+        // echo "<br><br>";
+        // dd(DB::table('sois_gates')->where('user_id','=',$id)->first());
+        $selected_key = DB::table('sois_gates')->where('user_id','=',$id)->first();
+        // dd($selected_key);
+        if ($selected_key) {
+            // DB::table('sois_gates')->where('user_id','=',$id)->delete();
+        //     // DB::table('sois_gates')->inse
+        //     // dd(SoisGate::where('gate_key','=',$this->encrypted)->exists());
+        //     dd("Hello");
+            SoisGate::where('user_id','=',$id)->update($this->modelGenerateKey($id,$uuid));
+            // SoisGate::create($this->modelGenerateKey($id,$uuid));
+        //     // dd($this->userId);
+        //     // $this->modelConfirmUserGenerateKeyVisible = false;
+        //     // $this->redirector($this->userInt);
+        //     // $this->resetValidation();
+        //     // $this->reset();
+        }else{
+        //     echo "Do tno Exist";
+            SoisGate::create($this->modelGenerateKey($id,$uuid));
+        //     // $this->modelConfirmUserGenerateKeyVisible = false;
+        //     // $this->redirector($this->userInt);
+        //     // $this->resetValidation();
+        //     // $this->reset();
+        }
+        // echo "Hello";
+        // dd($id);
+        return $this->accessControl($id);
+
+    }
+    public function modelGenerateKey($id,$uuid)
+    {
+        return [
+            'user_id' => $id,
+            'gate_key' => $uuid,
+        ];
+    }
+
+    public function addOrg(Request $request, $id)
+    {
+        $organization_id = $request->organization_id;
+        // echo $organization_id;
+
+        $userOrgData = DB::table('role_user')->where('user_id','=',$id)->first();
+        $userOrgDataInt = $userOrgData->organization_id;
+        // echo $userOrgDataInt;
+        
+        $userRoleData = DB::table('role_user')->where('user_id','=',$id)->first();
+        $userRoleDataInt = $userRoleData->role_id;
+        // echo $userRoleDataInt;
+        $RoleUSerChecker = DB::table('role_user')->where('user_id','=',$id)->where('organization_id','=',$userOrgDataInt)->first();
+        // dd($RoleUSerChecker);
+        if($RoleUSerChecker){
+            DB::table('role_user')->where('user_id','=',$id)->delete();
+            DB::table('role_user')->insert([
+                ['organization_id' => $organization_id,'role_id' => $userRoleDataInt, 'user_id' => $id],
+            ]);
+        }else{
+            DB::table('role_user')->insert([
+                ['organization_id' => $organization_id,'role_id' => $userRoleDataInt, 'user_id' => $id],
+            ]);
+        }
+        $RoleSignatureChecker = DB::table('event_signatures')->where('user_id','=',$id)->first();
+        // dd($RoleSignatureChecker);
+        if ($RoleSignatureChecker) {
+            DB::table('event_signatures')->where('user_id','=',$id)->delete();
+            DB::table('event_signatures')->insert([
+                ['organization_id' => $organization_id,'role_id' => $userRoleDataInt, 'user_id' => $id],
+            ]);
+        }else{
+            DB::table('event_signatures')->insert([
+                ['organization_id' => $organization_id,'role_id' => $userRoleDataInt, 'user_id' => $id],
+            ]);
+        }
+        return $this->accessControl($id);
+    }
+
+    public function accessControl($id, $error = null)
+    {
+        echo $error;
         $getUserData = DB::table('users')->where('user_id','=',$id)->get();
         // dd(DB::table('users')->where('user_id','=',$id)->get());
         // return view('normLaravel/users-update',compact('getUserData'));
@@ -95,12 +235,14 @@ class UserCRUD extends Controller
         $UserOrgData = DB::table('role_user')->where('user_id','=',$id)->first();
         // dd($UserOrgData);
         $UserOrg = $UserOrgData->organization_id;
-        // dd($UserOrg);
-        if (DB::table('organizations')->where('organization_id','=',$this->UserOrg)->get() != null) {
-            echo "Not";
+        
+        if ($UserOrg) {
+            $userOrgResultMessage = 'Change Organizaion';
         }else{
-            echo "Yes;";
+            $userOrgResultMessage = 'Add Organizaion';
         }
+        // dd($UserOrg);
+
         // DB::table('organizations')->where('organization_id','=',$this->UserOrg)->get();
         // dd(DB::table('organizations')->where('organization_id','=',$this->UserOrg)->get());
 
@@ -108,6 +250,8 @@ class UserCRUD extends Controller
         $UserRoleOrgData = DB::table('role_user')->where('user_id','=',$id)->first();
         $UserRole = $UserRoleOrgData->role_id;
         // dd($UserRole);
+
+
 
             // 'displayUserGateData' => $this->getUserSoisGate(),
         $UserGateData = DB::table('sois_gates')->where('user_id','=',$id)->get();
@@ -126,24 +270,33 @@ class UserCRUD extends Controller
             // 'displayUserPermsData' => $getUserPermission(),
         $permissionDataFromDB = User::find($id)->permissions()->get();
 
-
+        // dd(DB::table('organizations')->where('organization_id','=',$UserOrg)->get());
+        // dd(DB::table('sois_gates')->where('user_id','=',$id)->get());
 
         $getCourseData = DB::table('courses')->get();
         $getGenderData = DB::table('genders')->get();
         $getRolesData = DB::table('roles')->get();
+        $getOrganizationData = DB::table('organizations')->get();
+        $getPermissionsData = DB::table('permissions')->get();
         // dd($getRolesData);
         // return view('normLaravel/users-update');
         return view('normLaravel\users-update-access')
+                ->with('errorMessage', $error)
                 ->with('displayUserSelectedData', $getUserData)
                 ->with('rolesList', $getRolesData)
+                ->with('OrgsList', $getOrganizationData)
+                ->with('permsList', $getPermissionsData)
                 ->with('displayCourseDromDBForUpdateSelect', $SelectedUserCourse)
                 ->with('displayGenderDromDBForUpdateSelect', $SelectedUserGender)
                 ->with('displayCourseDromDB',$getCourseData)
                 ->with('displayGenderDromDB',$getGenderData)
                 // ->with('displayUserOrganizationData',$UserOrgData)
+                // ->with('displayUserOrganizationData',DB::table('organizations')->where('organization_id','=',$UserOrg)->get())
                 ->with('displayUserOrganizationData',DB::table('organizations')->where('organization_id','=',$UserOrg)->get())
+                ->with('displayUserOrganizationDataMessage',$userOrgResultMessage)
                 ->with('displayUserRoleData',DB::table('roles')->where('role_id','=',$UserRole)->get())
                 ->with('displayUserGateData',DB::table('sois_gates')->where('user_id','=',$id)->get())
+                ->with('displayUserGateKeyData',DB::table('sois_gates')->where('user_id','=',$id)->get())
                 ->with('displayUserPermsData',$permissionDataFromDB);
     }
 

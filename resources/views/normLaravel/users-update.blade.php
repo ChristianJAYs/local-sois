@@ -28,9 +28,13 @@
 			        <h2>Create News</h2>
 			    </div>
 			    <div class="col-span-1">
-					<x-jet-secondary-button class="m-2">
-					    {{ __('Go Back') }}
-					</x-jet-secondary-button>
+			    	@foreach($displayUserSelectedData as $user)
+                	    <a href="{{ route('user-selected-user', $user->user_id) }}">
+						   <x-jet-secondary-button class="m-2">
+						       {{ __('Go Back') }}
+						   </x-jet-secondary-button>
+                	    </a>
+                	@endforeach
 			    </div>
             </div>
 

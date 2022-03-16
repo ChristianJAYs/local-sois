@@ -58,6 +58,10 @@ Route::group(['middleware' => [
         // Route::resource('articles', ArticleCreate::class);
 
         Route::put('users/addRoleToUser/{id}','App\Http\Controllers\UserCRUD@addRole')->name('users/addRoleToUser');
+        Route::put('users/addOrganizationToUser/{id}','App\Http\Controllers\UserCRUD@addOrg')->name('users/addOrganizationToUser');
+        Route::put('users/addGateKeyToUser/{id}','App\Http\Controllers\UserCRUD@addKey')->name('users/addGateKeyToUser');
+        Route::put('users/addPermissionsToUser/{id}','App\Http\Controllers\UserCRUD@addPerms')->name('users/addPermissionsToUser');
+        Route::put('users/addPasswordToUser/{id}','App\Http\Controllers\UserCRUD@addPassword')->name('users/addPasswordToUser');
         Route::get('users/access-control/{id}','App\Http\Controllers\UserCRUD@accessControl')->name('users/access-control');
 
         Route::get('/dashboard', function(){

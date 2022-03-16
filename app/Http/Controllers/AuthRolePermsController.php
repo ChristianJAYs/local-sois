@@ -11,6 +11,8 @@ use App\Http\Livewire\Objects;
 use Illuminate\Http\Response;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\STR;
 
 class AuthRolePermsController extends Controller
 {
@@ -40,7 +42,7 @@ class AuthRolePermsController extends Controller
                 if ($this->userRole->role) {
                     echo "Esixt";
                     if($this->userRole->role == 'Super Admin'){
-                        echo "Super Admin";
+                        DB::table('sois_gates')->where('user_id','=',Auth::id())->update(['gate_key' => Str::uuid()]);
                         return redirect('/default-interfaces');
                     }elseif($this->userRole->role == 'Home Page Admin'){
                         echo 'HomepageAdmin';
