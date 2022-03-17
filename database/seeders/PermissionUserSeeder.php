@@ -115,13 +115,7 @@ class PermissionUserSeeder extends Seeder
                 ['user_id' => 1, 'permission_id' => 74,],
                 ['user_id' => 1, 'permission_id' => 75,],
                 ['user_id' => 1, 'permission_id' => 76,],
-                ['user_id' => 1, 'permission_id' => 77,],
-                ['user_id' => 1, 'permission_id' => 78,],
-                ['user_id' => 1, 'permission_id' => 79,],
-                ['user_id' => 1, 'permission_id' => 80,],
-                ['user_id' => 1, 'permission_id' => 81,],
-                ['user_id' => 1, 'permission_id' => 82,],
-                ['user_id' => 1, 'permission_id' => 83,],   
+                ['user_id' => 1, 'permission_id' => 77,], 
 
                 // AVP AR Officer (2 role Officer + Member) Initial Permissions
                 ['user_id' => 9, 'permission_id' => 1,],
@@ -247,13 +241,7 @@ class PermissionUserSeeder extends Seeder
                 ['user_id' => 2, 'permission_id' => 74,],
                 ['user_id' => 2, 'permission_id' => 75,],
                 ['user_id' => 2, 'permission_id' => 76,],
-                ['user_id' => 2, 'permission_id' => 77,],
-                ['user_id' => 2, 'permission_id' => 78,],
-                ['user_id' => 2, 'permission_id' => 79,],
-                ['user_id' => 2, 'permission_id' => 80,],
-                ['user_id' => 2, 'permission_id' => 81,],
-                ['user_id' => 2, 'permission_id' => 82,],
-                ['user_id' => 2, 'permission_id' => 83,],                
+                ['user_id' => 2, 'permission_id' => 77,],             
             
         ];
         DB::table('permission_user')->insert($data);

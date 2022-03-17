@@ -235,7 +235,8 @@ class PermissionSeeder extends Seeder
                     'created_at' => $currentTime, 'updated_at' => $currentTime,
                 ],
 
-            // HP create news
+            // Homepage permissions
+                // HP create news
                 [
                     // 39
                     'name' => 'HP-Create_News_Article', 
@@ -427,84 +428,48 @@ class PermissionSeeder extends Seeder
                     'name' => 'HP-View_WebPage_Type', 
                     'created_at' => $currentTime, 'updated_at' => $currentTime,
                 ],
-            // HP create permission
-                [
-                    // 71
-                    'name' => 'HP-Create_Permission', 
-                    'created_at' => $currentTime, 'updated_at' => $currentTime,
-                ],
-            // HP Edit permission
-                [
-                    // 72
-                    'name' => 'HP-Edit_Permission', 
-                    'created_at' => $currentTime, 'updated_at' => $currentTime,
-                ],
-            // HP Delete permission
-                [
-                    // 73
-                    'name' => 'HP-Delete_Permission', 
-                    'created_at' => $currentTime, 'updated_at' => $currentTime,
-                ],
-            // HP Read permission
-                [
-                    // 74
-                    'name' => 'HP-View_Permission', 
-                    'created_at' => $currentTime, 'updated_at' => $currentTime,
-                ],
             // HP Read Academic Members
                 [
-                    // 75
+                    // 71
                     'name' => 'HP-View_Academic_Members', 
                     'created_at' => $currentTime, 'updated_at' => $currentTime,
                 ], 
             // HP Read Non-Academic Members
                 [
-                    // 76
+                    // 72
                     'name' => 'HP-View_Non_Academic_Members', 
                     'created_at' => $currentTime, 'updated_at' => $currentTime,
                 ],
             // HP Access Sois Links Button
                 [
-                    // 77
+                    // 73
                     'name' => 'HP-Access_Sois_General_Links', 
                     'created_at' => $currentTime, 'updated_at' => $currentTime,
                 ],
             // HP Access Financial Link
                 [
-                    // 78
+                    // 74
                     'name' => 'HP-Access_Sois_Financial_Links', 
-                    'created_at' => $currentTime, 'updated_at' => $currentTime,
-                ],
-            // HP Access Sois Links Button
-                [
-                    // 79
-                    'name' => 'HP-Access_Sois_General_Links', 
                     'created_at' => $currentTime, 'updated_at' => $currentTime,
                 ],
             // HP Access AR Link
                 [
-                    // 80
+                    // 75
                     'name' => 'HP-Access_Sois_AR_Links', 
                     'created_at' => $currentTime, 'updated_at' => $currentTime,
                 ],
             // HP Access GPOA Link
                 [
-                    // 81
+                    // 76
                     'name' => 'HP-Access_Sois_GPOA_Links', 
                     'created_at' => $currentTime, 'updated_at' => $currentTime,
                 ],
             // HP Access Membership Link
                 [
-                    // 82
+                    // 77
                     'name' => 'HP-Access_Sois_Membership_Links', 
                     'created_at' => $currentTime, 'updated_at' => $currentTime,
-                ],
-            // HP Access Financial Link
-                [
-                    // 83
-                    'name' => 'HP-Access_Sois_Financial_Links', 
-                    'created_at' => $currentTime, 'updated_at' => $currentTime,
-                ],    
+                ], 
         ];
         DB::table('permissions')->insert($data);
     }
