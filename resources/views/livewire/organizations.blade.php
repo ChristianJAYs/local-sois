@@ -11,7 +11,7 @@
         @endif
     </div>
 
-        <div class="flex flex-col items-center">
+    <div class="flex flex-col items-center">
         <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                 <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
@@ -56,20 +56,13 @@
                                                     <td class="px-6 py-2">Non-Academic</td>
                                                 @endif
                                                 <td>
-                                                    <x-jet-button wire:click="viewShowModal({{ $item->organization_id }})">
+                                                    <a href="{{route('organization.show', $item->organization_id)}}">
+                                                    <x-jet-button>
                                                         {{__('View')}}
                                                     </x-jet-button>
-                                                    <x-jet-button wire:click="updateShowModal({{ $item->organization_id }})">
-                                                        {{__('Update')}}
-                                                    </x-jet-button>
-                                                    <x-jet-button wire:click="updateImageShowModal({{ $item->organization_id }})">
-                                                        {{__('Update Logo')}}
-                                                    </x-jet-button>
-                                                    <x-jet-button wire:click="updateBannerShowModal({{ $item->organization_id }})">
-                                                        {{__('Update Banner')}}
-                                                    </x-jet-button>
+                                                    </a>
                                                     <x-jet-danger-button wire:click="deleteShowModal({{ $item->organization_id }})">
-                                                        {{__('Delete')}}
+                                                        {{__('Deletes')}}
                                                     </x-jet-danger-button>
                                                 </td>
                                                 </td>
@@ -103,21 +96,14 @@
                                                 </td>
                                                 <td class="px-6 py-2">{{ $item->organization_details }}</td>
                                                 <td>
-                                                    <x-jet-button wire:click="viewShowModal({{ $item->organization_id }})">
-                                                        {{__('View')}}
-                                                    </x-jet-button>
-                                                    <x-jet-button wire:click="updateShowModal({{ $item->organization_id }})">
-                                                        {{__('Update')}}
-                                                    </x-jet-button>
-                                                    <x-jet-button wire:click="updateImageShowModal({{ $item->organization_id }})">
-                                                        {{__('Update Logo')}}
-                                                    </x-jet-button>
-                                                    <x-jet-button wire:click="updateBannerShowModal({{ $item->organization_id }})">
-                                                        {{__('Update Banner')}}
-                                                    </x-jet-button>
+                                                    <a href="{{route('organizations.show', $item->organization_id)}}">
+                                                        <x-jet-button>
+                                                            {{__('View')}}
+                                                        </x-jet-button>
+                                                    </a>
                                                     @if($userAuthRole == 'Super Admin')
                                                         <x-jet-danger-button wire:click="deleteShowModal({{ $item->organization_id }})">
-                                                            {{__('Delete')}}
+                                                            {{__('Deletes')}}
                                                         </x-jet-danger-button>
                                                     @endif
                                                 </td>

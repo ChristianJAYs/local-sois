@@ -10,6 +10,7 @@ use App\Http\Contollers\OrgAccArticleCreate;
 use App\Http\Contollers\OrganizationCRUD;
 use App\Http\Contollers\AnouncementCRUD;
 use App\Http\Contollers\UserCRUD;
+use App\Http\Contollers\OrgCRUD;
 
 
 
@@ -63,6 +64,13 @@ Route::group(['middleware' => [
         Route::put('users/addPermissionsToUser/{id}','App\Http\Controllers\UserCRUD@addPerms')->name('users/addPermissionsToUser');
         Route::put('users/addPasswordToUser/{id}','App\Http\Controllers\UserCRUD@addPassword')->name('users/addPasswordToUser');
         Route::get('users/access-control/{id}','App\Http\Controllers\UserCRUD@accessControl')->name('users/access-control');
+        
+        Route::put('organization/updateBanner/{id}','App\Http\Controllers\OrganizationCRUD@updateBnner')->name('organization/updateBanner');
+        Route::put('organization/updateLogo/{id}','App\Http\Controllers\OrganizationCRUD@updateLogo')->name('organization/updateLogo');
+        // Route::put('organization/deleteOrg/{id}','App\Http\Controllers\OrganizationCRUD@destroy')->name('organization/deleteOrg');
+
+        
+
 
         Route::get('/dashboard', function(){
             return view('admin.dashboards');
