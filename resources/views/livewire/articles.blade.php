@@ -23,7 +23,7 @@
         </a>
         @if($RoleUSerString == 'Super Admin')
             <a href="{{ route('articles.create') }}">
-            <x-jet-button wire:click="createNews">
+            <x-jet-button>
                 {{ __('Create School News') }}
             </x-jet-button>
             </a>

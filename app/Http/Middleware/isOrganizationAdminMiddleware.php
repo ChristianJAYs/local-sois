@@ -6,6 +6,7 @@ use Closure;
 use App\Models\User;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 class isOrganizationAdminMiddleware
 {
     /**
@@ -16,6 +17,8 @@ class isOrganizationAdminMiddleware
     protected $auth;
     protected $userData;
     protected $role;
+    protected $roleData;
+    protected $role_user_data;
     protected $userId;
     /**
      * Create a new filter instance.
@@ -38,18 +41,25 @@ class isOrganizationAdminMiddleware
      */
     public function handle($request, Closure $next)
     {
+        // echo "Hello";
         $this->userId = Auth::id();
         $this->userData = User::find($this->userId);
-        // dd($this->userData->roles);
-        $this->role = $this->userData->roles->first();
+        // dd(DB::table('role_user')->where('user_id','=',Auth::id())->first());
+        $this->role_user_data = DB::table('role_user')->where('user_id','=',Auth::id())->first();
+        // dd($this->role_user_data->role_id);
+        $this->roleData = DB::table('roles')->where('role_id','=',$this->role_user_data->role_id)->first();
+        // dd($this->roleData->role);
+        // dd(DB::table('roles')->where('role_id','=',$this->role_user_data->role_id)->first());
+        // $this->role = $this->userData->roles->first();
         // dd($this->role);
-        // dd($this->role->role_name);
+        // dd($this->role->role);
 
 
-        if ($this->role->role !== "Home Page Admin") {
+        if ($this->roleData->role !== "Super Admin" || $this->roleData->role !== "User") {
+            return $next($request);
+        }else{
             abort(403, 'Unauthorized action.');
         }
 
-        return $next($request);
     }
 }

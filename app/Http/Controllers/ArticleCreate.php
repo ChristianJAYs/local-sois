@@ -83,8 +83,10 @@ class ArticleCreate extends Controller
 
         // $path=$request->file('article_featured_image')->store('public');
         // $request->file('article_featured_image')->store('public');
+        
         $request->article_featured_image->storeAs('files', $article_featured_image_name);
         $request->article_featured_image->move(public_path('files'), $article_featured_image_name);
+        
         // $this->article_featured_image->store('files', 'imgfolder',$article_featured_image_name);
 
         // $this->article_featured_image->storeAs('files',$article_featured_image_name, 'imgfolder');
@@ -93,6 +95,7 @@ class ArticleCreate extends Controller
 
         $userID = Auth::id();
         $orgIDHolder = DB::table('role_user')->where('user_id','=',$userID)->first('organization_id');
+        // dd($orgIDHolder);
         $orgID = (int) $orgIDHolder->organization_id;
         // dd($orgID);
         $artSlug = str_replace(' ', '-', $article_title);
@@ -155,8 +158,8 @@ class ArticleCreate extends Controller
     public function edit($id)
     {
         $artData = Article::findOrFail($id);
-        $selectedArticle = 
-        // dd($artData);
+        $selectedArticle = DB::table('articles')->where('articles_id','=',$id)->get();
+        // dd($selectedArticle);
         return view('normLaravel.article-update', compact('artData'), compact('selectedArticle'));
         // return view('normLaravel.article-update',[
             // 'selectedArticle' => DB::table('articles')->where('articles_id','=',$id)->get(),
