@@ -130,9 +130,24 @@ class UserCRUD extends Controller
     public function addPerms(Request $request,$id)
     {
         $selectedPerms = $request->selectedPerms;
+        // dd(gettype($selectedPerms));
+        // dd($selectedPerms);
+        $data = [
+            ['permission_id' => $selectedPerms],
+            ['role_id' => '1'],
+        ];
+        // DB::table('permission_role')->insert($data);
+        // dd(gettype($selectedPerms));
+        // dd(DB::table('permission_user')->where('user_id','=',$id)->get());
         $userData = User::find($id);
-         $userData->permissions()->sync($selectedPerms);
-        return $this->accessControl($id);
+        // dd(DB::table('permission_role')->where('role_id','=',$id)->get());
+        // DB::table('permission_role')->where('role_id','=',$id)->delete();
+        // DB::table('permission_role')->insert([
+        //     ['permission_id' => $selectedPerms,'role_id' => $id ],
+        // ]);
+        // dd($selectedPerms);
+        $userData->permissions()->sync($this->selectedPerms);
+        // return $this->accessControl($id);
     }
 
     public function addKey($id)
@@ -269,7 +284,8 @@ class UserCRUD extends Controller
 
             // 'displayUserPermsData' => $getUserPermission(),
         $permissionDataFromDB = User::find($id)->permissions()->get();
-
+        // dd($permissionDataFromDB);
+        // dd(DB::table('permission_user')->where('user_id','=',$id)->get());
         // dd(DB::table('organizations')->where('organization_id','=',$UserOrg)->get());
         // dd(DB::table('sois_gates')->where('user_id','=',$id)->get());
 

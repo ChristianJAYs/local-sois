@@ -56,6 +56,7 @@ Route::group(['middleware' => [
         Route::resource('organization', 'App\Http\Controllers\OrganizationCRUD');
         Route::resource('announcement', 'App\Http\Controllers\AnouncementCRUD');
         Route::resource('users', 'App\Http\Controllers\UserCRUD');
+        Route::resource('roles', 'App\Http\Controllers\RoleController');
         // Route::resource('articles', ArticleCreate::class);
 
         Route::put('users/addRoleToUser/{id}','App\Http\Controllers\UserCRUD@addRole')->name('users/addRoleToUser');

@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use App\Models\User;
 use App\Http\Livewire\Objects;
+use App\Http\Controllers\PermissionCheckerController;
 
 use Auth;
 use Illuminate\Support\Facades\DB;
@@ -15,6 +16,7 @@ class AdminNavBars extends Component
     public $userId;
     public $userData;
     public $userRole;
+    public $permssionChecker;
 
     private $roleData;
     private $role_user_data;
@@ -22,12 +24,15 @@ class AdminNavBars extends Component
 
     public function getUserData()
     {
+        // $this->permssionChecker = new PermissionCheckerController();
+        // $this->permssionChecker->test('helllo');
+        
         // $this->object = new Objects();
         // $this->userRole = $this->object->roles();
         $this->role_user_data = DB::table('role_user')->where('user_id','=',Auth::id())->first();
         // dd($this->role_user_data->role_id);
         $this->roleData = DB::table('roles')->where('role_id','=',$this->role_user_data->role_id)->first();
-        // dd($this->userRole->role);
+        // dd($this->roleData->role);
         return $this->roleData->role; 
     }
     public function logoutControll()
