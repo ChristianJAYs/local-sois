@@ -305,7 +305,7 @@
                 <x-jet-secondary-button wire:click="$toggle('modalDeleteNewsFormVisible')" wire:loading.attr="disabled">
                     {{ __('Cancel') }}
                 </x-jet-secondary-button>
-                <x-jet-secondary-button class="ml-2" wire:click="delete" wire:loading.attr="disabled">
+                <x-jet-secondary-button class="ml-2" wire:click="checker" wire:loading.attr="disabled">
                     {{ __('Delete News') }}
                 </x-jet-secondary-button>
             </x-slot>

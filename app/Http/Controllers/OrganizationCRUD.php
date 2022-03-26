@@ -15,6 +15,7 @@ use App\Models\Article;
 use App\Models\AssetType;
 use App\Models\OrganizationAsset;
 use App\Models\SystemAsset;
+use App\Http\Controllers\PermissionCheckerController;
 
 use Illuminate\Support\STR;
 use Illuminate\Validation\Rule;
@@ -85,6 +86,8 @@ class OrganizationCRUD extends Controller
      */
     public function index()
     {
+        $this->permission_data = new PermissionCheckerController;
+        $this->permission_data->permssionChecker('HP-View_Organization_Page');    
         return view('normLaravel.organization-view',[
             // 'articleDatas' => DB::table('tags')->paginate(15),
         ]);
@@ -97,7 +100,8 @@ class OrganizationCRUD extends Controller
      */
     public function create()
     {
-
+        $this->permission_data = new PermissionCheckerController;
+        $this->permission_data->permssionChecker('HP-Create_Organization_Page');
         return view('normLaravel.organization-create');
     }
 
@@ -186,6 +190,8 @@ class OrganizationCRUD extends Controller
 
     public function accessOrgControll($id)
     {
+        $this->permission_data = new PermissionCheckerController;
+        $this->permission_data->permssionChecker('HP-View_Organization_Page'); 
         $this->cleanVars();
 
         $authUserId = Auth::id();
@@ -222,6 +228,8 @@ class OrganizationCRUD extends Controller
      */
     public function show($id)
     {
+        $this->permission_data = new PermissionCheckerController;
+        $this->permission_data->permssionChecker('HP-View_Organization_Page'); 
         $this->cleanVars();
         // dd(DB::table('organizations')->where('organization_id','=',$id)->get());
         // dd(DB::table('organization_types')->where('organization_type_id','=',DB::table('organizations')->where('organization_id','=',$id)->pluck('organization_type_id'))->get());

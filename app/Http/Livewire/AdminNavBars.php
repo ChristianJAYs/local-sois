@@ -16,17 +16,40 @@ class AdminNavBars extends Component
     public $userId;
     public $userData;
     public $userRole;
-    public $permssionChecker;
+    public $userPermission;
+    private $permssionChecker;
 
     private $roleData;
     private $role_user_data;
     private $object;
+    private $user_data;
+
+    public function mount()
+    {
+       // $this->user_data = User::find(Auth::id()); 
+       //  $this->userRole = $this->user_data->roles->first();
+       //  dd($this->userRole);
+    }
+
+    public function getUserPermission()
+    {
+        $this->user_data = User::find(Auth::id()); 
+        $this->userPermission = $this->user_data->permissions()->get();
+        return $this->userPermission; 
+    }
 
     public function getUserData()
     {
+        // $userData = User::findOrFail(Auth::id());
+        // dd($userData->permissions);
+        // foreach ($userData->roles as $role) {
+        //     echo $role->pivot->role;
+        // }
+        // echo "<br><br>";
+        // dd(DB::table('permission_user')->where('user_id','=',Auth::id())->get());
         // $this->permssionChecker = new PermissionCheckerController();
         // $this->permssionChecker->test('helllo');
-        
+        // dd(DB::table());
         // $this->object = new Objects();
         // $this->userRole = $this->object->roles();
         $this->role_user_data = DB::table('role_user')->where('user_id','=',Auth::id())->first();
@@ -46,6 +69,7 @@ class AdminNavBars extends Component
     {
         return view('livewire.admin-nav-bars',[
             'getUserRole' => $this->getUserData(),
+            'getUserPerms' => $this->getUserPermission(),
         ]);
     }
 }

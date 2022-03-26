@@ -126,10 +126,17 @@ class Users extends Component
 
 
     public $testButton;
+    public $userPermission;
     public $testButtonArray = [];
 
     public function mount()
     {
+        $this->user_data = User::find(Auth::id()); 
+        $this->userPermission = $this->user_data->permissions()->get();
+
+        // dd($this->userPermission);
+        // return $this->userPermission; 
+        // dd("Hello");
         // return $this->selectedPermsList();
     }
 

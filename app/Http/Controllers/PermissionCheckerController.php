@@ -10,16 +10,18 @@ class PermissionCheckerController extends Controller
 {
     public $perms;
     public $permission;
+    public $permissionID;
     public $id;
     public $permission_data;
 
-    public function test($permission,$id)
+    public function permssionChecker($permission)
     {
-        if (Permission::where('name', $permission)->exists()) {
-            return true;
+        if (Permission::where('name', $permission)->exists()){
+            $permissionID = Permission::where('name', $permission)->value('permission_id');
+            if ((Auth::user()->permissions->where('permission_id', $permissionID))->isNotEmpty())
+                return true;
         }else{
-            return false;
-            // abort(403, 'Unauthorized action.');
+            abort(403,'Unauthorized Acess.');
         }
     }
 }

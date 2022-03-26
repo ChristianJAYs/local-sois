@@ -63,6 +63,7 @@ Route::group(['middleware' => [
         Route::put('users/addOrganizationToUser/{id}','App\Http\Controllers\UserCRUD@addOrg')->name('users/addOrganizationToUser');
         Route::put('users/addGateKeyToUser/{id}','App\Http\Controllers\UserCRUD@addKey')->name('users/addGateKeyToUser');
         Route::put('users/addPermissionsToUser/{id}','App\Http\Controllers\UserCRUD@addPerms')->name('users/addPermissionsToUser');
+        Route::put('users/addMorePermissionsToUser/{id}','App\Http\Controllers\UserCRUD@addMorePerms')->name('users/addMorePermissionsToUser');
         Route::put('users/addPasswordToUser/{id}','App\Http\Controllers\UserCRUD@addPassword')->name('users/addPasswordToUser');
         Route::get('users/access-control/{id}','App\Http\Controllers\UserCRUD@accessControl')->name('users/access-control');
         
@@ -126,6 +127,10 @@ Route::group(['middleware' => [
         Route::get('/officers', function(){
             return view('admin.officers');
         })->name('officers');
+
+        Route::get('/ar-links', function(){
+            return view('admin.ar-links');
+        })->name('ar-links');
 
         Route::get('/system-pages/create-system-page', function(){
             return view('admin.pages-create-process');

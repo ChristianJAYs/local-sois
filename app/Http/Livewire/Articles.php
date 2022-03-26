@@ -9,10 +9,12 @@ use Storage;
 
 use App\Models\User;
 use App\Models\Organization;
+use App\Models\Permission;
 use App\Models\Article;
 use App\Models\AssetType;
 use App\Models\OrganizationAsset;
 use App\Models\SystemAsset;
+use App\Http\Controllers\PermissionCheckerController;
 
 use Livewire\WithPagination;
 use Illuminate\Support\STR;
@@ -113,6 +115,11 @@ class Articles extends Component
     public $RoleUSerString;
     private $RoleUSerStringHolder;
 
+    public $perms;
+    public $permsID;
+
+    private $permission_data;
+
     public function mount()
     {
         $this->user = User::find(Auth::id());
@@ -120,13 +127,9 @@ class Articles extends Component
         $this->RoleUSerChecker_ID = $this->RoleUSerChecker->role_id;
         $this->RoleUSerStringHolder = DB::table('roles')->where('role_id','=',$this->RoleUSerChecker_ID)->first();
         $this->RoleUSerString =  $this->RoleUSerStringHolder->role;
-        // dd($this->RoleUSerString);
-            // DB::table('role_user')->where('user_id','=',$this->userId)->delete();
-            // DB::table('role_user')->insert([
-                // ['role_id' => $this->roleModel, 'user_id' => $this->userId, 'organization_id' => null],
-            // ]);
 
-        // dd("Hello");
+        $this->permission_data = new PermissionCheckerController;
+        $this->permission_data->permssionChecker('HP-View_News_Article');
     }
 
     /*======================================================
@@ -150,6 +153,7 @@ class Articles extends Component
     ====================================================*/
     public function createNews()
     {
+
         $this->resetValidation();
         $this->reset();
         $this->modalCreateNewsFormVisible = true;
@@ -343,8 +347,19 @@ class Articles extends Component
     ====================================================*/
     public function deleteNewsShowModal($id)
     {
+
         $this->articleId = $id;
         $this->modalDeleteNewsFormVisible = true;
+    }
+    public function checker()
+    {
+        $this->permission_data = new PermissionCheckerController;
+        // $this->permission_data->permssionChecker('HP-Delete_News_Article');
+        if ($this->permission_data->permssionChecker('HP-Delete_News_Articles') == true) {
+            $this->delete();
+        }else{
+            abort(403,'Unauthorized Access.');
+        }
     }
     public function delete()
     {
@@ -490,6 +505,8 @@ class Articles extends Component
     =================================================================================*/
     public function unFeaturedNewsToOrganizationPageShowModal($id)
     {
+        $this->permission_data = new PermissionCheckerController;
+        $this->permission_data->permssionChecker('HP-Create_News_Article');
         $this->newsId = $id;
         $this->articleData = Article::where('articles_id','=',$this->newsId)->first();
         // dd($this->articleData);
@@ -510,6 +527,8 @@ class Articles extends Component
     =================================================================*/
     public function editImageNewsModal($id)
     {
+        $this->permission_data = new PermissionCheckerController;
+        $this->permission_data->permssionChecker('HP-Edit_News_Article');
         $this->resetValidation();
         $this->reset();
         $this->newsId = $id;
