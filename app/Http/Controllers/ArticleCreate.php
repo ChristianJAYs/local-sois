@@ -39,6 +39,8 @@ class ArticleCreate extends Controller
     public $artData;
     public $selectedArticle;
 
+    public $_instance;
+
     private $orgIDHolder;
     public function index()
     {
@@ -55,8 +57,8 @@ class ArticleCreate extends Controller
     public function create()
     {
         // dd("Hello");
-        $this->permission_data = new PermissionCheckerController;
-        $this->permission_data->permssionChecker('HP-View_News_Article');
+        // $this->permission_data = new PermissionCheckerController;
+        // $this->permission_data->permssionChecker('HP-View_News_Article');
         return view('normLaravel.article-create',);
     }
 
@@ -159,8 +161,8 @@ class ArticleCreate extends Controller
      */
     public function edit($id)
     {
-        $this->permission_data = new PermissionCheckerController;
-        $this->permission_data->permssionChecker('HP-Edit_News_Article');
+        // $this->permission_data = new PermissionCheckerController;
+        // $this->permission_data->permssionChecker('HP-Edit_News_Article');
         $artData = Article::findOrFail($id);
         $selectedArticle = DB::table('articles')->where('articles_id','=',$id)->get();
         // dd($selectedArticle);
