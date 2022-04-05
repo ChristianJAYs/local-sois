@@ -57,6 +57,7 @@ Route::group(['middleware' => [
         Route::resource('announcement', 'App\Http\Controllers\AnouncementCRUD');
         Route::resource('users', 'App\Http\Controllers\UserCRUD');
         Route::resource('roles', 'App\Http\Controllers\RoleController');
+        Route::resource('sub-links', 'App\Http\Controllers\SoisSubLinksCRUD');
         // Route::resource('articles', ArticleCreate::class);
 
         Route::put('users/addRoleToUser/{id}','App\Http\Controllers\UserCRUD@addRole')->name('users/addRoleToUser');
@@ -111,6 +112,9 @@ Route::group(['middleware' => [
         })->name('articles/view');
 
 
+        Route::get('/sub-links', function(){
+            return view('admin.sub-links');
+        })->name('sub-links');
 
         Route::get('/organizations', function(){
             return view('admin.organizations');
@@ -205,6 +209,11 @@ Route::group(['middleware' => [
 
 
         Route::resource('org-articles', 'App\Http\Controllers\OrgAccArticleCreate');
+
+
+        Route::get('/ar-menu', function(){
+            return view('orgAdmin.ar-menu');
+        })->name('ar-menu');
 
         
         Route::get('/Organization/articles', function(){

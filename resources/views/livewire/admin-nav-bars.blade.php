@@ -51,8 +51,8 @@
                                     <x-jet-dropdown-link href="{{ route('announcements') }}" :active="request()->routeIs('announcements')">
                                         {{ __('Announcements') }}
                                     </x-jet-dropdown-link>
-                                    <x-jet-dropdown-link href="{{ route('tags') }}" :active="request()->routeIs('tags')">
-                                        {{ __('Tags') }}
+                                    <x-jet-dropdown-link href="{{ route('sub-links') }}" :active="request()->routeIs('sub-links')">
+                                        {{ __('Gate SubLinks') }}
                                     </x-jet-dropdown-link>
                                     <x-jet-dropdown-link href="{{ route('officers') }}" :active="request()->routeIs('officers')">
                                         {{ __('Officers') }}
@@ -103,9 +103,19 @@
                                 </x-slot>
                                 <x-slot name="content">
                                     <!-- Account Management -->
+                                    @if($getUserRole == 'Super Admin')
                                     <x-jet-dropdown-link href="{{ route('ar-links') }}">
                                         {{ __('AR Data') }}
                                     </x-jet-dropdown-link>
+                                    @endif
+                                    @if($getUserRole == 'AR Officer Admin')
+                                    <x-jet-dropdown-link href="{{ route('Organization/dashboard') }}">
+                                        {{ __('Dashboard') }}
+                                    </x-jet-dropdown-link>
+                                    <x-jet-dropdown-link href="{{ route('ar-menu') }}">
+                                        {{ __('AR Menu') }}
+                                    </x-jet-dropdown-link>
+                                    @endif
                                     <div class="border-t border-gray-100"></div>
                                 </x-slot>
                             </x-jet-dropdown>

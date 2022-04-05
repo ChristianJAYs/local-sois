@@ -1,6 +1,6 @@
 @extends('layouts.headlines')
 
-@section('page-title','test')
+@section('page-title','Article Update')
 
 @livewire('admin-nav-bars')
 <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
