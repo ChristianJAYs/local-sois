@@ -58,6 +58,7 @@ Route::group(['middleware' => [
         Route::resource('users', 'App\Http\Controllers\UserCRUD');
         Route::resource('roles', 'App\Http\Controllers\RoleController');
         Route::resource('sub-links', 'App\Http\Controllers\SoisSubLinksCRUD');
+        Route::resource('AR-Events', 'App\Http\Controllers\AccomplishEventsCRUD');
         // Route::resource('articles', ArticleCreate::class);
 
         Route::put('users/addRoleToUser/{id}','App\Http\Controllers\UserCRUD@addRole')->name('users/addRoleToUser');
