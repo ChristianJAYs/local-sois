@@ -3,16 +3,23 @@
 namespace App\Http\Livewire;
 
 use App\Models\Events;
-use Illuminate\Support\Carbon;
 use Livewire\Component;
-use Asantibanez\LivewireCalendar\LivewireCalendar;
 use Illuminate\Support\Collection;
+use Asantibanez\LivewireCalendar\LivewireCalendar;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
+use \Carbon\Carbon;
+use Datetime;
+use DatePeriod;
+use DateInterval;
+// use Carbon\Carbon;
 
 class AppointmentsCalendar extends LivewireCalendar
 {
     public function events(): Collection
     {
-        return Events::query()
+        return Events::whereNotNull('date')
             ->whereDate('scheduled_at', '>=', $this->gridStartsAt)
             ->whereDate('scheduled_at', '<=', $this->gridEndsAt)
             ->get()
@@ -28,7 +35,13 @@ class AppointmentsCalendar extends LivewireCalendar
 
     // public function onEventClick($eventId)
     // {
-    //     return redirect()->route( route: 'admin')
+    //     // return redirect()->route( route: 'admin')
+    // }
+
+    // public function onEventDropped($eventId, $year, $month, $day)
+    // {
+    //     Events::where('id', $eventId)
+    //         ->update(['due date' => $year . '-' . $month . '-' . $day]);
     // }
 
 }
