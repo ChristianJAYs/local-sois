@@ -170,6 +170,42 @@ Route::group(['middleware' => [
             return view('livewire.testl-livewire');
         })->name('test');
 
+        Route::get('/upcoming-events', function(){
+            return view('admin.upcoming-event');
+        })->name('upcoming-events');
+
+        Route::get('/gpoa-events', function(){
+            return view('admin.gpoa-events');
+        })->name('gpoa-events');
+
+        Route::get('/approved-partnerships', function(){
+            return view('admin.approved-partnership');
+        })->name('approved-partnerships');
+
+        Route::get('/partnership-application', function(){
+            return view('admin.partnership-application');
+        })->name('partnership-application');
+
+        Route::get('/approved-events', function(){
+            return view('admin.approved-events');
+        })->name('approved-events');
+
+        Route::get('/disapproved-events', function(){
+            return view('admin.disapproved-events');
+        })->name('disapproved-events');
+
+        Route::get('/declined-partnerships', function(){
+            return view('admin.declined-partnerships');
+        })->name('declined-partnerships');
+
+
+
+
+        // memberships
+        Route::get('/memberships', function(){
+            return view('admin.memberships');
+        })->name('memberships');
+
 // 
         
 
@@ -244,6 +280,70 @@ Route::group(['middleware' => [
         Route::get('/announcements/org-deleted-announcements', function(){
             return view('orgAdmin.deleted-announcements');
         })->name('articles/org-deleted-announcements');
+
+
+        Route::get('/upcoming-events', function(){
+            return view('admin.upcoming-event');
+        })->name('upcoming-events');
+
+
+
+        Route::get('Organization/upcoming-events', function(){
+            return view('admin.upcoming-event');
+        })->name('Organization/upcoming-events');
+
+        Route::get('Organization/gpoa-events', function(){
+            return view('admin.gpoa-events');
+        })->name('Organization/gpoa-events');
+
+        Route::get('Organization/approved-partnerships', function(){
+            return view('admin.approved-partnership');
+        })->name('Organization/approved-partnerships');
+
+        Route::get('Organization/partnership-application', function(){
+            return view('admin.partnership-application');
+        })->name('Organization/partnership-application');
+
+        Route::get('Organization/approved-events', function(){
+            return view('admin.approved-events');
+        })->name('Organization/approved-events');
+
+        Route::get('Organization/disapproved-events', function(){
+            return view('admin.disapproved-events');
+        })->name('Organization/disapproved-events');
+
+        Route::get('Organization/declined-partnerships', function(){
+            return view('admin.declined-partnerships');
+        })->name('Organization/declined-partnerships');
+
+
+        Route::get('Organization/memberships', function(){
+            return view('admin.memberships');
+        })->name('Organization/memberships');
+
+        Route::get('Organization/userManagement', function(){
+            return view('admin.membership-user-management');
+        })->name('Organization/userManagement');
+
+        Route::get('Organization/membershipsMembers', function(){
+            return view('admin.membership-members');
+        })->name('Organization/membershipsMembers');
+
+        Route::get('Organization/paymentDetails', function(){
+            return view('admin.payment-details');
+        })->name('Organization/paymentDetails');
+
+        Route::get('Organization/applicationRequest', function(){
+            return view('admin.application-requests');
+        })->name('Organization/applicationRequest');
+
+        Route::get('Organization/accountRegistrants', function(){
+            return view('admin.account-registrants');
+        })->name('Organization/accountRegistrants');
+
+        Route::get('Organization/declinedApplications', function(){
+            return view('admin.declined-applications');
+        })->name('Organization/declinedApplications');
 
 });
 
