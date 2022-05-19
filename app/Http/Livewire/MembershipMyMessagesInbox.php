@@ -24,31 +24,26 @@ use \Carbon\Carbon;
 use Datetime;
 use DatePeriod;
 use DateInterval;
-
-class AccountRegistrants extends Component
-{
+class MembershipMyMessagesInbox extends Component
+{ 
     use WithPagination;
 
     private $organizationID;
     private $organizationData;
 
-    public function get_data_from_DB()
+    public function get_data_from_db()
     {
-        
         $this->organizationData = DB::table('role_user')->where('user_id','=',Auth::id())->first();
         $this->organizationID = $this->organizationData->organization_id;
-        // dd(
-            return DB::table('expected_applicants')->where('organization_id',$this->organizationID)
-                                ->orderBy('expected_applicant_id','DESC')
-                                ->paginate(4, ['*'], 'expected-applicants');
-                                // ->get()
-        // );
+            return DB::table('membership_messages')->join('organizations','organizations.organization_id','=','membership_messages.organization_id')
+                ->where('user_id',Auth::id())
+                ->orderBy('message_id','DESC')
+                ->paginate(6);
     }
-
     public function render()
     {
-        return view('livewire.account-registrants',[
-            'list_data_from_DB' => $this->get_data_from_DB(),
+        return view('livewire.membership-my-messages-inbox',[
+            'list_data_from_db' => $this->get_data_from_db(),
         ]);
     }
 }

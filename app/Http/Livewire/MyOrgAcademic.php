@@ -24,8 +24,7 @@ use \Carbon\Carbon;
 use Datetime;
 use DatePeriod;
 use DateInterval;
-
-class AccountRegistrants extends Component
+class MyOrgAcademic extends Component
 {
     use WithPagination;
 
@@ -34,20 +33,22 @@ class AccountRegistrants extends Component
 
     public function get_data_from_DB()
     {
-        
         $this->organizationData = DB::table('role_user')->where('user_id','=',Auth::id())->first();
         $this->organizationID = $this->organizationData->organization_id;
         // dd(
-            return DB::table('expected_applicants')->where('organization_id',$this->organizationID)
-                                ->orderBy('expected_applicant_id','DESC')
-                                ->paginate(4, ['*'], 'expected-applicants');
-                                // ->get()
+            return DB::table('academic_membership')->join('organizations','organizations.organization_id','=','academic_membership.organization_id')
+                            ->where('academic_membership.organization_id',$this->organizationID)
+                            ->where('academic_membership.am_status','=','Active')
+                            ->where('academic_membership.registration_status','=','Open')
+                            ->orderBy('academic_membership_id','DESC')
+                            ->paginate(5);
+                            // ->get()
         // );
     }
 
     public function render()
     {
-        return view('livewire.account-registrants',[
+        return view('livewire.my-org-academic',[
             'list_data_from_DB' => $this->get_data_from_DB(),
         ]);
     }

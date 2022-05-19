@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Events;
+use App\Models\Event;
 use Livewire\Component;
 use Illuminate\Support\Collection;
 use Asantibanez\LivewireCalendar\LivewireCalendar;
@@ -19,11 +19,11 @@ class AppointmentsCalendar extends LivewireCalendar
 {
     public function events(): Collection
     {
-        return Events::whereNotNull('date')
+        return Event::whereNotNull('date')
             ->whereDate('scheduled_at', '>=', $this->gridStartsAt)
             ->whereDate('scheduled_at', '<=', $this->gridEndsAt)
             ->get()
-            ->map(function (Events $model) {
+            ->map(function (Event $model) {
                 return [
                     'id' => $model->id,
                     'title' => $model->title,

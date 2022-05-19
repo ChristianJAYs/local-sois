@@ -317,6 +317,9 @@ Route::group(['middleware' => [
         })->name('Organization/declined-partnerships');
 
 
+
+
+
         Route::get('Organization/memberships', function(){
             return view('admin.memberships');
         })->name('Organization/memberships');
@@ -344,6 +347,64 @@ Route::group(['middleware' => [
         Route::get('Organization/declinedApplications', function(){
             return view('admin.declined-applications');
         })->name('Organization/declinedApplications');
+
+        Route::get('Organization/MyAcademicOrgs', function(){
+            return view('admin.my-org-academic');
+        })->name('Organization/MyAcademicOrgs');
+
+        Route::get('Organization/MyNonAcademicOrgs', function(){
+            return view('admin.my-org-nonacademic');
+        })->name('Organization/MyNonAcademicOrgs');
+
+        Route::get('Organization/MyApplicationAcademic', function(){
+            return view('admin.my-application-academic');
+        })->name('Organization/MyApplicationAcademic');
+
+        Route::get('Organization/MyApplicationNonAcademic', function(){
+            return view('admin.my-application-non-academic');
+        })->name('Organization/MyApplicationNonAcademic');
+
+        Route::get('Organizations/Messages/Inbox', function(){
+            return view('admin.membership-messages');
+        })->name('Organizations/Messages/Inbox');
+
+        Route::get('Organizations/Messages/Sent', function(){
+            return view('admin.membership-messages-sent');
+        })->name('Organizations/Messages/Sent');
+
+        Route::get('Organizations/MyMessages/Inbox', function(){
+            return view('admin.membership-my-messages-inbox');
+        })->name('Organizations/MyMessages/Inbox');
+
+
+
+        // AR ROUTES
+
+        Route::get('Organization/AR-Events', function(){
+            return view('admin.ar-events');
+        })->name('Organization/AR-Events');
+
+        Route::get('Organization/GPOA/AR-Events', function(){
+            return view('admin.ar-gpoa-events');
+        })->name('Organization/GPOA/AR-Events');
+
+        Route::get('Organization/accomplishments', function(){
+            return view('admin.ar-accomplishments');
+        })->name('Organization/accomplishments');
+
+        Route::get('Organization/student-accomplishments', function(){
+            return view('admin.ar-student-accomplishments');
+        })->name('Organization/student-accomplishments');
+
+        Route::get('Organization/OfficerSignatures', function(){
+            return view('admin.ar-officer-signatures');
+        })->name('Organization/OfficerSignatures');
+
+        Route::get('Organization/myAccomplishments', function(){
+            return view('admin.ar-my-accomplishments');
+        })->name('Organization/myAccomplishments');
+
+
 
 });
 

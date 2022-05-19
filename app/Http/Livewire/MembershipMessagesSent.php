@@ -25,30 +25,31 @@ use Datetime;
 use DatePeriod;
 use DateInterval;
 
-class AccountRegistrants extends Component
+
+class MembershipMessagesSent extends Component
 {
     use WithPagination;
 
     private $organizationID;
     private $organizationData;
 
-    public function get_data_from_DB()
+    public function get_data_from_db()
     {
-        
         $this->organizationData = DB::table('role_user')->where('user_id','=',Auth::id())->first();
         $this->organizationID = $this->organizationData->organization_id;
         // dd(
-            return DB::table('expected_applicants')->where('organization_id',$this->organizationID)
-                                ->orderBy('expected_applicant_id','DESC')
-                                ->paginate(4, ['*'], 'expected-applicants');
+            return DB::table('membership_replies')->join('users','users.user_id','=','membership_replies.user_id')
+                                ->join('organizations','organizations.organization_id','=','membership_replies.organization_id')
+                                ->where('membership_replies.organization_id', $this->organizationID)
+                                ->orderBy('reply_id','DESC')
+                                ->paginate(5);
                                 // ->get()
         // );
     }
-
     public function render()
     {
-        return view('livewire.account-registrants',[
-            'list_data_from_DB' => $this->get_data_from_DB(),
+        return view('livewire.membership-messages-sent',[
+            'list_data_from_db' => $this->get_data_from_db(),
         ]);
     }
 }
