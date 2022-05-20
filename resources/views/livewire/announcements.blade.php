@@ -178,7 +178,6 @@
                     <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
                         <livewire:appointments-calendar
                         before-calendar-view="calendar/before"
-                        after-calendar-view="path/to/view/starting/from/views/folder"
                         />
                     </div>
                 </div>
