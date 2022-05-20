@@ -10,7 +10,6 @@ use App\Models\AssetType;
 use App\Models\OrganizationAsset;
 use App\Models\SystemAsset;
 use App\Models\AcademicMember;
-use App\Models\AcademicMemberships;
 
 use Livewire\WithPagination;
 use Illuminate\Support\STR;
@@ -20,17 +19,9 @@ use Intervention\Image\ImageManager;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-use Illuminate\Support\Carbon;
-
-use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
-use Mediconesystems\LivewireDatatables\Column;
-use Mediconesystems\LivewireDatatables\NumberColumn;
-use Mediconesystems\LivewireDatatables\DateColumn;
-use Mediconesystems\LivewireDatatables\BooleanColumn;
-
 use Auth;
 
-class Memberships extends LivewireDatatable
+class Memberships extends Component
 {
 
     use WithPagination;
@@ -38,78 +29,31 @@ class Memberships extends LivewireDatatable
     private $organizationID;
     private $organizationData;
 
-    public $exportable = true;
-    public $hideable = 'select';
-
-    public $model = AcademicMemberships::class;
-
-    // public function builder()
-    // {
-    //     return Memberships::query();
-    // }
-
-    /*==============================================
-    =            calling tables section            =
-    ==============================================*/
-    
-    public function columns()
+    // AcademicApplication::all()
+                // ->where('application_status','=','pending')
+                // ->where('organization_id',$organizationID)
+                // ->count();
+    public function academicMembership()
     {
-        return[
+        $this->organizationData = DB::table('role_user')->where('user_id','=',Auth::id())->first();
+        $this->organizationID = $this->organizationData->organization_id;
+        // dd($this->organizationID); 
+        // dd(DB::table('role_user')->where('user_id','=',Auth::id())->first());
 
-            NumberColumn::name('academic_membership_id')
-                ->label('ID')
-                ->defaultSort('asc')
-                ->hideable()
-                ->sortBy('academic_membership_id'),
+        $this->organizationID = $this->organizationID = $this->organizationData->organization_id;
 
-            NumberColumn::name('organization_id')
-                ->label('Orgaization Id')
-                ->filterOn('organization_id')
-                ->filterable()
-                ->searchable(),
-
-            NumberColumn::name('membership_fee')
-                ->label('Fee')
-                ->filterable()
-                ->searchable(),
-
-            Column::name('semester')
-                ->label('Semester')
-                ->filterable()
-                ->searchable(),
-
-            Column::name('school_year')
-                ->label('School Year')
-                ->filterable()
-                ->searchable(),
-
-            DateColumn::name('membership_start_date')
-                ->label('Member Start Date'),
-
-            DateColumn::name('membership_end_date')
-                ->label('Member End Date')
-                ->filterable()
-                ->searchable(),
-
-            Column::name('registration_status')
-                ->label('Registration Status'),
-
-            DateColumn::name('registration_start_date')
-                ->label('Registration Start')
-                ->filterable(),
-
-            DateColumn::name('registration_end_date')
-                ->label('Registration End')
-                ->filterable()
-                ->searchable(),
-
-            Column::name('am_status')
-                ->label('Status')
-                ->filterable()
-                ->searchable(),
-
-        ];
+        // dd(
+            return DB::table('academic_membership')->where('organization_id','=',$this->organizationID)
+                                ->orderBy('academic_membership_id','DESC')
+                                // ->get()
+                                ->paginate(2);
+        // );
     }
-    
-    /*=====  End of calling tables section  ======*/
+
+    public function render()
+    {
+        return view('livewire.memberships',[
+            'ListAcads' => $this->academicMembership(),
+        ]);
+    }
 }
