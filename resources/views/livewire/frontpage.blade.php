@@ -8,41 +8,50 @@
 
 <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
 
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
+<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<!-- navbar -->
-<div class="w-full text-gray-700 dark-mode:text-gray-200 dark-mode:bg-gray-800" style="background: #2a0001;">
-     <div x-data="{ open: false }" class="flex flex-col max-w-screen-xl px-4 mx-auto md:items-center md:justify-between md:flex-row md:px-6 lg:px-8">
-          <div class="p-4 flex flex-row items-center justify-between">
-               <a href="{{ url('/')}}" class="flex text-lg font-semibold tracking-widest text-gray-900 uppercase rounded-lg dark-mode:text-white focus:outline-none focus:shadow-outline">
-                    <img class="h-8" src="{{ asset('image/svg/pup.svg') }}">
-                    <p  id="titulo1" class="system-title ml-2 text-white">Student Organization Information System</p>
-                    <p  id="titulo2" class="system-title-2 ml-2 text-white">SOIS</p>
-               </a>
-               <button class="md:hidden rounded-lg focus:outline-none focus:shadow-outline" @click="open = !open">
-                    <svg fill="currentColor" viewBox="0 0 20 20" class="w-6 h-6">
-                         <path x-show="!open" fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM9 15a1 1 0 011-1h6a1 1 0 110 2h-6a1 1 0 01-1-1z" clip-rule="evenodd"></path>
-                         <path x-show="open" fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-                    </svg>
-               </button>
-          </div>
-          <nav :class="{'flex': open, 'hidden': !open}" class="flex-col flex-grow pb-4 md:pb-0 hidden md:flex md:justify-end md:flex-row">
-               <a href="/">
-               <span class="inline-flex rounded-md">
-                   <button type="button" class="frontpage-nav-bar-design inline-flex items-center border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500  px-4 py-2 bg-gray-200 rounded-lg dark-mode:bg-gray-700 dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
-                    <i class="fas fa-home"></i>
-                       <span class="ml-1">Home</span>
-                   </button>
-               </span>
-               </a>
-               <a href="/news">
-               <span class="inline-flex rounded-md">
-                   <button type="button" class="frontpage-nav-bar-design inline-flex items-center border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500  px-4 py-2 bg-transparent rounded-lg dark-mode:bg-gray-700 dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
-                    <i class="far fa-newspaper"></i>
-                       <span class="ml-1">News</span>
-                   </button>
-               </span>
-               </a>
-                                  <x-jet-dropdown align="right" width="60">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+
+<!-- front page navigation -->
+<nav class="navbar fixed-top navbar-expand-lg navbar-light">
+    <a href="{{ url('/')}}" class="flex text-lg font-semibold tracking-widest text-gray-900 uppercase rounded-lg dark-mode:text-white focus:outline-none focus:shadow-outline">
+         <img class="h-8" src="{{ asset('image/svg/pup.svg') }}">
+         <p  id="titulo1" class="system-title ml-2 text-white">Student Organization Information System</p>
+         <p  id="titulo2" class="system-title-2 ml-2 text-white">SOIS</p>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">
+                        <span class="inline-flex rounded-md">
+                            <button type="button" class="frontpage-nav-bar-design inline-flex items-center border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500  px-4 py-2 bg-gray-200 rounded-lg dark-mode:bg-gray-700 dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
+                             <i class="fas fa-home"></i>
+                                <span class="ml-1">Home</span>
+                            </button>
+                        </span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/news">
+                        <span class="inline-flex rounded-md">
+                            <button type="button" class="frontpage-nav-bar-design inline-flex items-center border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500  px-4 py-2 bg-transparent rounded-lg dark-mode:bg-gray-700 dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
+                             <i class="far fa-newspaper"></i>
+                                <span class="ml-1">News</span>
+                            </button>
+                        </span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                        <span class="inline-flex rounded-md">
+                            <x-jet-dropdown align="right" width="60">
                                       <x-slot name="trigger">
                                           <span class="inline-flex rounded-md">
                                               <button type="button" class="frontpage-nav-bar-design inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-opacity-0 hover:bg-yellow-50 hover:text-yellow-700 focus:outline-none focus:bg-yellow-50 focus:text-white transition text-white">
@@ -70,8 +79,9 @@
                                           </div>
                                       </x-slot>
                                   </x-jet-dropdown>
-
-               <a href="{{ url('/login') }}">
+                        </span>
+                </li>
+                <a href="{{ url('/login') }}">
                <span class="inline-flex rounded-md">
                    <button type="button" class="frontpage-nav-bar-design inline-flex items-center border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500  px-4 py-2 bg-transparent rounded-lg dark-mode:bg-gray-700 dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
                     <i class="fas fa-sign-in-alt"></i>
@@ -79,32 +89,49 @@
                    </button>
                </span>
                </a>
-          </nav>
-     </div>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- End of front page navigation -->
+<!-- front page carousel -->
+<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+  <ol class="carousel-indicators">
+    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+  </ol>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="https://images.pexels.com/photos/338023/pexels-photo-338023.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="https://1.bp.blogspot.com/-qHgmPsTl2zo/XQETYej6ONI/AAAAAAAAHJ0/PBqWS59a0OE82yoe1O3OxakXY6EmjWzbwCKgBGAs/w0/twice-breakthrough-members-uhdpaper.com-4K-75.jpg" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="https://images.pexels.com/photos/5919042/pexels-photo-5919042.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" class="d-block w-100" alt="...">
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-target="#carouselExampleIndicators" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-target="#carouselExampleIndicators" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </button>
 </div>
+<!-- end f=of frontpage carousel -->
 
-<div style="background: #2a0001;">
-     <!-- main slider -->
-     <div class="sliding-announcement-wrap-homepage">
-         <div class="sliding-announcement">
-               @foreach($getDisplayArticlesOnHomepageCarousel as $HomepageNews)
-               <a href="{{$HomepageNews->article_slug}}">
-                   <div class="sliding-annonuncement-image-container">
-                         @foreach($getDisplaySelectedNewsImageData as $newsImage)
-                             @if($newsImage->articles_id == $HomepageNews->articles_id)
-                                 <img class="sliding-annonuncement-image" src="{{ asset('files/'.$newsImage->file) }}">
-                             @endif
-                         @endforeach
-                   </div>
-               </a>
-          @endforeach
-         </div>
-         <div class="slick-slider-dots"></div>
-         <button class="button-slider slide-arrow prev-arrow"><i class="carousel-chevron fas fa-angle-left fa-2x"></i></button>
-         <button class="button-slider slide-arrow next-arrow"><i class="carousel-chevron fas fa-angle-right fa-2x"></i></button>
-     </div>
-     
-     <!-- announcement -->
+
+<!-- frontpage accomplishment report div -->
+<div class="grid grid-cols-12">
+    <div class="col-span-6" style="background: red;">Accomplishment Report</div>
+    <div class="col-span-6" style="background: blue;">1</div>
+</div>
+<!-- end of front page accomplishment report div -->
+
+<!-- announcement -->
      <div class="flex flex-col" data-aos="fade-up">
           <div class="grid grid-cols-12">
                <div class="col-start-2 col-span-12">
@@ -247,59 +274,7 @@
      </div>
 </div>
 
-<div class="mt-3  mb-3" style="" data-aos="fade-up">
-     <div class="text-center"><p class="homepage-titles">Quick Links</p></div>
-     <div class="grid grid-cols-12">
-          <div class="col-span-3">
-               <a href="http://sois-gpoa.puptaguigcs.net">
-               <div class="QLData  flex flex-col items-center justify-center pt-5">
-                    <div class="">
-                         <span class="HPLinksLogo">
-                              <i class="fas fa-solid fa-calendar-check"></i>
-                         </span>
-                    </div>
-                    <div class="pt-5">GPOA</div>
-               </div>
-               </a>     
-          </div>
-          <div class="col-span-3">
-               <a href="http://sois-membership.puptaguigcs.net">
-                    <div class="QLData flex flex-col items-center justify-center pt-5">
-                         <div class="">
-                              <span class="HPLinksLogo">
-                                   <i class="fas fa-users"></i>
-                              </span>
-                         </div>
-                         <div class="pt-5">Organization Membership</div>
-                    </div>
-               </a>
-          </div>
-          <div class="col-span-3 ">
-               <a href="http://sois-ar.puptaguigcs.net">
-                    <div class="QLData flex flex-col items-center justify-center pt-5">
-                         <div class="">
-                              <span class="HPLinksLogo">
-                                   <i class="fas fa-solid fa-medal"></i>
-                              </span>
-                         </div>
-                         <div class="pt-5">Accomplishment Reports</div>
-                    </div>
-               </a>     
-          </div>
-          <div class="col-span-3">
-               <a href="#">
-                    <div class="QLData flex flex-col items-center justify-center pt-5">
-                         <div class="">
-                              <span class="HPLinksLogo">
-                                   <i class="fas fa-solid fa-money-bill"></i>
-                              </span>
-                         </div>
-                         <div class="pt-5">Financial Statement</div>
-                    </div>
-               </a>     
-          </div>
-     </div>
-</div>
+<p>Hello</p>
 
 <div style="border-style: none;">
      

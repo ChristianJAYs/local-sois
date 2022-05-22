@@ -250,6 +250,7 @@ class UserCRUD extends Controller
     {
         // dd($id);
         // dd(DB::table('permission_user')->where('user_id','=',$id)->get('permission_id'));
+        $role_id = null;
         echo $error;
         $getUserData = DB::table('users')->where('user_id','=',$id)->get();
         // dd(DB::table('users')->where('user_id','=',$id)->get());
@@ -278,9 +279,15 @@ class UserCRUD extends Controller
         // dd(DB::table('organizations')->where('organization_id','=',$this->UserOrg)->get());
 
             // 'displayUserRoleData' => $this->getUserRole(),
-        $UserRoleOrgData = DB::table('role_user')->where('user_id','=',$id)->first();
-        $UserRole = $UserRoleOrgData->role_id;
-        // dd($UserRole);
+        $UserRoleOrgData = DB::table('role_user')->where('user_id','=',$id)->get();
+        // $UserRoleOrgData = DB::table('role_user')->join('roles','roles.role_id','=','users.role_id')
+        //                        ->where('users.user_id',$id)
+        //                        ->select('roles.role')
+        //                        ->get();
+        // $UserRole = $UserRoleOrgData->role_id;
+        // dd($UserRoleOrgData);
+        $listofroles = DB::table('roles')->get();
+        // dd($listofroles);
 
 
 
@@ -321,15 +328,24 @@ class UserCRUD extends Controller
         // $a[] = $f;
         // dd($a);
 
-$xxx = DB::table('permission_user')->where('user_id','=',$id)->get();
+        $xxx = DB::table('permission_user')->where('user_id','=',$id)->get();
 // echo gettype($xxx);
-foreach ($xxx as $zzz) {
-    $data[] = $zzz->permission_id;
-}
+// dd($xxx);
+    if ($xxx != null) {
+        $data[] = [0];
+    }else{
+        foreach ($xxx as $zzz) {
+            $data[] = $zzz->permission_id;
+        }
+    }
+// dd("hello");
+        // foreach ($xxx as $zzz) {
+        //     $data[] = $zzz->permission_id;
+        // }
 // dd($data);
 
         // $c = DB::table('permissions')->whereNotIn('permission_id', $x)->get();;
-        $c = DB::table('permissions')->whereNotIn('permission_id', $data)->get();
+        // $c = DB::table('permissions')->whereNotIn('permission_id', $data)->get();
         // dd($c);
         // dd($f);
         // $d = DB::table('permissions')
@@ -356,19 +372,23 @@ foreach ($xxx as $zzz) {
                 // ->with('displayUserOrganizationData',DB::table('organizations')->where('organization_id','=',$UserOrg)->get())
                 ->with('displayUserOrganizationData',DB::table('organizations')->where('organization_id','=',$UserOrg)->get())
                 ->with('displayUserOrganizationDataMessage',$userOrgResultMessage)
-                ->with('displayUserRoleData',DB::table('roles')->where('role_id','=',$UserRole)->get())
+                // ->with('displayUserRoleData',DB::table('roles')->where('role_id','=',$UserRole)->get())
+                ->with('displayUserRoleData',$UserRoleOrgData)
                 ->with('displayUserGateData',DB::table('sois_gates')->where('user_id','=',$id)->get())
                 ->with('displayUserGateKeyData',DB::table('sois_gates')->where('user_id','=',$id)->get())
                 ->with('displayUserPermsData',$permissionDataFromDB)
+                ->with('displayListOgRoles',$listofroles)
                 ->with('displayUserSelectedPermsData',DB::table('permissions')->whereNotIn('permission_id', $data)->get());
     }
 
     public function addRole(Request $request, $id)
     {
         $role_id = $request->role_id;
+        $orgainzation_id = $request->organization_id;
+        dd($orgainzation_id);
         // echo $role_id;
         if (DB::table('role_user')->where('user_id','=',$id)->pluck('role_id') != null) {
-            DB::table('role_user')->where('user_id','=',$id)->delete();
+            // DB::table('role_user')->where('user_id','=',$id)->delete();
             DB::table('role_user')->insert([
                  'role_id' => $role_id, 'user_id' => $id, 'organization_id' => null,   
             ]);
@@ -380,6 +400,7 @@ foreach ($xxx as $zzz) {
             // echo "Not Exists";
         }
         // echo "Hello";
+        $role_id = null;
         return $this->accessControl($id);
         // return redirect()->route('user-selected-user', ['id' => $id]);
     }

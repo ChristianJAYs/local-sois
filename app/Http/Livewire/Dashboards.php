@@ -50,7 +50,7 @@ class Dashboards extends Component
         // dd("hello");
     }
 
-    public function getAuthUserDataFromDatabase()
+    public function getAuthUserDataRoleFromDatabase()
     {
         // $this->userData = Auth::user();
         // dd($this->userData->name);
@@ -63,7 +63,8 @@ class Dashboards extends Component
     public function render()
     {
         return view('livewire.dashboards',[
-            'getAuthUser' => $this->getAuthUserDataFromDatabase(),
+            'getAuthUser' => $this->getAuthUserDataRoleFromDatabase(),
+            'getUserData' => DB::table('users')->where('user_id','=',Auth::id())->get(),
         ]);
     }
 }

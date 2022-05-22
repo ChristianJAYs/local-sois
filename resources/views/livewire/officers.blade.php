@@ -60,14 +60,8 @@
                 @error('organization_id') <span class="error">{{ $message }}</span> @enderror
             </div>
             <div class="mt-4">
-                <x-jet-label for="school_year" value="{{ __('School Year') }}" />
-                <x-jet-input wire:model="school_year" id="school_year" class="block mt-1 w-full" type="text" required/>
-                @error('school_year') <span class="error">{{ $message }}</span> @enderror
             </div>
             <div class="mt-4">
-                <x-jet-label for="semester" value="{{ __('Semester') }}" />
-                <x-jet-input wire:model="semester" id="semester" class="block mt-1 w-full" type="text" required/>
-                @error('semester') <span class="error">{{ $message }}</span> @enderror
             </div>
             <div class="mt-4">
                 <x-jet-label for="position" value="{{ __('Position') }}" />
@@ -81,12 +75,7 @@
             </div>
             <div class="mt-4">
                 <x-jet-label for="position_category" value="{{ __('Position Category') }}" />
-                <select wire:model="position_category" class="block appearance-none w-full bg-gray-100 border border-gray-200 text-gray-700 py-3 px-4 pr-8 round leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
-                        <option default hidden>Choose Position Category</option>
-                    @foreach($getOfficerPosition as $op)
-                        <option value="{{$op->officer_positions_id}}">{{$op->position_category}}</option>
-                    @endforeach
-                </select>
+                <x-jet-input wire:model="position_category" id="position_category" class="block mt-1 w-full" type="text" required/>
                 @error('position_category') <span class="error">{{ $message }}</span> @enderror
             </div>
         </x-slot>
@@ -142,14 +131,8 @@
                 @error('organization_id') <span class="error">{{ $message }}</span> @enderror
             </div>
             <div class="mt-4">
-                <x-jet-label for="school_year" value="{{ __('School Year') }}" />
-                <x-jet-input wire:model="school_year" id="school_year" class="block mt-1 w-full" type="text" required/>
-                @error('school_year') <span class="error">{{ $message }}</span> @enderror
             </div>
             <div class="mt-4">
-                <x-jet-label for="semester" value="{{ __('Semester') }}" />
-                <x-jet-input wire:model="semester" id="semester" class="block mt-1 w-full" type="text" required/>
-                @error('semester') <span class="error">{{ $message }}</span> @enderror
             </div>
             <div class="mt-4">
                 <x-jet-label for="position" value="{{ __('Position') }}" />
@@ -163,12 +146,7 @@
             </div>
             <div class="mt-4">
                 <x-jet-label for="position_category" value="{{ __('Position Category') }}" />
-                <select wire:model="position_category" class="block appearance-none w-full bg-gray-100 border border-gray-200 text-gray-700 py-3 px-4 pr-8 round leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
-                        <option default hidden>Choose Position Category</option>
-                    @foreach($getOfficerPosition as $op)
-                        <option value="{{$op->officer_positions_id}}">{{$op->position_category}}</option>
-                    @endforeach
-                </select>
+                <x-jet-input wire:model="position_category" id="position_category" class="block mt-1 w-full" type="date" required/>
                 @error('position_category') <span class="error">{{ $message }}</span> @enderror
             </div>
         </x-slot>
