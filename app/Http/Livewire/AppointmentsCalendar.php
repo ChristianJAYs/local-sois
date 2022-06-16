@@ -20,8 +20,8 @@ class AppointmentsCalendar extends LivewireCalendar
     public function events(): Collection
     {
         return Event::query()
-            ->whereDate('start_date', '>=', $this->gridStartsAt)
             ->whereDate('end_date', '<=', $this->gridEndsAt)
+            ->whereDate('start_date', '<=', $this->gridEndsAt)
             ->get()
             ->map(function (Event $model) {
                 return [
@@ -32,6 +32,7 @@ class AppointmentsCalendar extends LivewireCalendar
                 ];
             });
     }
+    
 
     // public function onEventClick($eventId)
     // {

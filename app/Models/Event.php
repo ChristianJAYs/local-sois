@@ -15,6 +15,12 @@ class Event extends Model
     protected $primaryKey = 'accomplished_event_id';
     protected $table = 'accomplished_events';
 
+    protected $fillable = [
+        'start_date',
+        'end_date',
+        'title',
+    ];
+
     public function organization()
     {
         return $this->belongsTo(Organization::class, 'organization_id');
