@@ -39,7 +39,6 @@ class AuthRolePermsController extends Controller
             // dd($this->userData);
             $this->userRoleData = DB::table('role_user')->where('user_id','=',$this->user_id)->first();
             $this->userRole = $this->userRoleData->role_id;
-            // dd($this->userRole);
             if(Auth::check()){
                 // dd(DB::table('roles')->where('role_id','=',$this->userRole)->first());
                 // echo $this->userRole->role;
@@ -59,8 +58,14 @@ class AuthRolePermsController extends Controller
 
                         echo "<br><br>";
                         return redirect('/default-interfaces');
-                        dd("Super Admin");
-                    }elseif($this->user_role != 'Super Admin' || $this->user_role != 'User' ){
+                        // dd("Super Admin");
+                    }
+                    elseif($this->user_role == 'Head of Student Affairs'){
+                        echo $this->user_role;
+                        echo "<br><br>";
+                        // dd("Head of student affairs");
+                        return redirect('/admin-default-interfaces');
+                    }elseif($this->user_role != 'Super Admin' || $this->user_role != 'Head of Student Affairs' || $this->user_role != 'User' ){
                         echo $this->user_role;
                         echo "<br><br>";
                         echo "Not Suer admin";

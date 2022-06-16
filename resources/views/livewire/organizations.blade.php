@@ -30,7 +30,7 @@
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
-                                @if($userAuthRole == 'Super Admin')
+                                @if($userAuthRole == 'Super Admin' || $userAuthRole == 'Head of Student Services')
                                     @if($posts->count())
                                         @foreach($posts as $item)
                                             <tr>
@@ -75,18 +75,11 @@
                                             </td>
                                         </tr>
                                     @endif
+                                <!-- @elseif($userAuthRole == 'Home Page Admin') -->
                                 @else
                                     @if($userAffliatedOrganization->count())
                                         @foreach($userAffliatedOrganization as $item)
                                             <tr>
-                                                
-                                                <!-- <td class="px-6 py-2">
-                                                    @if (!empty($item->organization_logo))
-                                                        <img width="100px" src="{{ asset('/files/' . $item->organization_logo) }}"/>
-                                                    @else
-                                                        No featured image available!
-                                                    @endif
-                                                </td> -->
                                                 <td class="px-6 py-2">{{ $item->organization_name }}</td>
                                                 <td class="px-6 py-2">{{ $item->organization_details }}</td>
                                                 <td class="px-6 py-2">

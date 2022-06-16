@@ -182,7 +182,13 @@
                         @error('selectedOrganization') <span class="error">{{ $message }}</span> @enderror
                     @else
                         @if($getUserRole == 'Home Page Admin')
-                            
+                            <x-jet-label for="selectedOrganization" value="{{ __('Organization') }}" />
+                        <select wire:model="selectedOrganization" class="block appearance-none w-full bg-gray-100 border border-gray-200 text-gray-700 py-3 px-4 pr-8 round leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                            <option default hidden>Choose organization</option>
+                            @foreach($getOrganization as $orgs)
+                                <option value="{{$orgs->organization_id}}">{{$orgs->organization_name}}</option>
+                            @endforeach
+                        </select>
                         @endif
                     @endif
                 </div>

@@ -54,12 +54,15 @@ class Sliders extends Component
     public $organization_id;
     public $articleOrgData;
 
+    private $userRoleData;
+
+
     
     public function mount()
     {
-        $this->object = new Objects();
-        $this->userRole = $this->object->roles();
-        $this->userRoleString = $this->userRole->role;
+        // $this->object = new Objects();
+        // $this->userRole = $this->object->roles();
+        // $this->userRoleString = $this->userRole->role;
 
 
         if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
@@ -195,8 +198,12 @@ class Sliders extends Component
     {
         $this->userId = Auth::id();
         $this->user = User::find($this->userId);
-        $this->va = $this->user->organizations->first();
-        $this->organization_id = $this->va->organization_id;
+        $this->userRoleData = DB::table('role_user')->where('user_id','=',$this->userId)->first();
+        if ($this->userRoleData->organization_id != null) {
+            $this->organization_id = $this->userRoleData->organization_id;
+        }else{
+            $this->organization_id = 1;
+        }
         return $this->organization_id;
     }
 

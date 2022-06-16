@@ -8,7 +8,9 @@ use App\Http\Contollers\CookieController;
 use App\Http\Contollers\ArticleCreate;
 use App\Http\Contollers\OrgAccArticleCreate;
 use App\Http\Contollers\OrganizationCRUD;
+use App\Http\Contollers\OrganizationController;
 use App\Http\Contollers\AnouncementCRUD;
+use App\Http\Contollers\AnnouncementCRUD;
 use App\Http\Contollers\UserCRUD;
 use App\Http\Contollers\OrgCRUD;
 
@@ -19,6 +21,7 @@ use App\Http\Livewire\SelectedUser;
 use App\Http\Livewire\OrganizationPages;
 use App\Http\Livewire\PagesUpdateProcess;
 use App\Http\Livewire\ViewAnnouncement;
+use App\Http\Middleware\isHeadOfStudentServices;
 
 
 /*
@@ -38,6 +41,37 @@ Route::get('/authredirects', 'App\Http\Controllers\AuthRolePermsController@index
 
 Route::get('/cookie/set','App\Http\Controllers\CookieController@setCookie');
 Route::get('/cookie/get','App\Http\Controllers\CookieController@getCookie');
+
+Route::group(['middleware' => [
+            'isHeadOfStudentServices',
+            'auth:sanctum',
+            'verified',
+]], function(){
+
+        Route::resource('admin-articles', 'App\Http\Controllers\ArticleCreate');
+        Route::resource('admin-organization', 'App\Http\Controllers\OrganizationCRUD');
+        Route::resource('admin-announcement', 'App\Http\Controllers\AnouncementCRUD');
+        Route::resource('admin-users', 'App\Http\Controllers\UserCRUD');
+        Route::resource('admin-roles', 'App\Http\Controllers\RoleController');
+        Route::resource('admin-sub-links', 'App\Http\Controllers\SoisSubLinksCRUD');
+        Route::resource('admin-AR-Events', 'App\Http\Controllers\AccomplishEventsCRUD');
+
+        Route::resource('admin-org-articles', 'App\Http\Controllers\OrgAccArticleCreate');
+
+        Route::get('/admin-default-interfaces', function(){
+            return view('admin.default-interfaces');
+        })->name('admin-default-interfaces');
+
+        Route::get('/admin-org', function(){
+            return view('admin.organizations');
+        })->name('admin-org');
+
+        Route::get('/adminArticles', function(){
+            return view('admin.articles');
+        })->name('adminArticles');
+
+});
+
 
 Route::group(['middleware' => [
             'isSuperAdmin',
@@ -74,7 +108,9 @@ Route::group(['middleware' => [
         // Route::put('organization/deleteOrg/{id}','App\Http\Controllers\OrganizationCRUD@destroy')->name('organization/deleteOrg');
 
         
-
+        Route::get('/superorganization', function(){
+            return view('admin.organizations');
+        })->name('superorganization');
 
         Route::get('/dashboard', function(){
             return view('admin.dashboards');
@@ -116,10 +152,6 @@ Route::group(['middleware' => [
         Route::get('/sub-links', function(){
             return view('admin.sub-links');
         })->name('sub-links');
-
-        Route::get('/organizations', function(){
-            return view('admin.organizations');
-        })->name('organizations');
 
         Route::get('/events', function(){
             return view('admin.events');
@@ -253,7 +285,10 @@ Route::group(['middleware' => [
 
 
         Route::resource('org-articles', 'App\Http\Controllers\OrgAccArticleCreate');
+        Route::resource('organizations', 'App\Http\Controllers\OrganizationController');
+        Route::resource('orgAnnouncements', 'App\Http\Controllers\AnnouncementOrganizationController');
 
+        Route::post('/org-store-announcement', 'App\Http\Controllers\AnnouncementOrganizationController@store');
 
         Route::get('/ar-menu', function(){
             return view('orgAdmin.ar-menu');
@@ -272,9 +307,12 @@ Route::group(['middleware' => [
             return view('orgAdmin.events');
         })->name('Organization/events');
 
-        Route::get('Organization/announcements', function(){
+        Route::get('OrganizationAnnouncements', function(){
             return view('orgAdmin.announcements');
-        })->name('Organization/announcements');
+        })->name('OrganizationAnnouncements');
+
+        // Route::post('/org-announcement-create.blade', 'App\Http\Controllers\AnnouncementCRUD@store');
+
 
         Route::get('Organization/officers', function(){
             return view('orgAdmin.officers');

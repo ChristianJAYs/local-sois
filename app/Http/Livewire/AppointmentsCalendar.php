@@ -19,16 +19,16 @@ class AppointmentsCalendar extends LivewireCalendar
 {
     public function events(): Collection
     {
-        return Event::whereNotNull('date')
-            ->whereDate('scheduled_at', '>=', $this->gridStartsAt)
-            ->whereDate('scheduled_at', '<=', $this->gridEndsAt)
+        return Event::query()
+            ->whereDate('start_date', '>=', $this->gridStartsAt)
+            ->whereDate('end_date', '<=', $this->gridEndsAt)
             ->get()
             ->map(function (Event $model) {
                 return [
                     'id' => $model->id,
                     'title' => $model->title,
                     'description' => $model->notes,
-                    'date' => $model->scheduled_at,
+                    'date' => $model->start_date,
                 ];
             });
     }

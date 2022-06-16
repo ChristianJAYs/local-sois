@@ -385,20 +385,57 @@ class UserCRUD extends Controller
     {
         $role_id = $request->role_id;
         $orgainzation_id = $request->organization_id;
-        dd($orgainzation_id);
+        
+        $userWithOrgData = DB::table('role_user')->where('user_id','=',$id)->where('organization_id','!=',null)->first();
+        // dd($userWithOrgData->organization_id);
+
+        // dd(DB::table('role_user')->where('user_id','=',$id)->where('organization_id','!=',null)->first());
         // echo $role_id;
-        if (DB::table('role_user')->where('user_id','=',$id)->pluck('role_id') != null) {
-            // DB::table('role_user')->where('user_id','=',$id)->delete();
-            DB::table('role_user')->insert([
-                 'role_id' => $role_id, 'user_id' => $id, 'organization_id' => null,   
+
+        DB::table('role_user')->insert([
+                 'role_id' => $role_id, 'user_id' => $id, 'organization_id' => $userWithOrgData->organization_id,   
             ]);
-            // echo "Exists";
-        }else{
-            DB::table('role_user')->insert([
-                 'role_id' => $role_id, 'user_id' => $id, 'organization_id' => null,   
+        
+        $userRoleData = DB::table('role_user')->where('user_id','=',$id)->first();
+        // dd($userRoleData->role_id);
+        $userRoleDataInt = $userRoleData->role_id;
+        // echo $userRoleDataInt;
+        $RoleUSerChecker = DB::table('role_user')->where('user_id','=',$id)->where('organization_id','=',$userRoleData->organization_id)->first();
+        // dd($RoleUSerChecker);
+        if (DB::table('event_signatures')->where('user_id','=',$id)->first() == null) {
+            DB::table('event_signatures')->insert([
+                ['organization_id' => $userRoleData->organization_id,'role_id' => $userRoleDataInt, 'user_id' => $id],
             ]);
-            // echo "Not Exists";
         }
+        // dd(DB::table('event_signatures')->where('user_id','=',$id)->first());
+
+        // if($RoleUSerChecker){
+        //     DB::table('role_user')->where('user_id','=',$id)->delete();
+        //     DB::table('role_user')->insert([
+        //         ['organization_id' => $organization_id,'role_id' => $userRoleDataInt, 'user_id' => $id],
+        //     ]);
+        // }else{
+        //     DB::table('role_user')->insert([
+        //         ['organization_id' => $organization_id,'role_id' => $userRoleDataInt, 'user_id' => $id],
+        //     ]);
+        // }
+        // $RoleSignatureChecker = DB::table('event_signatures')->where('user_id','=',$id)->first();
+        // // dd($RoleSignatureChecker);
+        // if ($RoleSignatureChecker) {
+        //     DB::table('event_signatures')->where('user_id','=',$id)->delete();
+        //     DB::table('event_signatures')->insert([
+        //         ['organization_id' => $organization_id,'role_id' => $userRoleDataInt, 'user_id' => $id],
+        //     ]);
+        // }else{
+        //     DB::table('event_signatures')->insert([
+        //         ['organization_id' => $organization_id,'role_id' => $userRoleDataInt, 'user_id' => $id],
+        //     ]);
+        // }
+
+
+
+            
+        
         // echo "Hello";
         $role_id = null;
         return $this->accessControl($id);
