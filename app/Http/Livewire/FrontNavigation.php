@@ -36,11 +36,19 @@ class FrontNavigation extends Component
     {
         return DB::table('organization_assets')->where('status','=','1')->where('is_latest_image','=','1')->get();
     }
+    public function organizationLinks()
+    {
+        return DB::table('organizations')
+            ->orderBy('created_at','asc')
+            ->get();
+        // return DB::table('organizations')->get();
+    }
     public function render()
     {
         return view('livewire.front-navigation',[
             'getDisplayArticlesOnHomepageCarousel' => $this->getHomepageCarouselDataFromDatabase(),
             'getDisplaySelectedNewsImageData' => $this->getNewsImage(),
+            'orgLinks' => $this->organizationLinks(),
         ]);
     }
 }
