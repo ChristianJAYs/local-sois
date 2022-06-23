@@ -27,22 +27,16 @@
                 {{ __('Create School News') }}
             </x-jet-button>
             </a>
-        @elseif($RoleUSerString == 'Head of Student Services')
-            <a href="{{ route('admin-articles.create') }}">
-            <x-jet-button>
-                {{ __('Create Admin School News') }}
-            </x-jet-button>
-            </a>
-        @else
+            @else
             <a href="{{ route('org-articles.create') }}">
             <x-jet-button wire:click="createNews">
                 {{ __('Create Org News') }}
             </x-jet-button>
             </a>
-        @endif
+            @endif
     </div>
 
-    <div class="flex flex-col items-center">
+    <div class="flex flex-col ">
         <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                 <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
@@ -62,7 +56,7 @@
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
-                            @if($articleDataController == 'Super Admin' || $articleDataController == 'Head of Student Services')                                    
+                            @if($articleDataController == 'Super Admin')                                    
                             <!-- this is super admin -->
                                 @if($articleDatas->count())
                                     @foreach($articleDatas as $item)
@@ -188,7 +182,7 @@
             </div>
         </div>
     </div>
-    @if($articleDataController == 'Super Admin' || $articleDataController == 'Head of Student Services')
+    @if($articleDataController == 'Super Admin')
         {{$articleDatas->links()}}
     @else
         {{$articleOrganization->links()}}

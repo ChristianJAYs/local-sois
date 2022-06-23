@@ -295,9 +295,9 @@ Route::group(['middleware' => [
             return view('admin.sa-membership-account-registrants');
         })->name('SAAccountRegistrants');
 
-        Route::get('/SAAccountRegistrants', function(){
+        Route::get('/SADeclinedApplication', function(){
             return view('admin.sa-membership-declined-applications');
-        })->name('SAAccountRegistrants');
+        })->name('SADeclinedApplication');
 
         Route::get('/SAAcademicApplication', function(){
             return view('admin.sa-membership-academic-application');
@@ -337,7 +337,7 @@ Route::group(['middleware' => [
         })->name('SAApprovedPartnership');
 
         Route::get('/SADeclinedPartnership', function(){
-            return view('admin.sa-gpoa-declined-partnership');
+            return view('admin.sa-gpoa-decline-partnership');
         })->name('SADeclinedPartnership');
 
         Route::get('/SAUpcomingEvents', function(){

@@ -7,7 +7,7 @@
             </x-jet-button>
         </a>
     </div>
-    <div class="flex flex-row flex-wrap items-center justify-center align-middle">
+    <div class="flex flex-row flex-wrap  justify-center align-middle">
         <div class="mx-auto">
             <div class="flex flex-col items-center">
                 <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
