@@ -388,10 +388,6 @@ class Officers extends LivewireDatatable
                 ->filterable(),
                 // ->editable(),
 
-            Column::delete('officer_id')
-                ->excludeFromExport()
-                ->label('delete'),
-
             
 
         ];
