@@ -46,7 +46,7 @@ class OrganizationController extends Controller
      */
     public function show(Organization $organization)
     {
-        return view('normLaravel.organization-view',[
+        return view('normlaravel.organization-view',[
             // 'articleDatas' => DB::table('tags')->paginate(15),
         ]);
     }

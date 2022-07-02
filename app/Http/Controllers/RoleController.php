@@ -46,7 +46,7 @@ class RoleController extends Controller
         $perms_array = DB::table('permission_role')->where('role_id','=',$role->role_id)->pluck('permission_id');
         $perms = Role::where('role_id','=',$role->role_id)->with('permissions')->get();
         $role_data = DB::table('roles')->where('role_id','=',$role->role_id)->get();
-        return view('normLaravel/roles-view', compact('role_data'),compact('perms'));
+        return view('normlaravel/roles-view', compact('role_data'),compact('perms'));
     }
 
 

@@ -254,7 +254,7 @@ class UserCRUD extends Controller
         echo $error;
         $getUserData = DB::table('users')->where('user_id','=',$id)->get();
         // dd(DB::table('users')->where('user_id','=',$id)->get());
-        // return view('normLaravel/users-update',compact('getUserData'));
+        // return view('normlaravel/users-update',compact('getUserData'));
         $SelectedUserCourseHolder = DB::table('users')->where('user_id','=',$id)->pluck('course_id');
         $SelectedUserCourse = DB::table('courses')->where('course_id','=',$SelectedUserCourseHolder)->get();
         // dd($SelectedUserCourse);
@@ -357,8 +357,8 @@ class UserCRUD extends Controller
             // ->get();
         // dd($c);
         // dd("Hello");
-        // return view('normLaravel/users-update');
-        return view('normLaravel\users-update-access')
+        // return view('normlaravel/users-update');
+        return view('normlaravel\users-update-access')
                 ->with('errorMessage', $error)
                 ->with('displayUserSelectedData', $getUserData)
                 ->with('rolesList', $getRolesData)
@@ -454,7 +454,7 @@ class UserCRUD extends Controller
      */
     public function create()
     {
-        return view('normLaravel.users-create');
+        return view('normlaravel.users-create');
     }
 
     /**
@@ -482,7 +482,7 @@ class UserCRUD extends Controller
                 ['role_id' => '8', 'user_id' => $latestID->user_id, 'organization_id' => null],
             ]);
 
-        return view('normLaravel/users-create');
+        return view('normlaravel/users-create');
     }
 
     public function modelCreateUser($first_name,$middle_name,$last_name,$date_of_birth,$address,$email,$mobile_number,$student_number,$password)
@@ -523,7 +523,7 @@ class UserCRUD extends Controller
     {
         $getUserData = DB::table('users')->where('user_id','=',$id)->get();
         // dd(DB::table('users')->where('user_id','=',$id)->get());
-        // return view('normLaravel/users-update',compact('getUserData'));
+        // return view('normlaravel/users-update',compact('getUserData'));
         $SelectedUserCourseHolder = DB::table('users')->where('user_id','=',$id)->pluck('course_id');
         $SelectedUserCourse = DB::table('courses')->where('course_id','=',$SelectedUserCourseHolder)->get();
         // dd($SelectedUserCourse);
@@ -536,8 +536,8 @@ class UserCRUD extends Controller
         $getCourseData = DB::table('courses')->get();
         $getGenderData = DB::table('genders')->get();
 
-        return view('normLaravel/users-update')->with('displayUserSelectedData', $getUserData)->with('displayCourseDromDBForUpdateSelect', $SelectedUserCourse)->with('displayGenderDromDBForUpdateSelect', $SelectedUserGender)->with('displayCourseDromDB',$getCourseData)->with('displayGenderDromDB',$getGenderData);
-        // return view('normLaravel/users-update',[
+        return view('normlaravel/users-update')->with('displayUserSelectedData', $getUserData)->with('displayCourseDromDBForUpdateSelect', $SelectedUserCourse)->with('displayGenderDromDBForUpdateSelect', $SelectedUserGender)->with('displayCourseDromDB',$getCourseData)->with('displayGenderDromDB',$getGenderData);
+        // return view('normlaravel/users-update',[
         //     'displayUserSelectedData' => $getUserData,
         //     'displayCourseDromDBForUpdateSelect' => $SelectedUserCourse,
         //     'displayCourseDromDBForUpdateSelect' => DB::table('courses')->where('course_id','=',$SelectedUserCourseHolder)->get(),
@@ -545,7 +545,7 @@ class UserCRUD extends Controller
         //     'displayCourseDromDB' =>$getCourseData,
         //     'displayGenderDromDB' =>$getGenderData,
         // ]);
-        // return view('normLaravel/users-update')
+        // return view('normlaravel/users-update')
     }
 
     /**
@@ -713,7 +713,7 @@ class UserCRUD extends Controller
             // $this->redirector();
         // return redirect('user-selected-user', ['id' => $id]);
         return redirect()->route('user-selected-user', ['id' => $id]);
-            // return view('normLaravel/users-update');
+            // return view('normlaravel/users-update');
         // dd("Hello");
 
     }

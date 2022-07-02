@@ -2,11 +2,24 @@
     <h2 class="table-title">PUP Organizations</h2>
 
     <div class="flex items-center justify-end px-4 py-3 text-right sm:px-6">
+        <p>
+            
+        {{$UserRole}}
+        </p>
+        @if($UserRole == 'Head of Student Services')
+        <a href="{{route('admin-sub-links.create')}}">
+            <x-jet-button>
+                {{ __('Create New Sub Link') }}
+            </x-jet-button>
+        </a>
+        @endif
+        @if($UserRole == 'Super Admim')
         <a href="{{route('sub-links.create')}}">
             <x-jet-button>
                 {{ __('Create New Sub Link') }}
             </x-jet-button>
         </a>
+        @endif
     </div>
 
     <div class="flex flex-col">

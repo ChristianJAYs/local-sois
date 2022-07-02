@@ -126,7 +126,7 @@ class OrgAccArticleCreate extends Controller
     {
         // dd(Auth::id());
         // dd(DB::table('role_user')->where('user_id','=',Auth::id())->pluck('organization_id'));
-        return view('normLaravel.article-create');
+        return view('normlaravel.article-create');
     }
 
     /**
@@ -137,7 +137,7 @@ class OrgAccArticleCreate extends Controller
     public function create()
     {
         // dd("Hello");
-        return view('normLaravel.article-create');
+        return view('normlaravel.article-create');
     }
 
     /**
@@ -184,8 +184,8 @@ class OrgAccArticleCreate extends Controller
         $artData = Article::findOrFail($id);
         $selectedArticle = DB::table('articles')->where('articles_id','=',$id)->get();
         // dd($artData);
-        return view('normLaravel.article-update', compact('artData'), compact('selectedArticle'));
-        // return view('normLaravel.article-update',[
+        return view('normlaravel.article-update', compact('artData'), compact('selectedArticle'));
+        // return view('normlaravel.article-update',[
             // 'selectedArticle' => DB::table('articles')->where('articles_id','=',$id)->get(),
             // 'art' => $artData,
         // ]);

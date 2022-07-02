@@ -39,7 +39,7 @@ class AnnouncementCRUD extends Controller
      */
     public function create()
     {
-        return view('normLaravel.org-announcement-create',);
+        return view('normlaravel.org-announcement-create',);
     }
 
     /**
