@@ -667,7 +667,7 @@ class Organizations extends Component
         // dd($this->OrgDataFromUser);
         if ($this->OrgDataFromUser->organization_id != null) {
             $this->orgData = DB::table('organizations')->where('organization_id','=',$this->OrgDataFromUser->organization_id)->first();
-            dd($this->orgData->organization_name);
+            // dd($this->orgData->organization_name);
             if($this->OrgDataFromUser){
                 $this->orgUserId = $this->OrgDataFromUser->organization_id;
                 $this->userOrganization = $this->orgData->organization_name;
