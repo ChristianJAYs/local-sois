@@ -56,11 +56,20 @@
                                                     <td class="px-6 py-2">Non-Academic</td>
                                                 @endif
                                                 <td>
+                                                    @if($userAuthRole == 'Super Admin')
                                                     <a href="{{route('organization.show', $item->organization_id)}}">
-                                                    <x-jet-button>
-                                                        {{__('View')}}
-                                                    </x-jet-button>
+                                                        <x-jet-button>
+                                                            {{__('Super View')}}
+                                                        </x-jet-button>
                                                     </a>
+                                                    @endif
+                                                    @if($userAuthRole == 'Head of Student Services')
+                                                    <a href="{{route('admin-organization.show', $item->organization_id)}}">
+                                                        <x-jet-button>
+                                                            {{__('Admin View ')}}
+                                                        </x-jet-button>
+                                                    </a>
+                                                    @endif
                                                     <x-jet-danger-button wire:click="deleteShowModal({{ $item->organization_id }})">
                                                         {{__('Deletes')}}
                                                     </x-jet-danger-button>

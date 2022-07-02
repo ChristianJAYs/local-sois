@@ -344,7 +344,7 @@
                         </button>
                     </span>
                     <div id="myDropdown" class="dropdown-content">
-                            @if($getUserRole == "Super Admin")
+                        @if($getUserRole == "Super Admin")
                             <div class="block px-4 py-2 text-xs text-gray-400">
                                 {{ __('Event Report') }}
                             </div>

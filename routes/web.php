@@ -49,7 +49,7 @@ Route::group(['middleware' => [
 ]], function(){
 
         Route::resource('admin-articles', 'App\Http\Controllers\ArticleCreate');
-        Route::resource('admin-organization', 'App\Http\Controllers\OrganizationCRUD');
+        Route::resource('admin-organization', 'App\Http\Controllers\AdminOrganization');
         Route::resource('admin-announcement', 'App\Http\Controllers\AnouncementCRUD');
         Route::resource('admin-users', 'App\Http\Controllers\UserCRUD');
         Route::resource('admin-roles', 'App\Http\Controllers\RoleController');
@@ -57,6 +57,9 @@ Route::group(['middleware' => [
         Route::resource('admin-AR-Events', 'App\Http\Controllers\AccomplishEventsCRUD');
 
         Route::resource('admin-org-articles', 'App\Http\Controllers\OrgAccArticleCreate');
+
+        Route::put('adminorganization/updateBanner/{id}','App\Http\Controllers\AdminOrganization@updateBnner')->name('adminorganization/updateBanner');
+        Route::put('adminorganization/updateLogo/{id}','App\Http\Controllers\AdminOrganization@updateLogo')->name('adminorganization/updateLogo');
 
         Route::get('/admin-default-interfaces', function(){
             return view('admin.default-interfaces');

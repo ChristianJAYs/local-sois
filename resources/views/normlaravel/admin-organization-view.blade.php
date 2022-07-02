@@ -124,7 +124,7 @@
 		</div>
 		<div class="flex flex-col">
 			<div class="flex flex-row">
-				<a href="{{ route('organization.edit', $orgData->organization_id) }}">
+				<a href="{{ route('admin-organization.edit', $orgData->organization_id) }}">
 					<x-jet-button >
 					    {{__('Update')}}
 					</x-jet-button>
@@ -149,7 +149,7 @@
                 @csrf
                 {{ csrf_field() }}
                 @foreach($displayOrganizationData as $orgData)
-                    <form name="add-role" id="add-role" method="post" action="{{ route('organization/updateBanner', $orgData->organization_id ) }}" enctype="multipart/form-data">
+                    <form name="add-role" id="add-role" method="post" action="{{ route('adminorganization/updateBanner', $orgData->organization_id ) }}" enctype="multipart/form-data">
                         <div class="modal-header">
                             <h5 class="modal-title" id="staticBackdropLabel">Change {{$orgData->organization_name}}'s Image Banner </h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -189,7 +189,7 @@
                 @csrf
                 {{ csrf_field() }}
                 @foreach($displayOrganizationData as $orgData)
-                    <form name="add-role" id="add-role" method="post" action="{{ route('organization/updateLogo', $orgData->organization_id ) }}" enctype="multipart/form-data">
+                    <form name="add-role" id="add-role" method="post" action="{{ route('adminorganization/updateLogo', $orgData->organization_id ) }}" enctype="multipart/form-data">
                         <div class="modal-header">
                             <h5 class="modal-title" id="staticBackdropLabel">Change {{$orgData->organization_name}}'s Image Banner </h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
