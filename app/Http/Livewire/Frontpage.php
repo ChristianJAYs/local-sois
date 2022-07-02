@@ -78,11 +78,11 @@ class Frontpage extends Component
 
     private $connect; 
 
-    public function testCarousel()
-    {
-        $this->connect = mysqli_connect("localhost", "root", "", "sois1");
-        // dd($this->connect);
-    }
+    // public function testCarousel()
+    // {
+    //     $this->connect = mysqli_connect("localhost", "root", "", "sois1");
+    //     // dd($this->connect);
+    // }
 
     public function make_query($connect)
     {
@@ -640,7 +640,7 @@ class Frontpage extends Component
             'displayARLink' => $this->getARLink(),
             'displayMembershipLink' => $this->getMembershipLink(),
 
-            'test' => $this->testCarousel(),
+            // 'test' => $this->testCarousel(),
 
             'isWebpageHomepage' => $this->selectSystemHomepage(),
             'isCurrentSlugInSystemPage' => $this->selectSlugForSystemPagesViews(),

@@ -49,6 +49,7 @@ Route::group(['middleware' => [
 ]], function(){
 
         Route::resource('admin-articles', 'App\Http\Controllers\ArticleCreate');
+        Route::resource('admin-sliders', 'App\Http\Controllers\AdminSlider');
         Route::resource('admin-organization', 'App\Http\Controllers\AdminOrganization');
         Route::resource('admin-announcement', 'App\Http\Controllers\AnouncementCRUD');
         Route::resource('admin-users', 'App\Http\Controllers\UserCRUD');

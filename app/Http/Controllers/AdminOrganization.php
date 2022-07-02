@@ -431,7 +431,7 @@ class AdminOrganization extends Controller
             'organization_acronym' => $organization_acronym_DB,
             'organization_slug' => $organization_slug_DB,
         ];
-    }
+    }   
 
     /**
      * Remove the specified resource from storage.

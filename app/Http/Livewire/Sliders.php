@@ -55,6 +55,7 @@ class Sliders extends Component
     public $articleOrgData;
 
     private $userRoleData;
+    private $role_name;
 
 
     
@@ -64,7 +65,7 @@ class Sliders extends Component
         // $this->userRole = $this->object->roles();
         // $this->userRoleString = $this->userRole->role;
 
-
+        // dd("Hello");
         if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
             $ip = $_SERVER['HTTP_CLIENT_IP'];
             // echo "1";
@@ -209,13 +210,20 @@ class Sliders extends Component
 
     public function getRole()
     {
-        // dd($this->userRole->role);
+        $this->userId = Auth::id();
+        $this->user = User::find($this->userId);
+        $this->userRoleData = DB::table('role_user')->where('user_id','=',$this->userId)->first();
+        
+        $this->role_name = DB::table('roles')->where('role_id','=',$this->userRoleData->role_id)->first();
+        return $this->role_name->role;
+        // dd($this->userRoleData->role_id);
     }
 
     public function render()
     {
         return view('livewire.sliders',[
             'getCarouselHomepage' => $this->read(),
+            'getUserRole' => $this->getRole(),
             'getCarouselOrganization' => $this->getOrganizationArticlesFromDatabase(),
             'getDisplayArticleOnSelectModal' => $this->getArticlesFromDatabase(),
             'getDisplayOrganizationArticleOnSelectModal' => $this->getOrganizationArticlesSliderFromDatabase(),
