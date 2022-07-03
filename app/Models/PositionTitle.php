@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class PositionTitle extends Model
 {
+    public $timestamps = false;
     protected $guarded = [];
     protected $primaryKey = 'position_title_id';
     protected $table = 'position_titles';

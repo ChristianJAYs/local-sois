@@ -2,9 +2,14 @@
 
     <h2 class="table-title">Position Titles</h2>
     <div class="flex items-center justify-end px-4 py-3 text-right sm:px-6">
-        <x-jet-button wire:click="createPositionTitleModal">
+        <a href="{{route('admin-position-titles.create')}}">
+            <x-jet-button>
+                {{ __('Create Position Titles') }}
+            </x-jet-button>
+        </a>
+        <!-- <x-jet-button wire:click="createPositionTitleModal">
             {{ __('Create Position') }}
-        </x-jet-button>
+        </x-jet-button> -->
     </div>
 
 
