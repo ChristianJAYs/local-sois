@@ -1,7 +1,10 @@
 <div>
-<x-jet-button wire:click="createOfficerModal">
-	{{ __('Add New Officer') }}
-</x-jet-button>
+
+<a href="{{route('admin-officers.create')}}">
+    <x-jet-button>
+        {{ __('Add Officer') }}
+    </x-jet-button>
+</a>
 
 <!--==========================================
 =            Create Officer Modal            =
