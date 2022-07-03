@@ -55,7 +55,7 @@ Route::group(['middleware' => [
         Route::resource('admin-web-page-type', 'App\Http\Controllers\WebPageType');
         Route::resource('admin-officers', 'App\Http\Controllers\OfficerControl');
         Route::resource('admin-position-titles', 'App\Http\Controllers\PositionTitles');
-        Route::resource('admin-organization', 'App\Http\Controllers\AdminOrganization');
+        Route::resource('admin-organization', 'App\Http\Controllers\OrganizationCRUD');
         Route::resource('admin-announcement', 'App\Http\Controllers\AnouncementCRUD');
         Route::resource('admin-users', 'App\Http\Controllers\UserCRUD');
         Route::resource('admin-roles', 'App\Http\Controllers\RoleController');
