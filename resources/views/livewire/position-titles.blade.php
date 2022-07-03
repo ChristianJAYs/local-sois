@@ -2,11 +2,19 @@
 
     <h2 class="table-title">Position Titles</h2>
     <div class="flex items-center justify-end px-4 py-3 text-right sm:px-6">
-        <a href="{{route('admin-position-titles.create')}}">
+        @if($getUserRole == 'Super Admin')
+            <a href="{{route('sadmin-position-titles.create')}}">
+                <x-jet-button>
+                    {{ __('Create Position Titles') }}
+                </x-jet-button>
+            </a>
+        @else
+            <a href="{{route('admin-position-titles.create')}}">
             <x-jet-button>
                 {{ __('Create Position Titles') }}
             </x-jet-button>
-        </a>
+            </a>
+        @endif
         <!-- <x-jet-button wire:click="createPositionTitleModal">
             {{ __('Create Position') }}
         </x-jet-button> -->

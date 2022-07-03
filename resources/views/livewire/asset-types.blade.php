@@ -1,11 +1,25 @@
 <div class="p-6">
     <h2 class="table-title">System Asset Types</h2>
     <div class="flex items-center justify-end px-4 py-3 text-right sm:px-6">
-        <a href="{{route('admin-system-assets-type.create')}}">
+        @if($getUserRole == 'Super Admin')
+            <a href="{{route('sadmin-system-assets-type.create')}}">
                 <x-jet-button>
                     {{ __('Create Asset Type') }}
                 </x-jet-button>
             </a>
+        @else
+            <a href="{{route('admin-system-assets-type.create')}}">
+                <x-jet-button>
+                    {{ __('Create Asset Type') }}
+                </x-jet-button>
+            </a>
+        @endif
+
+        <!-- <a href="{{route('admin-system-assets-type.create')}}">
+                <x-jet-button>
+                    {{ __('Create Asset Type') }}
+                </x-jet-button>
+            </a> -->
 <!--         <x-jet-button wire:click="createAssetTypeShowModel">
             {{ __('Create Asset Type') }}
         </x-jet-button> -->

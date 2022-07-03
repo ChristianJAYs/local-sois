@@ -234,6 +234,14 @@ Route::group(['middleware' => [
         Route::resource('AR-Events', 'App\Http\Controllers\AccomplishEventsCRUD');
         // Route::resource('articles', ArticleCreate::class);
 
+        Route::resource('sadmin-sois-sub-links', 'App\Http\Controllers\SoisSystemLinks');
+        Route::resource('sadmin-system-assets-type', 'App\Http\Controllers\SystemAssetTypes');
+        Route::resource('sadmin-web-page-type', 'App\Http\Controllers\WebPageType');
+        Route::resource('sadmin-officers', 'App\Http\Controllers\OfficerControl');
+        Route::resource('sadmin-position-titles', 'App\Http\Controllers\PositionTitles');
+        Route::resource('sadmin-organization', 'App\Http\Controllers\OrganizationCRUD');
+        Route::resource('admin-sliders', 'App\Http\Controllers\AdminSlider');
+
         Route::put('users/addRoleToUser/{id}','App\Http\Controllers\UserCRUD@addRole')->name('users/addRoleToUser');
         Route::put('users/addOrganizationToUser/{id}','App\Http\Controllers\UserCRUD@addOrg')->name('users/addOrganizationToUser');
         Route::put('users/addGateKeyToUser/{id}','App\Http\Controllers\UserCRUD@addKey')->name('users/addGateKeyToUser');

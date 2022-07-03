@@ -2,11 +2,24 @@
     <h2 class="table-title">SOIS: Webpages Types</h2>
 
     <div class="flex items-center justify-end px-4 py-3 text-right sm:px-6">
-        <a href="{{route('admin-web-page-type.create')}}">
+        @if($getUserRole == 'Super Admin')
+            <a href="{{route('sadmin-web-page-type.create')}}">
             <x-jet-button>
                 {{ __('Create Web Page Type') }}
             </x-jet-button>
-        </a>
+            </a>
+        @else
+            <a href="{{route('admin-web-page-type.create')}}">
+            <x-jet-button>
+                {{ __('Create Web Page Type') }}
+            </x-jet-button>
+            </a>
+        @endif
+        <!-- <a href="{{route('admin-web-page-type.create')}}">
+            <x-jet-button>
+                {{ __('Create Web Page Type') }}
+            </x-jet-button>
+        </a> -->
      <!--    <x-jet-button wire:click="createPageTypeShowModel">
             {{ __('Create Web Page Type') }}
         </x-jet-button> -->

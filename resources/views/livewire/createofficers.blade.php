@@ -1,10 +1,22 @@
 <div>
-
-<a href="{{route('admin-officers.create')}}">
+        @if($getUserRole == 'Super Admin')
+            <a href="{{route('sadmin-officers.create')}}">
+                <x-jet-button>
+                    {{ __('Add Officer') }}
+                </x-jet-button>
+            </a>
+        @else
+            <a href="{{route('admin-officers.create')}}">
+                <x-jet-button>
+                    {{ __('Add Officer') }}
+                </x-jet-button>
+            </a>
+        @endif
+<!-- <a href="{{route('admin-officers.create')}}">
     <x-jet-button>
         {{ __('Add Officer') }}
     </x-jet-button>
-</a>
+</a> -->
 
 <!--==========================================
 =            Create Officer Modal            =
