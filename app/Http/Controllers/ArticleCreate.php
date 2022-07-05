@@ -381,7 +381,37 @@ class ArticleCreate extends Controller
     public function featureNews($id)
     {
         Article::where('articles_id',$id)->update(['is_featured_in_newspage' => '1']);
-        return redirect('articles.show', array('id' =>$id));
+        return redirect('viewarticles')->with('status', 'Blog Post Form Data Has Been inserted');
+    }
+    public function UNfeatureNews($id)
+    {
+        Article::where('articles_id',$id)->update(['is_featured_in_newspage' => '0']);
+        return redirect('viewarticles')->with('status', 'Blog Post Form Data Has Been inserted');
+    }
+
+
+    public function setAsTopNews($id)
+    {
+        $isArticleTopNews = Article::find($id);
+        if ($isArticleTopNews != null) {
+            Article::where('is_article_featured_home_page',true)->update([
+                'is_article_featured_home_page' => false,
+            ]);
+            DB::table('articles')->where('articles_id','=',$isArticleTopNews->articles_id)->update(['is_article_featured_home_page'=>"1"]);
+        }
+        return redirect('viewarticles')->with('status', 'Blog Post Form Data Has Been inserted');
+    }
+
+    public function NotsetAsTopNews($id)
+    {
+        $isArticleTopNews = Article::find($id);
+        if ($isArticleTopNews != null) {
+            Article::where('is_article_featured_home_page',true)->update([
+                'is_article_featured_home_page' => false,
+            ]);
+            DB::table('articles')->where('articles_id','=',$isArticleTopNews->articles_id)->update(['is_article_featured_home_page'=>"0"]);
+        }
+        return redirect('viewarticles')->with('status', 'Blog Post Form Data Has Been inserted');
     }
 
     /**

@@ -238,6 +238,13 @@ Route::group(['middleware' => [
         Route::post('articles/updateImageProcess/{id}/{artID}','App\Http\Controllers\ArticleCreate@updateImageProcess')->name('articles/updateImageProcess');
         Route::get('articles/featureNews/{id}','App\Http\Controllers\ArticleCreate@featureNews')->name('articles/featureNews');
 
+        Route::get('articles/unfeatureNews/{id}','App\Http\Controllers\ArticleCreate@unfeatureNews')->name('articles/unfeatureNews');
+        
+
+        Route::get('articles/setAsTopNews/{id}','App\Http\Controllers\ArticleCreate@setAsTopNews')->name('articles/setAsTopNews');
+        Route::get('articles/NotsetAsTopNews/{id}','App\Http\Controllers\ArticleCreate@NotsetAsTopNews')->name('articles/NotsetAsTopNews');
+
+
         Route::resource('sadmin-sois-sub-links', 'App\Http\Controllers\SoisSystemLinks');
         Route::resource('sadmin-system-assets-type', 'App\Http\Controllers\SystemAssetTypes');
         Route::resource('sadmin-web-page-type', 'App\Http\Controllers\WebPageType');
