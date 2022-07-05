@@ -63,6 +63,11 @@
                                                         {{ __('Edit') }}
                                                     </x-jet-button>
                                                 </a>
+                                                <a href="{{ route('sadmin-web-page-type/delete',$item->page_types_id) }}">
+                                                    <x-jet-danger-button>
+                                                        {{__('Delete')}}
+                                                    </x-jet-danger-button>
+                                                </a>
                                             @else
                                                 <a href="{{ route('admin-web-page-type.edit',$item->page_types_id) }}">
                                                     <x-jet-button>
@@ -70,9 +75,6 @@
                                                     </x-jet-button>
                                                 </a>
                                             @endif
-                                            <x-jet-danger-button wire:click="deletePageTypeShowModal({{ $item->page_types_id }})">
-                                                {{__('Delete')}}
-                                            </x-jet-danger-button>
                                         </td>
                                     </tr>
                                 @endforeach

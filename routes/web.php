@@ -211,6 +211,16 @@ Route::group(['middleware' => [
         Route::get('/AdminARSubmitAccomplishments', function(){
             return view('admin.s-a-page-if-no-data');
         })->name('AdminARSubmitAccomplishments');
+
+
+
+        Route::get('sliders/delete/{id}','App\Http\Controllers\AdminSlider@deleteAdmin')->name('sliders/delete');
+
+        Route::get('student-services-admin-sois-sub-links/delete/{id}','App\Http\Controllers\SoisSystemLinks@deleteAdmin')->name('student-services-admin-sois-sub-links/delete');
+        
+        Route::get('student-services-admin-system-assets-type/delete/{id}','App\Http\Controllers\SystemAssetTypes@deleteAdmin')->name('student-services-admin-system-assets-type/delete');
+        Route::get('admin-organization/delete/{id}','App\Http\Controllers\SystemAssetTypes@deleteAdmin')->name('admin-organization/delete');
+
 });
 
 
@@ -242,6 +252,35 @@ Route::group(['middleware' => [
         Route::get('admin-system-assets-type/delete/{id}','App\Http\Controllers\SystemAssetTypes@delete')->name('admin-system-assets-type/delete');
         
         Route::get('announcement/delete/{id}','App\Http\Controllers\AnnouncementCRUD@delete')->name('announcement/delete');
+        
+        Route::get('sadmin-web-page-type/delete/{id}','App\Http\Controllers\WebPageType@delete')->name('sadmin-web-page-type/delete');
+        
+        Route::get('organization/delete/{id}','App\Http\Controllers\OrganizationCRUD@delete')->name('organization/delete');
+
+        Route::get('user-selected-user/delete/{id}','App\Http\Controllers\UserCRUD@delete')->name('user-selected-user/delete');
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
         Route::get('articles/updateImage/{id}','App\Http\Controllers\ArticleCreate@updateImage')->name('articles/updateImage');

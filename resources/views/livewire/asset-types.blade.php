@@ -63,18 +63,24 @@
                                                         {{ __('Edit') }}
                                                     </x-jet-button>
                                                 </a>
+                                                <a href="{{ route('admin-system-assets-type/delete',$item->asset_type_id) }}">
+                                                    <x-jet-danger-button>
+                                                        {{__('Delete')}}
+                                                    </x-jet-danger-button>
+                                                </a>
                                             @else
                                                 <a href="{{ route('admin-system-assets-type.edit',$item->asset_type_id) }}">
                                                     <x-jet-button>
                                                         {{ __('Edit') }}
                                                     </x-jet-button>
                                                 </a>
+                                                <a href="{{ route('student-services-admin-system-assets-type/delete',$item->asset_type_id) }}">
+                                                    <x-jet-danger-button>
+                                                        {{__('Delete')}}
+                                                    </x-jet-danger-button>
+                                                </a>
                                             @endif
-                                            <a href="{{ route('admin-system-assets-type/delete',$item->asset_type_id) }}">
-                                                <x-jet-danger-button>
-                                                    {{__('Delete')}}
-                                                </x-jet-danger-button>
-                                            </a>
+                                            
                                         </td>
                                     </tr>
                                 @endforeach

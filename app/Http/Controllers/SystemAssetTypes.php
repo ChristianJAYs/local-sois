@@ -84,6 +84,12 @@ SystemAssetTypes extends Controller
         //
     }
 
+    public function deleteAdmin($id)
+    {
+        AssetType::find($id)->delete();
+        return redirect('/admin-default-interfaces');
+    }
+
     public function delete($id)
     {
         // AssetType::find($id)->destroy()

@@ -89,6 +89,12 @@ class SoisSystemLinks extends Controller
         //
     }
 
+    public function deleteAdmin($id)
+    {
+        SoisLink::find($id)->update(['status'=>'0']);
+        return redirect('/admin-default-interfaces');
+    }
+
     public function delete($id)
     {
         SoisLink::find($id)->update(['status'=>'0']);

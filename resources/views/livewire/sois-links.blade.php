@@ -59,18 +59,23 @@
                                                         {{ __('Edit') }}
                                                     </x-jet-button>
                                                 </a>
+                                                <a href="{{ route('admin-sois-sub-links/delete',$item->sois_links_id) }}">
+                                                    <x-jet-danger-button>
+                                                        {{__('Delete')}}
+                                                    </x-jet-danger-button>
+                                                </a>
                                             @else
                                                 <a href="{{ route('admin-sois-sub-links.edit',$item->sois_links_id) }}">
                                                     <x-jet-button>
                                                         {{ __('Edit') }}
                                                     </x-jet-button>
                                                 </a>
+                                                <a href="{{ route('student-services-admin-sois-sub-links/delete',$item->sois_links_id) }}">
+                                                    <x-jet-danger-button>
+                                                        {{__('Delete')}}
+                                                    </x-jet-danger-button>
+                                                </a>
                                             @endif
-                                            <a href="{{ route('admin-sois-sub-links/delete',$item->sois_links_id) }}">
-                                                <x-jet-danger-button>
-                                                    {{__('Delete')}}
-                                                </x-jet-danger-button>
-                                            </a>
                                         </td>
                                     </tr>
                                  @endforeach

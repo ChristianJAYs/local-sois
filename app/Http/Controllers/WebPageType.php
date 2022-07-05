@@ -85,6 +85,12 @@ class WebPageType extends Controller
         //
     }
 
+    public function delete($id)
+    {
+        PageType::find($id)->update(['status'=>'0']);
+        return redirect('/default-interfaces');
+    }
+
     /**
      * Remove the specified resource from storage.
      *

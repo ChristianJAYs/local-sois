@@ -539,6 +539,17 @@ class OrganizationCRUD extends Controller
         $selectedOrganizationAssetDataIsLatestLogo = null;
         $selectedOrganizationAssetDataID = null;
     }
+    public function deleteAdmin($id)
+    {
+        Organization::find($id)->update(['status'=>'0']);
+        return redirect('/admin-org');
+    }
+
+    public function delete($id)
+    {
+        Organization::find($id)->update(['status'=>'0']);
+        return redirect('/superorganization');
+    }
 
     /**
      * Remove the specified resource from storage.

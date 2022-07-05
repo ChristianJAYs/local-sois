@@ -63,11 +63,19 @@
                                                     </a>
                                                 </td>
                                                 <td class="px-6 py-4 text-sm whitespace-no-wrap">
-                                                    <a href="{{route('admin-sliders/delete',$item->articles_id)}}">
-                                                        <x-jet-danger-button>
-                                                            {{__('Remove in Carousel')}}
-                                                        </x-jet-danger-button>
-                                                    </a>
+                                                    @if($getUserRole == 'Super Admin')
+                                                        <a href="{{route('admin-sliders/delete',$item->articles_id)}}">
+                                                            <x-jet-danger-button>
+                                                                {{__('Remove in Carousel')}}
+                                                            </x-jet-danger-button>
+                                                        </a>
+                                                    @else
+                                                        <a href="{{ route('sliders/delete',$item->articles_id) }}">
+                                                            <x-jet-danger-button>
+                                                                {{__('Admin Remove in Carousel')}}
+                                                            </x-jet-danger-button>
+                                                        </a>
+                                                    @endif
                                                 </td>
                                             </tr>
                                         @endforeach
