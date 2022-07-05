@@ -1,6 +1,6 @@
 @extends('layouts.headlines')
 
-@section('page-title','test')
+@section('page-title','SOIS|Create Announcement')
 
 @livewire('admin-nav-bars')
 
@@ -47,33 +47,25 @@
 	<div class="max-w-lg rounded overflow-hidden shadow-lg">
 		@csrf
 		{{ csrf_field() }}
-		<form name="add-articles" id="add-articles" method="POST" action="{{ route('orgAnnouncements.store') }}" enctype="multipart/form-data">
+		<form name="add-articles" id="add-articles" method="POST" action="{{ route('admin-announcement.store') }}">
 		@csrf
 		{{ csrf_field() }}
 			<div class="px-6 py-4">
 				<div class="form-group">
-					<label for="article_featured_image">article_featured_image</label>
-					<input type="file" id="article_featured_image" name="article_featured_image" class="form-control" required="">
+					<label for="announcement_title">Announcement Title</label>
+					<input type="text" id="announcement_title" name="announcement_title" class="form-control" required="">
 				</div>
 				<div class="form-group">
-					<label for="article_title">article_title</label>
-					<input type="text" id="article_title" name="article_title" class="form-control" required="">
+					<label for="announcement_content">Announcement Content</label>
+					<input type="text" id="announcement_content" name="announcement_content" class="form-control" required="">
 				</div>
 				<div class="form-group">
-					<label for="article_subtitle">article_subtitle</label>
-					<input type="text" id="article_subtitle" name="article_subtitle" class="form-control" required="">
+					<label for="exp_date">Expiration Date</label>
+					<input type="date" id="exp_date" name="exp_date" class="form-control" required="">
 				</div>
 				<div class="form-group">
-					<label for="article_content">article_content</label>
-					<input type="text" id="article_content" name="article_content" class="form-control" required="">
-				</div>
-				<div class="form-group">
-					<label for="article_type_id">Choose Article Type:</label>
-  					<select name="article_type_id" id="article_type_id" class="form-control" required="">
-  					  <option value="1">Select Article Type</option>
-  					  <option value="1">School News</option>
-  					  <option value="2">Event News</option>
-  					</select>
+					<label for="exp_time">Expiration Time</label>
+					<input type="time" id="exp_time" name="exp_time" class="form-control" required="">
 				</div>
 	  		</div>
 	  		<div class="px-6 pt-4 pb-2">

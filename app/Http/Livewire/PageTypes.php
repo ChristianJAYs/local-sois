@@ -8,6 +8,8 @@ use App\Models\PageType;
 use Livewire\WithPagination;
 use App\Http\Livewire\Objects;
 use App\Models\User;
+
+use Illuminate\Support\Facades\DB;
 use Auth;
 
 class PageTypes extends Component
@@ -28,6 +30,9 @@ class PageTypes extends Component
 
     public $pageTypeID;
     public $pageTypeData;
+
+    private $RoleUserDataOnNull;
+    private $RoleDataOnNull;
 
     /*=============================================================
     =            Create Page TypeSection comment block            =

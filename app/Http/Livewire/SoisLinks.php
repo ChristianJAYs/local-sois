@@ -28,6 +28,8 @@ class SoisLinks extends Component
     public $status;
     public $soisLinkID;
     public $soisLinkData;
+    private $RoleUserDataOnNull;
+    private $RoleDataOnNull;
     
 
     

@@ -75,6 +75,9 @@ class createofficers extends Component
     public $userData;
     public $userOrganizationData;
 
+    private $RoleUserDataOnNull;
+    private $RoleDataOnNull;
+
     public function rules()
     {
         return [

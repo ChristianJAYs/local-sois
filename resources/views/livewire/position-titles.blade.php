@@ -35,7 +35,7 @@
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
-                            @if($getUserRole == 'Super Admin')                                    
+                            @if($getUserRole == 'Super Admin' || 'Head of Student Services')                                    
                             <!-- this is super admin -->
                                 @if($PositionData->count())
                                     @foreach($PositionData as $item)

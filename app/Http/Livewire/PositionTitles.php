@@ -54,6 +54,9 @@ class PositionTitles extends Component
     public $userData;
     public $userOrganizationData;
 
+    private $RoleUserDataOnNull;
+    private $RoleDataOnNull;
+
     /*==================================
     =            Mount Auth            =
     ==================================*/
