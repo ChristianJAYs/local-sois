@@ -236,6 +236,9 @@ Route::group(['middleware' => [
         Route::resource('AR-Events', 'App\Http\Controllers\AccomplishEventsCRUD');
         // Route::resource('articles', ArticleCreate::class);
 
+
+        Route::get('admin-sliders/delete/{id}','App\Http\Controllers\AdminSlider@delete')->name('admin-sliders/delete');
+
         Route::get('announcement/delete/{id}','App\Http\Controllers\AnnouncementCRUD@delete')->name('announcement/delete');
 
 

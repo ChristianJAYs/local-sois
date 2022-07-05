@@ -122,6 +122,12 @@ class AdminSlider extends Controller
         //
     }
 
+    public function delete($id)
+    {
+        Article::find($id)->update(['is_carousel_homepage'=>'0']);
+        return redirect('/default-interfaces');
+    }
+
     /**
      * Remove the specified resource from storage.
      *
