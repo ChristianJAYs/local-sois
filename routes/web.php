@@ -566,6 +566,7 @@ Route::group(['middleware' => [
         Route::resource('oadmin-sliders', 'App\Http\Controllers\OAdminSlider');
         Route::resource('oadmin-announcement', 'App\Http\Controllers\OAnnouncementCRUD');
         Route::resource('oadmin-officers', 'App\Http\Controllers\OOfficerControl');
+        Route::resource('oadmin-position-titles', 'App\Http\Controllers\OPositionTitles');
 
         Route::post('/org-store-announcement', 'App\Http\Controllers\AnnouncementOrganizationController@store');
 
