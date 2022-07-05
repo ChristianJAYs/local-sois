@@ -66,10 +66,11 @@
                                                     </x-jet-button>
                                                 </a>
                                             @endif
-
-                                            <x-jet-danger-button wire:click="deleteSOISLinkShowModal({{ $item->sois_links_id }})">
-                                                {{__('Delete')}}
-                                            </x-jet-danger-button>
+                                            <a href="{{ route('admin-sois-sub-links/delete',$item->sois_links_id) }}">
+                                                <x-jet-danger-button>
+                                                    {{__('Delete')}}
+                                                </x-jet-danger-button>
+                                            </a>
                                         </td>
                                     </tr>
                                  @endforeach

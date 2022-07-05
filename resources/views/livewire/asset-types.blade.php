@@ -70,9 +70,11 @@
                                                     </x-jet-button>
                                                 </a>
                                             @endif
-                                            <x-jet-danger-button wire:click="deleteAssetTypeShowModal({{ $item->asset_type_id }})">
-                                                {{__('Delete')}}
-                                            </x-jet-danger-button>
+                                            <a href="{{ route('admin-system-assets-type/delete',$item->asset_type_id) }}">
+                                                <x-jet-danger-button>
+                                                    {{__('Delete')}}
+                                                </x-jet-danger-button>
+                                            </a>
                                         </td>
                                     </tr>
                                 @endforeach

@@ -238,7 +238,9 @@ Route::group(['middleware' => [
 
 
         Route::get('admin-sliders/delete/{id}','App\Http\Controllers\AdminSlider@delete')->name('admin-sliders/delete');
-
+        Route::get('admin-sois-sub-links/delete/{id}','App\Http\Controllers\SoisSystemLinks@delete')->name('admin-sois-sub-links/delete');
+        Route::get('admin-system-assets-type/delete/{id}','App\Http\Controllers\SystemAssetTypes@delete')->name('admin-system-assets-type/delete');
+        
         Route::get('announcement/delete/{id}','App\Http\Controllers\AnnouncementCRUD@delete')->name('announcement/delete');
 
 

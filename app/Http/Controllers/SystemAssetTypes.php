@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\AssetType;
 
-class SystemAssetTypes extends Controller
+class 
+SystemAssetTypes extends Controller
 {
     public $type;
     public $asset_type_description;
@@ -81,6 +82,12 @@ class SystemAssetTypes extends Controller
     public function update(Request $request, $id)
     {
         //
+    }
+
+    public function delete($id)
+    {
+        AssetType::find($id)->update(['status'=>'0']);
+        return redirect('/default-interfaces');
     }
 
     /**

@@ -89,6 +89,12 @@ class SoisSystemLinks extends Controller
         //
     }
 
+    public function delete($id)
+    {
+        SoisLink::find($id)->update(['status'=>'0']);
+        return redirect('/default-interfaces');
+    }
+
     /**
      * Remove the specified resource from storage.
      *
