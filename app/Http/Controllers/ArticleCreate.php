@@ -179,7 +179,7 @@ class ArticleCreate extends Controller
      */
     public function show($id)
     {
-        // dd($id);
+        dd($id);
         // dd(DB::table('organization_assets')->where('articles_id','=',$id)->get());
         $article_Data = DB::table('articles')->where('articles_id','=',$id)->get();
         // dd(DB::table('articles')->where('articles_id','=',$id)->first());
@@ -414,6 +414,20 @@ class ArticleCreate extends Controller
         return redirect('viewarticles')->with('status', 'Blog Post Form Data Has Been inserted');
     }
 
+    public function delete($id)
+    {
+        // dd(DB::table('organization_assets')->where('articles_id','=',$id)->first());
+        // $destroyAsset = DB::table('organization_assets')->where('articles_id','=',$id)->first();
+        $asetid = DB::table('organization_assets')->where('articles_id','=',$id)->first();
+        // dd($asetid);
+        $destroyAsset  = OrganizationAsset::findOrFail($asetid->organization_asset_id);
+        // dd($destroyAsset);
+        $destroyAsset->delete();
+        Article::destroy($id);
+        return redirect('viewarticles')->with('status', 'Blog Post Form Data Has Been inserted');
+        // dd(Article::find($id));
+    }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -422,6 +436,6 @@ class ArticleCreate extends Controller
      */
     public function destroy($id)
     {
-        //
+        dd("HEllo");
     }
 }

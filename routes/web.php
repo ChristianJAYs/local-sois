@@ -243,6 +243,7 @@ Route::group(['middleware' => [
 
         Route::get('articles/setAsTopNews/{id}','App\Http\Controllers\ArticleCreate@setAsTopNews')->name('articles/setAsTopNews');
         Route::get('articles/NotsetAsTopNews/{id}','App\Http\Controllers\ArticleCreate@NotsetAsTopNews')->name('articles/NotsetAsTopNews');
+        Route::get('articles/delete/{id}','App\Http\Controllers\ArticleCreate@delete')->name('articles/delete');
 
 
         Route::resource('sadmin-sois-sub-links', 'App\Http\Controllers\SoisSystemLinks');
