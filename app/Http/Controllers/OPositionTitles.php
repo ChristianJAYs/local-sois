@@ -63,7 +63,7 @@ class OPositionTitles extends Controller
             'organization_id' => $request->organization_id,
             'position_category_id' => $request->position_category_id,
         ]);
-        return redirect('organization/officers');
+        return redirect('Organization/officers');
     }
 
     /**
