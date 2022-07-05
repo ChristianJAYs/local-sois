@@ -3,25 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
-use Auth;
-use Storage;
-
-use App\Models\User;
-use App\Models\Organization;
-use App\Models\Article;
-use App\Models\Announcement;
 use App\Models\AssetType;
-use App\Models\OrganizationAsset;
-use App\Models\SystemAsset;
 
-use Illuminate\Support\STR;
-use Illuminate\Validation\Rule;
-use Intervention\Image\ImageManager;
-use Illuminate\Support\Facades\DB;
-
-class AnnouncementCRUD extends Controller
+class SASystemAssetTypes extends Controller
 {
+    public $type;
+    public $asset_type_description;
+
+
     /**
      * Display a listing of the resource.
      *
@@ -39,7 +28,7 @@ class AnnouncementCRUD extends Controller
      */
     public function create()
     {
-        return view('normlaravel.admin-announcement-create',);
+        return view('normlaravel\sadmin-sois-asset-type-create');
     }
 
     /**
@@ -50,29 +39,15 @@ class AnnouncementCRUD extends Controller
      */
     public function store(Request $request)
     {
-        $announcement_title = $request->announcement_title;
-        $announcement_content = $request->announcement_content;
-        $exp_date = $request->exp_date;
-        $exp_time = $request->exp_time;
+        $type = $request->type;
+        $asset_type_description = $request->asset_type_description;
 
-        $userID = Auth::id();
-        $orgIDHolder = DB::table('role_user')->where('user_id','=',$userID)->first('organization_id');
-        // dd($orgIDHolder);
-        $orgID = (int) $orgIDHolder->organization_id;
-        Announcement::create([
-            'announcement_title' =>$announcement_title,
-            'announcement_content' =>$announcement_content,
-            'user_id' => $userID,
-            'exp_date' =>$exp_date,
-            'exp_time' =>$exp_time,
-            'status' => '1',
+        AssetType::create([
+            'type' => $request->type,
+            'asset_type_description' => $request->asset_type_description,
         ]);
-       
-
-        // dd("Hello");
-         return redirect('adminAnnouncements')->with('status', 'Announcement Post Form Data Has Been inserted');
+        return redirect('/default-interfaces');
     }
-
 
     /**
      * Display the specified resource.

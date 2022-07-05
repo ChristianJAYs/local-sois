@@ -17,6 +17,13 @@
     <h2 class="table-title">Announcements</h2>
     <div class="flex items-center justify-end px-4 py-3 text-right sm:px-6">
         @if($roleUser == 'Head of Student Services')
+        <a href="{{ route('admin-announcement.create') }}">
+            <x-jet-button>
+                {{ __('Create Announcement') }}
+            </x-jet-button>
+        </a>
+        @endif
+        @if($roleUser == 'Super Admin')
         <a href="{{ route('adminCreateAnnouncement.create') }}">
             <x-jet-button>
                 {{ __('Create Announcement') }}
@@ -45,17 +52,17 @@
                                 <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Announcement Title</th>
                                 <!-- <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Announcement Content</th> -->
                                 <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Signature</th>
-                                <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Signer Position</th>
+                                <!-- <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Signer Position</th> -->
                                 <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Expiration Data</th>
-                                <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">User Id</th>
+                                <!-- <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">User Id</th> -->
                                 <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Date Creation</th>
                                 <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Action</th>
-                                <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">feature in slider</th>
+                                <!-- <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">feature in slider</th> -->
                             </tr>
                         </thead>
 
                         <tbody class="bg-white divide-y divide-gray-200">
-                                @if($roleUser == 'Super Admin')
+                                @if($roleUser == 'Super Admin' || 'Head of Student Services')
                                     @if($displayAnnouncements->count())
                                         @foreach($displayAnnouncements as $item)
                                              <tr>
@@ -65,21 +72,21 @@
                                                 <td class="px-6 py-4 text-sm whitespace-no-wrap">
                                                     {{ $item->announcement_title }}
                                                 </td>
-                                                <td class="px-6 py-4 text-sm whitespace-no-wrap">
+                                                <!-- <td class="px-6 py-4 text-sm whitespace-no-wrap">
                                                     {{ $item->announcement_content }}
-                                                </td>
+                                                </td> -->
                                                 <td class="px-6 py-4 text-sm whitespace-no-wrap">
                                                     {{ $item->signature }}
                                                 </td>
-                                                <td class="px-6 py-4 text-sm whitespace-no-wrap">
+                                                <!-- <td class="px-6 py-4 text-sm whitespace-no-wrap">
                                                     {{ $item->signer_position }}
-                                                </td>
+                                                </td> -->
                                                 <td class="px-6 py-4 text-sm whitespace-no-wrap">
                                                     {{ $item->exp_date }}
                                                 </td>
-                                                <td class="px-6 py-4 text-sm whitespace-no-wrap">
+                                                <!-- <td class="px-6 py-4 text-sm whitespace-no-wrap">
                                                     {{ $item->user_id }}
-                                                </td>
+                                                </td> -->
                                                 <td class="px-6 py-4 text-sm whitespace-no-wrap">
                                                     {{ $item->created_at }}
                                                 </td>
@@ -106,7 +113,7 @@
                                         </tr>
                                     @endif
                                 @endif
-                                @if($roleUser != 'Super Admin')
+                                @if($roleUser != 'Super Admin' || 'Head of Student Services')
                                     @if($displayOrgAnnouncements->count())
                                         @foreach($displayOrgAnnouncements as $item)
                                              <tr>
@@ -116,21 +123,21 @@
                                                 <td class="px-6 py-4 text-sm whitespace-no-wrap">
                                                     {{ $item->announcement_title }}
                                                 </td>
-                                                <td class="px-6 py-4 text-sm whitespace-no-wrap">
-                                                    <!-- {{ $item->announcement_content }} -->
-                                                </td>
+                                                <!-- <td class="px-6 py-4 text-sm whitespace-no-wrap">
+                                                    {{ $item->announcement_content }}
+                                                </td> -->
                                                 <td class="px-6 py-4 text-sm whitespace-no-wrap">
                                                     {{ $item->signature }}
                                                 </td>
-                                                <td class="px-6 py-4 text-sm whitespace-no-wrap">
+                                                <!-- <td class="px-6 py-4 text-sm whitespace-no-wrap">
                                                     {{ $item->signer_position }}
-                                                </td>
+                                                </td> -->
                                                 <td class="px-6 py-4 text-sm whitespace-no-wrap">
                                                     {{ $item->exp_date }}
                                                 </td>
-                                                <td class="px-6 py-4 text-sm whitespace-no-wrap">
+                                                <!-- <td class="px-6 py-4 text-sm whitespace-no-wrap">
                                                     {{ $item->user_id }}
-                                                </td>
+                                                </td> -->
                                                 <td class="px-6 py-4 text-sm whitespace-no-wrap">
                                                     {{ $item->created_at }}
                                                 </td>
@@ -147,11 +154,11 @@
                                                         {{__('Delete')}}
                                                     </x-jet-danger-button>
                                                 </td>
-                                                <td class="px-6 py-4 text-sm whitespace-no-wrap">
+                                                <!-- <td class="px-6 py-4 text-sm whitespace-no-wrap">
                                                     <x-jet-button wire:click="addOrgAnnouncementSlider({{ $item->announcements_id }})">
                                                         {{__('Add Slider')}}
                                                     </x-jet-button>
-                                                </td>
+                                                </td> -->
                                             </tr>
                                         @endforeach
                                     @else

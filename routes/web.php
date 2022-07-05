@@ -56,7 +56,7 @@ Route::group(['middleware' => [
         Route::resource('admin-officers', 'App\Http\Controllers\OfficerControl');
         Route::resource('admin-position-titles', 'App\Http\Controllers\PositionTitles');
         Route::resource('admin-organization', 'App\Http\Controllers\OrganizationCRUD');
-        Route::resource('admin-announcement', 'App\Http\Controllers\AnouncementCRUD');
+        Route::resource('admin-announcement', 'App\Http\Controllers\AnnouncementCRUD');
         Route::resource('admin-users', 'App\Http\Controllers\UserCRUD');
         Route::resource('admin-roles', 'App\Http\Controllers\RoleController');
         Route::resource('admin-sub-links', 'App\Http\Controllers\SoisSubLinksCRUD');
@@ -234,10 +234,6 @@ Route::group(['middleware' => [
         Route::resource('AR-Events', 'App\Http\Controllers\AccomplishEventsCRUD');
         // Route::resource('articles', ArticleCreate::class);
 
-        Route::get('articles/updateImage/{id}','App\Http\Controllers\ArticleCreate@updateImage')->name('articles/updateImage');
-        Route::post('articles/updateImageProcess/{id}/{artID}','App\Http\Controllers\ArticleCreate@updateImageProcess')->name('articles/updateImageProcess');
-        Route::get('articles/featureNews/{id}','App\Http\Controllers\ArticleCreate@featureNews')->name('articles/featureNews');
-
         Route::resource('sadmin-sois-sub-links', 'App\Http\Controllers\SoisSystemLinks');
         Route::resource('sadmin-system-assets-type', 'App\Http\Controllers\SystemAssetTypes');
         Route::resource('sadmin-web-page-type', 'App\Http\Controllers\WebPageType');
@@ -245,6 +241,13 @@ Route::group(['middleware' => [
         Route::resource('sadmin-position-titles', 'App\Http\Controllers\PositionTitles');
         Route::resource('sadmin-organization', 'App\Http\Controllers\OrganizationCRUD');
         Route::resource('admin-sliders', 'App\Http\Controllers\AdminSlider');
+        Route::resource('sadmin-sois-sub-links', 'App\Http\Controllers\SASoisSystemLinks');
+        Route::resource('sadmin-system-assets-type', 'App\Http\Controllers\SASystemAssetTypes');
+        Route::resource('sadmin-web-page-type', 'App\Http\Controllers\SAWebPageType');
+        Route::resource('sadmin-officers', 'App\Http\Controllers\SAOfficerControl');
+        Route::resource('sadmin-position-titles', 'App\Http\Controllers\SAPositionTitles');
+        Route::resource('sadmin-organization', 'App\Http\Controllers\SAOrganizationCRUD');
+        Route::resource('sadmin-sliders', 'App\Http\Controllers\SAAdminSlider');
 
         Route::put('users/addRoleToUser/{id}','App\Http\Controllers\UserCRUD@addRole')->name('users/addRoleToUser');
         Route::put('users/addOrganizationToUser/{id}','App\Http\Controllers\UserCRUD@addOrg')->name('users/addOrganizationToUser');

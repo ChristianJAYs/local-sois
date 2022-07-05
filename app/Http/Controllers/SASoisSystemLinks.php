@@ -3,25 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\SoisLink;
 
-use Auth;
-use Storage;
-
-use App\Models\User;
-use App\Models\Organization;
-use App\Models\Article;
-use App\Models\Announcement;
-use App\Models\AssetType;
-use App\Models\OrganizationAsset;
-use App\Models\SystemAsset;
-
-use Illuminate\Support\STR;
-use Illuminate\Validation\Rule;
-use Intervention\Image\ImageManager;
-use Illuminate\Support\Facades\DB;
-
-class AnnouncementCRUD extends Controller
+class SASoisSystemLinks extends Controller
 {
+    public $link_name;
+    public $link_description;
+    public $external_link;
+    public $status;
+
     /**
      * Display a listing of the resource.
      *
@@ -39,7 +29,7 @@ class AnnouncementCRUD extends Controller
      */
     public function create()
     {
-        return view('normlaravel.admin-announcement-create',);
+        return view('normlaravel\sadmin-sois-links-create');
     }
 
     /**
@@ -48,31 +38,22 @@ class AnnouncementCRUD extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+
     public function store(Request $request)
     {
-        $announcement_title = $request->announcement_title;
-        $announcement_content = $request->announcement_content;
-        $exp_date = $request->exp_date;
-        $exp_time = $request->exp_time;
-
-        $userID = Auth::id();
-        $orgIDHolder = DB::table('role_user')->where('user_id','=',$userID)->first('organization_id');
-        // dd($orgIDHolder);
-        $orgID = (int) $orgIDHolder->organization_id;
-        Announcement::create([
-            'announcement_title' =>$announcement_title,
-            'announcement_content' =>$announcement_content,
-            'user_id' => $userID,
-            'exp_date' =>$exp_date,
-            'exp_time' =>$exp_time,
+        $link_name = $request->link_name;
+        $link_description = $request->link_description;
+        $external_link = $request->external_link;
+        $status ='1';
+        SoisLink::create([
+            'link_name' => $request->link_name,
+            'link_description' => $request->link_description,
+            'external_link' => $request->external_link,
             'status' => '1',
         ]);
-       
-
-        // dd("Hello");
-         return redirect('adminAnnouncements')->with('status', 'Announcement Post Form Data Has Been inserted');
+        return redirect('/default-interfaces');
     }
-
 
     /**
      * Display the specified resource.

@@ -31,6 +31,9 @@ class AssetTypes extends Component
 
     public $assetTypeData;
     public $InformationBox;
+
+    private $RoleUserDataOnNull;
+    private $RoleDataOnNull;
     
     /*===============================================================
     =            Create Asset Type Section comment block            =
