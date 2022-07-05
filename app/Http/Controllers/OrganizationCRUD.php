@@ -102,7 +102,24 @@ class OrganizationCRUD extends Controller
     {
         // $this->permission_data = new PermissionCheckerController;
         // $this->permission_data->permssionChecker('HP-Create_Organization_Page');
-        return view('normlaravel.organization-create');
+        $authUserRole = DB::table('role_user')->where('user_id','=',Auth::id())->first();
+        $role_name = DB::table('roles')->where('role_id','=',$authUserRole->role_id)->first();
+        $authUserRoleType = $role_name->role;
+
+        if ($role_name->role == "Super Admin") {
+            return view('normlaravel.organization-create',[
+                'userAuthRole' => $authUserRoleType,
+            ]);
+        }
+        if ($role_name->role == "Head of Student Services") {
+            return view('normlaravel.admin-organization-create',[
+                'userAuthRole' => $authUserRoleType,
+            ]);
+        }
+        // return $authUserRoleType;
+        // dd($authUserRoleType);
+
+        // $this->accessOrgControll();
     }
 
     /**
@@ -132,7 +149,6 @@ class OrganizationCRUD extends Controller
         $organization_acronym = $request->organization_acronym;
 
         $organization_slug = str_replace(" ", "_", $organization_name);
-        echo $organization_type_id;
 
 
         $status = 1;
@@ -177,15 +193,24 @@ class OrganizationCRUD extends Controller
 
         $authUserId = Auth::id();
         $authUserData = User::find($authUserId);        
-        $authUserRole = $authUserData->roles->first();
-        $authUserRoleType = $authUserRole->role;         
+        $authUserRole = DB::table('role_user')->where('user_id','=',Auth::id())->first();
+        $role_name = DB::table('roles')->where('role_id','=',$authUserRole->role_id)->first();
+        $authUserRoleType = $role_name->role;
         // return $authUserRoleType;
         // dd($authUserRoleType);
 
         // $this->accessOrgControll();
-        return view('normlaravel\organization-create',[
-            // 'userAuthRole' => $authUserRoleType,
-        ]);         
+        if ($role_name->role == "Super Admin") {
+            return view('normlaravel.organization-create',[
+                'userAuthRole' => $authUserRoleType,
+            ]);
+        }
+        if ($role_name->role == "Head of Student Services") {
+            return view('normlaravel.admin-organization-create',[
+                'userAuthRole' => $authUserRoleType,
+            ]);
+        }
+                 
     }
 
     public function accessOrgControll($id)
