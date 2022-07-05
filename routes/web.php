@@ -227,12 +227,15 @@ Route::group(['middleware' => [
 
         Route::resource('articles', 'App\Http\Controllers\ArticleCreate');
         Route::resource('organization', 'App\Http\Controllers\OrganizationCRUD');
-        Route::resource('announcement', 'App\Http\Controllers\AnouncementCRUD');
+        Route::resource('announcement', 'App\Http\Controllers\AnnouncementCRUD');
         Route::resource('users', 'App\Http\Controllers\UserCRUD');
         Route::resource('roles', 'App\Http\Controllers\RoleController');
         Route::resource('sub-links', 'App\Http\Controllers\SoisSubLinksCRUD');
         Route::resource('AR-Events', 'App\Http\Controllers\AccomplishEventsCRUD');
         // Route::resource('articles', ArticleCreate::class);
+
+        Route::get('announcement/delete/{id}','App\Http\Controllers\AnnouncementCRUD@delete')->name('announcement/delete');
+
 
         Route::get('articles/updateImage/{id}','App\Http\Controllers\ArticleCreate@updateImage')->name('articles/updateImage');
         Route::post('articles/updateImageProcess/{id}/{artID}','App\Http\Controllers\ArticleCreate@updateImageProcess')->name('articles/updateImageProcess');

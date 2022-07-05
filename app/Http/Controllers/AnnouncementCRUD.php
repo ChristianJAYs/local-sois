@@ -168,9 +168,12 @@ class AnnouncementCRUD extends Controller
         // dd(Announcement::findOrFail($id));
         // DB::table('announcements')->where('status','=','0')->
         // Announcement::findOrFail($id)->update(['status' => '0']);
-        DB::table('announcements')->where('announcements_id','=',$id)->update([
-            'status' => '0',
-        ]);
+        // DB::table('announcements')->where('announcements_id','=',$id)->update([
+            // 'status' => '0',
+        // ]);
+
+        Announcement::destroy($id);
+
 
         return redirect('announcements')->with('status', 'Blog Post Form Data Has Been inserted');
     }

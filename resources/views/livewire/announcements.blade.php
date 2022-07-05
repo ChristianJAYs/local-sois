@@ -97,17 +97,18 @@
                                                     {{ $item->created_at }}
                                                 </td>
                                                 <td class="px-6 py-4 text-sm whitespace-no-wrap">
-                                                    <x-jet-button wire:click="viewAnnouncement({{ $item->announcements_id }})">
-                                                        {{__('View announcement')}}
-                                                    </x-jet-button>
+                                                    <a href="{{ route('announcement.show',$item->announcements_id) }}">
+                                                        <x-jet-button>
+                                                            {{__('View announcement')}}
+                                                        </x-jet-button>
+                                                    </a>
                                                 </td>
                                                 <td class="px-6 py-4 text-sm whitespace-no-wrap">
-                                                    <x-jet-button wire:click="updateAnnouncementShowModal({{ $item->announcements_id }})">
-                                                        {{__('Update')}}
-                                                    </x-jet-button>
-                                                    <x-jet-danger-button wire:click="deleteAnnouncementShowModal({{ $item->announcements_id }})">
-                                                        {{__('Delete')}}
-                                                    </x-jet-danger-button>
+                                                    <a href="{{ route('announcement/delete',$item->announcements_id) }}">
+                                                        <x-jet-danger-button>
+                                                            {{__('Delete')}}
+                                                        </x-jet-danger-button>
+                                                    </a>
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -118,8 +119,7 @@
                                             </td>
                                         </tr>
                                     @endif
-                                @endif
-                                @if($roleUser != 'Super Admin' || 'Head of Student Services')
+                                @else
                                     @if($displayOrgAnnouncements->count())
                                         @foreach($displayOrgAnnouncements as $item)
                                              <tr>
