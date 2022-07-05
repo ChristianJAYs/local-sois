@@ -16,19 +16,25 @@
 
     <h2 class="table-title">Announcements</h2>
     <div class="flex items-center justify-end px-4 py-3 text-right sm:px-6">
-        @if($roleUser == 'Head of Student Services')
-        <a href="{{ route('admin-announcement.create') }}">
-            <x-jet-button>
-                {{ __('Create Announcement') }}
-            </x-jet-button>
-        </a>
-        @endif
         @if($roleUser == 'Super Admin')
         <a href="{{ route('sadmin-announcement.create') }}">
             <x-jet-button>
                 {{ __('Create Announcement') }}
             </x-jet-button>
         </a>
+        @elseif($roleUser == 'Home Page Admin')
+        <a href="{{ route('oadmin-announcement.create') }}">
+            <x-jet-button>
+                {{ __('Create Announcement') }}
+            </x-jet-button>
+        </a>
+        @elseif($roleUser == 'Head of Student Services')
+        <a href="{{ route('admin-announcement.create') }}">
+            <x-jet-button>
+                {{ __('Create Announcement') }}
+            </x-jet-button>
+        </a>
+
         @endif
         @if($roleUser == 'Super Admin')
             <x-jet-danger-button wire:click="deletedannouncements">

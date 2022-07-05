@@ -54,16 +54,12 @@
 					<input type="file" id="article_featured_image" name="article_featured_image" class="form-control" required="">
 				</div> -->
 				<div class="form-group">
-					<label for="article_title">announcement title</label>
-					<input type="text" id="article_title" name="article_title" class="form-control" required="">
-				</div>
-				<div class="form-group">
-					<label for="article_subtitle">announcement subtitle</label>
-					<input type="text" id="article_subtitle" name="article_subtitle" class="form-control" required="">
+					<label for="announcement_title">announcement title</label>
+					<input type="text" id="announcement_title" name="announcement_title" class="form-control" required="">
 				</div>
 				<div class="form-group" wire:ignore>
-					<label for="article_content">Announcement Content</label>
-					<textarea type="text" input="article_content" name="article_content" id="summernote" class="summernote"></textarea>
+					<label for="announcement_content">Announcement Content</label>
+					<textarea type="text" input="announcement_content" name="announcement_content" id="summernote" class="summernote"></textarea>
 				</div>
 				<div class="form-group">
 					<label for="exp_date">Expiration Date</label>
