@@ -62,6 +62,8 @@ Route::group(['middleware' => [
         Route::resource('admin-sub-links', 'App\Http\Controllers\SoisSubLinksCRUD');
         Route::resource('admin-AR-Events', 'App\Http\Controllers\AccomplishEventsCRUD');
 
+        Route::get('announcement/delete/{id}','App\Http\Controllers\AnnouncementCRUD@delete')->name('announcement/delete');
+
         Route::resource('admin-org-articles', 'App\Http\Controllers\OrgAccArticleCreate');
 
         Route::put('adminorganization/updateBanner/{id}','App\Http\Controllers\AdminOrganization@updateBnner')->name('adminorganization/updateBanner');

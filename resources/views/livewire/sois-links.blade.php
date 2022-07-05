@@ -53,9 +53,19 @@
                                             </a>
                                         </td>
                                         <td>
-                                            <x-jet-button wire:click="updateSOISLinkShowModal({{ $item->sois_links_id }})">
-                                                {{__('Update')}}
-                                            </x-jet-button>
+                                            @if($getUserRole == 'Super Admin')
+                                                <a href="{{ route('sadmin-sois-sub-links.edit',$item->sois_links_id) }}">
+                                                    <x-jet-button>
+                                                        {{ __('Edit') }}
+                                                    </x-jet-button>
+                                                </a>
+                                            @else
+                                                <a href="{{ route('admin-sois-sub-links.edit',$item->sois_links_id) }}">
+                                                    <x-jet-button>
+                                                        {{ __('Edit') }}
+                                                    </x-jet-button>
+                                                </a>
+                                            @endif
 
                                             <x-jet-danger-button wire:click="deleteSOISLinkShowModal({{ $item->sois_links_id }})">
                                                 {{__('Delete')}}
