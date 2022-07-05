@@ -35,23 +35,6 @@
 	@endif	
 </div>
 
-
-<div class="grid grid-cols-12 p-5">
-	<div class="col-span-6 max-w-lg rounded overflow-hidden shadow-lg">
-		<div class="px-6 py-4">
-			@foreach($selectedArticle as $selectArt)
-			<div class="form-group">
-				<label for="article_title">article_title : {{$selectArt->announcement_title}}</label>
-				<input type="text" id="article_title" name="article_title" class="form-control" >
-			</div>
-			<div class="form-group">
-				<label for="article_content">article_content : {{$selectArt->announcement_content}}</label>
-				<input type="text" id="article_content" name="article_subtitle" class="form-control" >
-			</div>
-			@endforeach
-	  	</div>
-	</div>
-
 	<div class=" col-span-6 max-w-lg rounded overflow-hidden shadow-lg">
 		<form name="add-articles" id="add-articles" method="post" action="{{ route('announcement.update', $artData->announcements_id ) }}" enctype="multipart/form-data">
 		@csrf
@@ -59,13 +42,14 @@
 			<div class="px-6 py-4">
 				@foreach($selectedArticle as $selectArt)
 				<div class="form-group">
-					<label for="announcement_title">announcement_title : {{$selectArt->announcement_title}}</label>
-					<input type="text" id="announcement_title" name="announcement_title" class="form-control" >
+					<label for="announcement_title">announcement_title :</label>
+					<input type="text" id="announcement_title" name="announcement_title" placeholder="{{$selectArt->announcement_title}}" class="form-control" >
 				</div>
-				<div class="form-group">
-					<label for="announcement_content">announcement_content : {{$selectArt->announcement_content}}</label>
-					<input type="text" id="announcement_content" name="announcement_content" class="form-control" >
+				<div class="form-group" wire:ignore>
+					<label for="announcement_content">Announcement Content</label>
+					<textarea type="text" input="announcement_content" name="announcement_content" placeholder="{{$selectArt->announcement_content}}" id="summernote" class="summernote"></textarea>
 				</div>
+
 				@endforeach
 	  		</div>
 	  		<div class="px-6 pt-4 pb-2">
@@ -75,7 +59,27 @@
 	</div>
 </div>
 
+<!--========================================
+=            Summernote Section            =
+=========================================-->
 
+<script>
+      $('#summernote').summernote({
+        tabsize: 2,
+        height: 120,
+        toolbar: [
+          ['style', ['style']],
+          ['font', ['bold', 'underline', 'clear']],
+          ['color', ['color']],
+          ['para', ['ul', 'ol', 'paragraph']],
+          ['table', ['table']],
+          ['insert', ['link', 'picture', 'video']],
+          ['view', ['fullscreen', 'codeview', 'help']]
+        ]
+      });
+    </script>
+
+<!--====  End of Summernote Section  ====-->
 
 
 

@@ -57,9 +57,19 @@
                                             {{ $item->page_description }}
                                         </td>
                                         <td class="px-6 py-4 text-sm whitespace-no-wrap">
-                                            <x-jet-button wire:click="updatePageTypeShowModal({{ $item->page_types_id }})">
-                                                {{__('Update')}}
-                                            </x-jet-button>
+                                            @if($getUserRole == 'Super Admin')
+                                                <a href="{{ route('sadmin-web-page-type.edit',$item->page_types_id) }}">
+                                                    <x-jet-button>
+                                                        {{ __('Edit') }}
+                                                    </x-jet-button>
+                                                </a>
+                                            @else
+                                                <a href="{{ route('admin-web-page-type.edit',$item->page_types_id) }}">
+                                                    <x-jet-button>
+                                                        {{ __('Edit') }}
+                                                    </x-jet-button>
+                                                </a>
+                                            @endif
                                             <x-jet-danger-button wire:click="deletePageTypeShowModal({{ $item->page_types_id }})">
                                                 {{__('Delete')}}
                                             </x-jet-danger-button>
