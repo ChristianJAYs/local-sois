@@ -7,11 +7,6 @@
                     {{ __('Add Data in Homepage Slider') }}
                 </x-jet-button>
             </a>
-        @else
-            <p>{{$getUserRole}}</p>
-            <x-jet-button wire:click="createOrgSlider">
-                {{ __('Add Data in Organization Slider') }}
-            </x-jet-button>
         @endif
         @if($getUserRole == 'Super Admin')
             <a href="{{route('sadmin-sliders.create')}}">
