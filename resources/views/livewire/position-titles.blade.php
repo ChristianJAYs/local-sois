@@ -8,11 +8,17 @@
                     {{ __('Create Position Titles') }}
                 </x-jet-button>
             </a>
-        @else
+        @elseif($getUserRole == 'Head of Student Services')
             <a href="{{route('admin-position-titles.create')}}">
             <x-jet-button>
                 {{ __('Create Position Titles') }}
             </x-jet-button>
+            </a>
+        @elseif($getUserRole == 'Home Page Admin')
+            <a href="{{route('oadmin-position-titles.create')}}">
+                <x-jet-button>
+                    {{ __('Add Officer') }}
+                </x-jet-button>
             </a>
         @endif
         <!-- <x-jet-button wire:click="createPositionTitleModal">

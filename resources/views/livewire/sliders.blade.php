@@ -14,11 +14,12 @@
                     {{ __('Add Data in Homepage Slider') }}
                 </x-jet-button>
             </a>
-        @endif
-        @if($getUserRole != 'Super Admin' || $getUserRole != 'Head of Student Services')
-            <x-jet-button wire:click="createOrgSlider">
-                {{ __('Add Data in Organization Slider') }}
+        @elseif($getUserRole == 'Home Page Admin')
+            <a href="{{route('oadmin-sliders.create')}}">
+            <x-jet-button>
+                {{ __('Add News to Slider') }}
             </x-jet-button>
+            </a>
         @endif
     </div>
     <div class="flex flex-col">

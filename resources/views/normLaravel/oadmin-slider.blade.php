@@ -1,6 +1,6 @@
 @extends('layouts.headlines')
 
-@section('page-title','SOIS|Create Announcement')
+@section('page-title','Add News to Slider')
 
 @livewire('admin-nav-bars')
 
@@ -45,27 +45,18 @@
 
 <div class="flex flex-col p-5">
 	<div class="max-w-lg rounded overflow-hidden shadow-lg">
-		@csrf
-		{{ csrf_field() }}
-		<form name="add-articles" id="add-articles" method="POST" action="{{ route('sadmin-announcement.store') }}">
+		<form name="add-articles" id="add-articles" method="POST" action="{{ route('oadmin-sliders.store') }}" enctype="multipart/form-data">
 		@csrf
 		{{ csrf_field() }}
 			<div class="px-6 py-4">
 				<div class="form-group">
-					<label for="announcement_title">announcement title</label>
-					<input type="text" id="announcement_title" name="announcement_title" class="form-control" required="">
-				</div>
-				<div class="form-group" wire:ignore>
-					<label for="announcement_content">Announcement Content</label>
-					<textarea type="text" input="announcement_content" name="announcement_content" id="summernote" class="summernote"></textarea>
-				</div>
-				<div class="form-group">
-					<label for="exp_date">Expiration Date</label>
-					<input type="date" id="exp_date" name="exp_date" class="form-control" required="">
-				</div>
-				<div class="form-group">
-					<label for="exp_time">Expiration Time</label>
-					<input type="time" id="exp_time" name="exp_time" class="form-control" required="">
+					<label for="articleData">{{ __('Select Article to add in Homepage Slider') }}</label>
+  					<select name="article_type_id" id="article_type_id" class="form-control block  round leading-tight focus:outline-none focus:bg-white focus:border-gray-500" required="">
+  					<option value="" selected>Choose Article News</option>
+  						@foreach($getDisplayArticleOnSelectModal as $articles)
+                            <option value="{{$articles->articles_id}}">{{$articles->article_title}}</option>
+                        @endforeach
+  					</select>
 				</div>
 	  		</div>
 	  		<div class="px-6 pt-4 pb-2">
@@ -75,27 +66,7 @@
 	</div>
 </div>
 
-<!--========================================
-=            Summernote Section            =
-=========================================-->
 
-<script>
-      $('#summernote').summernote({
-        tabsize: 2,
-        height: 120,
-        toolbar: [
-          ['style', ['style']],
-          ['font', ['bold', 'underline', 'clear']],
-          ['color', ['color']],
-          ['para', ['ul', 'ol', 'paragraph']],
-          ['table', ['table']],
-          ['insert', ['link', 'picture', 'video']],
-          ['view', ['fullscreen', 'codeview', 'help']]
-        ]
-      });
-    </script>
-
-<!--====  End of Summernote Section  ====-->
 
 
 

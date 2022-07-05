@@ -1,6 +1,6 @@
 @extends('layouts.headlines')
 
-@section('page-title','SOIS|Create Announcement')
+@section('page-title','SOIS|Announcement Creation')
 
 @livewire('admin-nav-bars')
 
@@ -25,7 +25,7 @@
 	    <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-5">
 			<div class="grid grid-cols-12">
 			    <div class="col-span-12">
-			        <h2>Create News</h2>
+			        <h2>Create Announcement</h2>
 			    </div>
 			    <div class="col-span-1">
 					<x-jet-secondary-button class="m-2">
@@ -45,7 +45,7 @@
 
 <div class="flex flex-col p-5">
 	<div class="max-w-lg rounded overflow-hidden shadow-lg">
-		<form name="add-articles" id="add-articles" method="POST" action="{{ route('admin-announcement.store') }}" enctype="multipart/form-data">
+		<form name="add-articles" id="add-articles" method="POST" action="{{ route('oadmin-announcement.store') }}" enctype="multipart/form-data">
 		@csrf
 		{{ csrf_field() }}
 			<div class="px-6 py-4">

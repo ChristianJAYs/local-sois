@@ -14,6 +14,12 @@
                 {{ __('Create Organization') }}
             </x-jet-button>
             </a>
+        @elseif($userAuthRole == 'Home Page Admin')
+            <a href="{{route('oadmin-organization.create')}}">
+            <x-jet-button>
+                {{ __('Create Organization') }}
+            </x-jet-button>
+            </a>
         @endif
     </div>
 
