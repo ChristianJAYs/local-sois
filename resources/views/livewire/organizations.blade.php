@@ -8,7 +8,7 @@
                 {{ __('Create Organization') }}
             </x-jet-button>
             </a>
-        @else
+        @elseif($userAuthRole == 'Head of Student Services')
             <a href="{{route('admin-organization.create')}}">
             <x-jet-button>
                 {{ __('Create Organization') }}

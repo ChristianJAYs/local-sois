@@ -61,9 +61,9 @@
 					<label for="article_subtitle">announcement subtitle</label>
 					<input type="text" id="article_subtitle" name="article_subtitle" class="form-control" required="">
 				</div>
-				<div class="form-group">
-					<label for="article_content">announcement content</label>
-					<input type="text" id="article_content" name="article_content" class="form-control" required="">
+				<div class="form-group" wire:ignore>
+					<label for="article_content">Announcement Content</label>
+					<textarea type="text" input="article_content" name="article_content" id="summernote" class="summernote"></textarea>
 				</div>
 				<div class="form-group">
 					<label for="exp_date">Expiration Date</label>
@@ -91,7 +91,27 @@
 
 
 
+<!--========================================
+=            Summernote Section            =
+=========================================-->
 
+<script>
+      $('#summernote').summernote({
+        tabsize: 2,
+        height: 120,
+        toolbar: [
+          ['style', ['style']],
+          ['font', ['bold', 'underline', 'clear']],
+          ['color', ['color']],
+          ['para', ['ul', 'ol', 'paragraph']],
+          ['table', ['table']],
+          ['insert', ['link', 'picture', 'video']],
+          ['view', ['fullscreen', 'codeview', 'help']]
+        ]
+      });
+    </script>
+
+<!--====  End of Summernote Section  ====-->
 
 
 
