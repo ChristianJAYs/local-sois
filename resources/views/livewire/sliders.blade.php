@@ -1,18 +1,25 @@
 <div class="p-6">
     <h2 class="table-title">Slider</h2>
     <div class="flex items-center justify-end px-4 py-3 text-right sm:px-6">
-            @if($getUserRole == 'Super Admin' || $getUserRole == 'Head of Student Services')
+        @if($getUserRole == 'Head of Student Services')
             <a href="{{route('admin-sliders.create')}}">
                 <x-jet-button>
                     {{ __('Add Data in Homepage Slider') }}
                 </x-jet-button>
             </a>
-            @else
+        @endif
+        @if($getUserRole == 'Super Admin')
+            <a href="{{route('sadmin-sliders.create')}}">
+                <x-jet-button>
+                    {{ __('Add Data in Homepage Slider') }}
+                </x-jet-button>
+            </a>
+        @else
             <p>{{$getUserRole}}</p>
             <x-jet-button wire:click="createOrgSlider">
                 {{ __('Add Data in Organization Slider') }}
             </x-jet-button>
-            @endif
+        @endif
     </div>
     <div class="flex flex-col">
         <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
