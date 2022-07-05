@@ -57,9 +57,19 @@
                                             {{ $item->asset_type_description }}
                                         </td>
                                         <td class="px-6 py-4 text-sm whitespace-no-wrap">
-                                            <x-jet-button wire:click="updateAssetTypeShowModal({{ $item->asset_type_id }})">
-                                                {{__('Update')}}
-                                            </x-jet-button>
+                                            @if($getUserRole == 'Super Admin')
+                                                <a href="{{ route('sadmin-system-assets-type.edit',$item->asset_type_id) }}">
+                                                    <x-jet-button>
+                                                        {{ __('Edit') }}
+                                                    </x-jet-button>
+                                                </a>
+                                            @else
+                                                <a href="{{ route('admin-system-assets-type.edit',$item->asset_type_id) }}">
+                                                    <x-jet-button>
+                                                        {{ __('Edit') }}
+                                                    </x-jet-button>
+                                                </a>
+                                            @endif
                                             <x-jet-danger-button wire:click="deleteAssetTypeShowModal({{ $item->asset_type_id }})">
                                                 {{__('Delete')}}
                                             </x-jet-danger-button>
