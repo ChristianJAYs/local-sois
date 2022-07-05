@@ -86,7 +86,8 @@ SystemAssetTypes extends Controller
 
     public function delete($id)
     {
-        AssetType::find($id)->update(['status'=>'0']);
+        // AssetType::find($id)->destroy()
+        AssetType::find($id)->delete();
         return redirect('/default-interfaces');
     }
 
