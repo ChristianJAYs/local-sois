@@ -179,7 +179,7 @@ class ArticleCreate extends Controller
      */
     public function show($id)
     {
-        dd($id);
+        // dd($id);
         // dd(DB::table('organization_assets')->where('articles_id','=',$id)->get());
         $article_Data = DB::table('articles')->where('articles_id','=',$id)->get();
         // dd(DB::table('articles')->where('articles_id','=',$id)->first());

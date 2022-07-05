@@ -164,17 +164,7 @@ class AnnouncementCRUD extends Controller
 
     public function delete($id)
     {
-        // Announcement::destroy($id);
-        // dd(Announcement::findOrFail($id));
-        // DB::table('announcements')->where('status','=','0')->
-        // Announcement::findOrFail($id)->update(['status' => '0']);
-        // DB::table('announcements')->where('announcements_id','=',$id)->update([
-            // 'status' => '0',
-        // ]);
-
         Announcement::destroy($id);
-
-
         return redirect('announcements')->with('status', 'Blog Post Form Data Has Been inserted');
     }
 
