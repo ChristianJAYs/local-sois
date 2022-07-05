@@ -1,5 +1,4 @@
 <div>
-    SOIS GATE KEY
     @if($errorMessage == 1)
         <p class="p-6">This user Doesn't have permission to access the Sois Gate. Please Contact the Administrator's to give you access.</p>
     @endif
