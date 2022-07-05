@@ -368,7 +368,7 @@ class OrganizationCRUD extends Controller
         }else{
             $organization_primary_color_DB= $get_org_data_from_DB->organization_primary_color;
             // echo "organization_primary_color_DB: ".$organization_primary_color_DB." : This is null";
-            // echo "<br><br>";
+            // echo "<javascript:void(0);br><br>";
         }
         if($organization_secondary_color != null){
             $organization_secondary_color_DB = $organization_secondary_color;

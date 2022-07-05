@@ -418,12 +418,15 @@ class ArticleCreate extends Controller
     {
         // dd(DB::table('organization_assets')->where('articles_id','=',$id)->first());
         // $destroyAsset = DB::table('organization_assets')->where('articles_id','=',$id)->first();
-        $asetid = DB::table('organization_assets')->where('articles_id','=',$id)->first();
+        // $asetid = DB::table('organization_assets')->where('articles_id','=',$id)->first();
         // dd($asetid);
-        $destroyAsset  = OrganizationAsset::findOrFail($asetid->organization_asset_id);
+        // $destroyAsset  = OrganizationAsset::findOrFail($asetid->organization_asset_id);
         // dd($destroyAsset);
-        $destroyAsset->delete();
-        Article::destroy($id);
+        // $destroyAsset->delete();
+        // Article::destroy($id);
+        DB::table('articles')->where('articles_id','=',$id)->update([
+            'status' => '0',
+        ]);
         return redirect('viewarticles')->with('status', 'Blog Post Form Data Has Been inserted');
         // dd(Article::find($id));
     }
