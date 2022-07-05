@@ -14,8 +14,8 @@
                     {{ __('Add Data in Homepage Slider') }}
                 </x-jet-button>
             </a>
-        @else
-            <p>{{$getUserRole}}</p>
+        @endif
+        @if($getUserRole != 'Super Admin' || $getUserRole != 'Head of Student Services')
             <x-jet-button wire:click="createOrgSlider">
                 {{ __('Add Data in Organization Slider') }}
             </x-jet-button>
@@ -39,7 +39,7 @@
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
-                                @if($userRoleString == 'Super Admin')
+                                @if($getUserRole == 'Super Admin' || $getUserRole == 'Head of Student Services')
                                     @if($getCarouselHomepage->count())
                                         @foreach($getCarouselHomepage as $item)
                                              <tr>
@@ -110,7 +110,7 @@
             </div>
         </div>
     </div>
-    @if($userRoleString == 'Super Admin')
+    @if($getUserRole == 'Super Admin' || $getUserRole == 'Head of Student Serv')
         {{$getCarouselHomepage->links()}}
     @else
         {{$getDisplayOrganizationArticleOnSelectModal->links()}}
