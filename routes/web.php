@@ -250,8 +250,9 @@ Route::group(['middleware' => [
         Route::resource('sadmin-web-page-type', 'App\Http\Controllers\SAWebPageType');
         Route::resource('sadmin-officers', 'App\Http\Controllers\SAOfficerControl');
         Route::resource('sadmin-position-titles', 'App\Http\Controllers\SAPositionTitles');
-        Route::resource('sadmin-organization', 'App\Http\Controllers\SAOrganizationCRUD');
+        Route::resource('sadmin-organization', 'App\Http\Controllers\OrganizationCRUD');
         Route::resource('sadmin-sliders', 'App\Http\Controllers\SAAdminSlider');
+        Route::resource('sadmin-announcement', 'App\Http\Controllers\SAAnnouncementCRUD');
 
         Route::put('users/addRoleToUser/{id}','App\Http\Controllers\UserCRUD@addRole')->name('users/addRoleToUser');
         Route::put('users/addOrganizationToUser/{id}','App\Http\Controllers\UserCRUD@addOrg')->name('users/addOrganizationToUser');

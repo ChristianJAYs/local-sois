@@ -24,7 +24,7 @@
         </a>
         @endif
         @if($roleUser == 'Super Admin')
-        <a href="{{ route('adminCreateAnnouncement.create') }}">
+        <a href="{{ route('sadmin-announcement.create') }}">
             <x-jet-button>
                 {{ __('Create Announcement') }}
             </x-jet-button>
