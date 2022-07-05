@@ -563,6 +563,8 @@ Route::group(['middleware' => [
         Route::resource('organizations', 'App\Http\Controllers\OrganizationController');
         Route::resource('orgAnnouncements', 'App\Http\Controllers\AnnouncementOrganizationController');
 
+        Route::resource('oadmin-sliders', 'App\Http\Controllers\OAdminSlider');
+
         Route::post('/org-store-announcement', 'App\Http\Controllers\AnnouncementOrganizationController@store');
 
         Route::get('/ar-menu', function(){
