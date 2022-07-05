@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Permission;
+use App\Models\PositionTitle;
+
+use App\Models\Organization;
+use App\Models\PositionCategory;
 
 use Illuminate\Validation\Rule;
 use Livewire\WithPagination;
@@ -18,7 +21,7 @@ use Illuminate\Support\Facades\DB;
 
 use Auth;
 
-class SAPermissionCRUD extends Controller
+class SAPositionTitles extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -37,7 +40,10 @@ class SAPermissionCRUD extends Controller
      */
     public function create()
     {
-        return view('normlaravel.sadmin-permission');
+        return view('normlaravel\sadmin-position-titles',[
+            'getOrganization' => Organization::where('status','=','1')->get(),
+            'getPositionCategory' => PositionCategory::get(),
+        ]);
     }
 
     /**
@@ -48,17 +54,16 @@ class SAPermissionCRUD extends Controller
      */
     public function store(Request $request)
     {
-        $name = $request->name;
-        $description = $request->description;
-
-        Permission::create([
-            'name' =>$name,
-            'description' =>$description,
+        $position_title = $request->position_title;
+        $organization_id = $request->organization_id;
+        $position_category_id = $request->position_category_id;
+        $status ='1';
+        PositionTitle::create([
+            'position_title' => $request->position_title,
+            'organization_id' => $request->organization_id,
+            'position_category_id' => $request->position_category_id,
         ]);
-       
-
-        // dd("Hello");
-         return redirect('roles')->with('status', 'Roles Form Data Has Been inserted');
+        return redirect('/officers');
     }
 
     /**

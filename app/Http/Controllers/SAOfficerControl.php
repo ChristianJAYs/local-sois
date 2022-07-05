@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Permission;
+use App\Models\Officer;
+use App\Models\Organization;
+use App\Models\PositionTitle;
 
 use Illuminate\Validation\Rule;
 use Livewire\WithPagination;
@@ -18,7 +20,7 @@ use Illuminate\Support\Facades\DB;
 
 use Auth;
 
-class SAPermissionCRUD extends Controller
+class SAOfficerControl extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -29,7 +31,6 @@ class SAPermissionCRUD extends Controller
     {
         //
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -37,7 +38,10 @@ class SAPermissionCRUD extends Controller
      */
     public function create()
     {
-        return view('normlaravel.sadmin-permission');
+        return view('normlaravel\sadmin-sois-officer-create',[
+            'getOrganization' => Organization::where('status','=','1')->get(),
+            'getPositionTitles' => PositionTitle::get(),
+        ]);
     }
 
     /**
@@ -48,17 +52,27 @@ class SAPermissionCRUD extends Controller
      */
     public function store(Request $request)
     {
-        $name = $request->name;
-        $description = $request->description;
-
-        Permission::create([
-            'name' =>$name,
-            'description' =>$description,
+        //  $request->validate([
+        //     'officer_signature' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        // ]);
+        // $officer_signature_name = time().'.'.$request->officer_signature->extension();  
+        // $request->officer_signature->storeAs('files', $officer_signature_name);
+        // $request->officer_signature->move(public_path('files'), $officer_signature_name);
+        // $artSlug = str_replace(' ', '-', $article_title);
+        
+        Officer::create([
+            'first_name' => $request->first_name,
+            'middle_name' => $request->middle_name,
+            'last_name' => $request->last_name,
+            'suffix' => $request->suffix,
+            'organization_id' => $request->organization_id,
+            'position_title_id' => $request->position_title_id,
+            'term_end' => $request->term_end,
+            'term_start' => $request->term_start,
+            'status' => '1',
+            // 'officer_signature' => $request->officer_signature_name,
         ]);
-       
-
-        // dd("Hello");
-         return redirect('roles')->with('status', 'Roles Form Data Has Been inserted');
+        return redirect('officers')->with('status', 'Officer has been added.');
     }
 
     /**
