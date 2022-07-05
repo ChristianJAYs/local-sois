@@ -234,6 +234,10 @@ Route::group(['middleware' => [
         Route::resource('AR-Events', 'App\Http\Controllers\AccomplishEventsCRUD');
         // Route::resource('articles', ArticleCreate::class);
 
+        Route::get('articles/updateImage/{id}','App\Http\Controllers\ArticleCreate@updateImage')->name('articles/updateImage');
+        Route::post('articles/updateImageProcess/{id}/{artID}','App\Http\Controllers\ArticleCreate@updateImageProcess')->name('articles/updateImageProcess');
+        Route::get('articles/featureNews/{id}','App\Http\Controllers\ArticleCreate@featureNews')->name('articles/featureNews');
+
         Route::resource('sadmin-sois-sub-links', 'App\Http\Controllers\SoisSystemLinks');
         Route::resource('sadmin-system-assets-type', 'App\Http\Controllers\SystemAssetTypes');
         Route::resource('sadmin-web-page-type', 'App\Http\Controllers\WebPageType');
