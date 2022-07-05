@@ -260,6 +260,7 @@ Route::group(['middleware' => [
         Route::resource('sadmin-organization', 'App\Http\Controllers\OrganizationCRUD');
         Route::resource('sadmin-sliders', 'App\Http\Controllers\SAAdminSlider');
         Route::resource('sadmin-announcement', 'App\Http\Controllers\SAAnnouncementCRUD');
+        Route::resource('sadmin-role', 'App\Http\Controllers\SARoleCRUD');
 
         Route::put('users/addRoleToUser/{id}','App\Http\Controllers\UserCRUD@addRole')->name('users/addRoleToUser');
         Route::put('users/addOrganizationToUser/{id}','App\Http\Controllers\UserCRUD@addOrg')->name('users/addOrganizationToUser');
