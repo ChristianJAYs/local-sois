@@ -733,6 +733,12 @@ class UserCRUD extends Controller
         ];
     }
 
+    public function deleteAdmin($id)
+    {
+        DB::table('users')->where('user_id','=',$id)->update(['status'=>'0']);
+        return redirect('/Adminusers');
+    }
+
     public function delete($id)
     {
         // dd($id);

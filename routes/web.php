@@ -219,8 +219,12 @@ Route::group(['middleware' => [
         Route::get('student-services-admin-sois-sub-links/delete/{id}','App\Http\Controllers\SoisSystemLinks@deleteAdmin')->name('student-services-admin-sois-sub-links/delete');
         
         Route::get('student-services-admin-system-assets-type/delete/{id}','App\Http\Controllers\SystemAssetTypes@deleteAdmin')->name('student-services-admin-system-assets-type/delete');
-        Route::get('admin-organization/delete/{id}','App\Http\Controllers\SystemAssetTypes@deleteAdmin')->name('admin-organization/delete');
+        Route::get('admin-organization/delete/{id}','App\Http\Controllers\OrganizationCRUD@deleteAdmin')->name('admin-organization/delete');
+        Route::get('admin-articles/delete/{id}','App\Http\Controllers\ArticleCreate@deleteAdmin')->name('admin-articles/delete');
+        Route::get('admin-announcement/delete/{id}','App\Http\Controllers\AnnouncementCRUD@deleteAdmin')->name('admin-announcement/delete');
+        Route::get('admin-user-selected-user/delete/{id}','App\Http\Controllers\UserCRUD@deleteAdmin')->name('admin-user-selected-user/delete');
 
+        Route::get('organization/delete/{id}','App\Http\Controllers\OrganizationCRUD@delete')->name('organization/delete');
 });
 
 
@@ -617,6 +621,16 @@ Route::group(['middleware' => [
         Route::resource('oadmin-officers', 'App\Http\Controllers\OOfficerControl');
         Route::resource('oadmin-position-titles', 'App\Http\Controllers\OPositionTitles');
         Route::resource('oadmin-social', 'App\Http\Controllers\OSocialMedia');
+        Route::resource('oadmin-organization', 'App\Http\Controllers\OrganizationUserController');
+
+
+        Route::get('oadmin-articles/delete/{id}','App\Http\Controllers\OrgAccArticleCreate@deleteCommsOfficer')->name('oadmin-articles/delete');
+
+
+
+
+
+
 
         Route::post('/org-store-announcement', 'App\Http\Controllers\AnnouncementOrganizationController@store');
 
@@ -780,6 +794,8 @@ Route::group(['middleware' => [
         })->name('Organization/myAccomplishments');
 
 
+
+        Route::put('oadmin-organization/{id}','App\Http\Controllers\OrganizationCRUD@deleteCommsOfficer')->name('oadmin-organization');
 
 });
 

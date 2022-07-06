@@ -431,6 +431,12 @@ class ArticleCreate extends Controller
         // dd(Article::find($id));
     }
 
+    public function deleteAdmin($id)
+    {
+        Article::find($id)->update(['status'=>'0']);
+        return redirect('/adminArticles');
+    }
+
     /**
      * Remove the specified resource from storage.
      *

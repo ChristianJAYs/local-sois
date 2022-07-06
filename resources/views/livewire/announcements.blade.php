@@ -96,6 +96,8 @@
                                                 <td class="px-6 py-4 text-sm whitespace-no-wrap">
                                                     {{ $item->created_at }}
                                                 </td>
+                                                
+                                                @if($roleUser == 'Super Admin')
                                                 <td class="px-6 py-4 text-sm whitespace-no-wrap">
                                                     <a href="{{ route('announcement.show',$item->announcements_id) }}">
                                                         <x-jet-button>
@@ -110,6 +112,15 @@
                                                         </x-jet-danger-button>
                                                     </a>
                                                 </td>
+                                                @elseif($roleUser == 'Head of Student Services')
+                                                <td class="px-6 py-4 text-sm whitespace-no-wrap">
+                                                    <a href="{{ route('admin-announcement/delete',$item->announcements_id) }}">
+                                                        <x-jet-danger-button>
+                                                            {{__('Delete')}}
+                                                        </x-jet-danger-button>
+                                                    </a>
+                                                </td>
+                                                @endif
                                             </tr>
                                         @endforeach
                                     @else
@@ -121,6 +132,7 @@
                                     @endif
                                 @else
                                     @if($displayOrgAnnouncements->count())
+                                    hello
                                         @foreach($displayOrgAnnouncements as $item)
                                              <tr>
                                                 <td class="px-6 py-4 text-sm whitespace-no-wrap">

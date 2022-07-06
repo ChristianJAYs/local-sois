@@ -162,6 +162,12 @@ class AnnouncementCRUD extends Controller
 
     }
 
+    public function deleteAdmin($id)
+    {
+        Announcement::destroy($id);
+        return redirect('adminAnnouncements')->with('status', 'Blog Post Form Data Has Been inserted');
+    }
+
     public function delete($id)
     {
         Announcement::destroy($id);

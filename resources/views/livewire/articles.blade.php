@@ -75,16 +75,25 @@
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger">Delete</button>
                                                 </form> -->
-                                                <a href="{{ route('articles.show',$item->articles_id) }}">
-                                                    <x-jet-button>
-                                                        {{__('Show Article')}}
-                                                    </x-jet-button>
-                                                </a>
-                                                <a href="{{ route('articles/delete',$item->articles_id) }}">
-                                                    <x-jet-danger-button>
-                                                        {{__('Delete')}}
-                                                    </x-jet-danger-button>
-                                                </a>
+                                                @if($RoleUSerString == 'Super Admin')
+                                                    <a href="{{ route('articles.show',$item->articles_id) }}">
+                                                        <x-jet-button>
+                                                            {{__('Show Article')}}
+                                                        </x-jet-button>
+                                                    </a>
+                                                    <a href="{{ route('articles/delete',$item->articles_id) }}">
+                                                        <x-jet-danger-button>
+                                                            {{__('Delete')}}
+                                                        </x-jet-danger-button>
+                                                    </a>
+                                                @else
+                                                    <a href="{{ route('admin-articles/delete',$item->articles_id) }}">
+                                                        <x-jet-danger-button>
+                                                            {{__('Delete')}}
+                                                        </x-jet-danger-button>
+                                                    </a>
+                                                @endif
+                                                
                                             </td>
                                         </tr>
                                     @endforeach
@@ -112,9 +121,11 @@
                                                 <x-jet-button wire:click="updateNewsShowModal({{ $orgitem->articles_id }})">
                                                     {{__('Update')}}
                                                 </x-jet-button>
-                                                <x-jet-danger-button wire:click="deletefeaturedNewsShowModal({{ $orgitem->articles_id }})">
-                                                    {{__('Delete')}}
-                                                </x-jet-danger-button>
+                                                <a href="{{ route('oadmin-articles/delete',$orgitem->articles_id) }}">
+                                                    <x-jet-danger-button>
+                                                        {{__('Delete')}}
+                                                    </x-jet-danger-button>
+                                                </a>
                                             </td>
                                             <td class="px-6 py-4 text-sm whitespace-no-wrap">
                                                 <x-jet-button wire:click="featuredNewsToOrganizationPageShowModal({{ $orgitem->articles_id }})">
