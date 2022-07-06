@@ -625,6 +625,7 @@ Route::group(['middleware' => [
 
 
         Route::get('oadmin-articles/delete/{id}','App\Http\Controllers\OrgAccArticleCreate@deleteCommsOfficer')->name('oadmin-articles/delete');
+        Route::get('oadmin-announcement/delete/{id}','App\Http\Controllers\OAnnouncementCRUD@deleteCommsOfficer')->name('oadmin-announcement/delete');
 
 
 
