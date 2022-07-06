@@ -37,14 +37,14 @@
 
 
     <div class=" col-span-6 max-w-lg rounded overflow-hidden shadow-lg">
-        <form name="add-articles" id="add-articles" method="post" action="{{ route('sadmin-web-page-type.update', $spagetype->page_types_id ) }}" enctype="multipart/form-data">
+        <form name="add-articles" id="add-articles" method="post" action="{{ route('admin-web-page-type.update', $spagetype->page_types_id ) }}" enctype="multipart/form-data">
         @csrf
         @method('PUT')
             <div class="px-6 py-4">
                 @foreach($selectedPageType as $selectPageType)
                 <div class="form-group">
                     <label for="page_type">Page Type :</label>
-                    <input type="text" id="page_type" name="type" placeholder= "{{$selectPageType->page_type}}" class="form-control" >
+                    <input type="text" id="page_type" name="page_type" placeholder= "{{$selectPageType->page_type}}" class="form-control" >
                 </div>
                 <div class="form-group">
                     <label for="page_description">Page Type Description : </label>
