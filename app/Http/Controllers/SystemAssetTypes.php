@@ -20,8 +20,7 @@ use Illuminate\Validation\Rule;
 use Intervention\Image\ImageManager;
 use Illuminate\Support\Facades\DB;
 
-class 
-SystemAssetTypes extends Controller
+class SystemAssetTypes extends Controller
 {
     public $type;
     public $asset_type_description;

@@ -531,7 +531,7 @@ class ArticleCreate extends Controller
         }
         if ($role_name->role == 'Head of Student Services') {
             Article::where('articles_id',$id)->update(['is_featured_in_newspage' => '1']);
-            return redirect('admin-articles')->with('status', 'Blog Post Form Data Has Been inserted');
+            return redirect('adminArticles')->with('status', 'Blog Post Form Data Has Been inserted');
         }
     }
     public function UNfeatureNews($id)
@@ -546,7 +546,7 @@ class ArticleCreate extends Controller
         }
         if ($role_name->role == 'Head of Student Services') {
             Article::where('articles_id',$id)->update(['is_featured_in_newspage' => '0']);
-            return redirect('admin-articles')->with('status', 'Blog Post Form Data Has Been inserted');
+            return redirect('adminArticles')->with('status', 'Blog Post Form Data Has Been inserted');
         }
     }
 
@@ -575,22 +575,38 @@ class ArticleCreate extends Controller
                 ]);
                 DB::table('articles')->where('articles_id','=',$isArticleTopNews->articles_id)->update(['is_article_featured_home_page'=>"1"]);
             }
-            return redirect('viewarticles')->with('status', 'Blog Post Form Data Has Been inserted');
-            return redirect('admin-articles')->with('status', 'Blog Post Form Data Has Been inserted');
+            return redirect('adminArticles')->with('status', 'Blog Post Form Data Has Been inserted');
         }
         
     }
 
     public function NotsetAsTopNews($id)
     {
-        $isArticleTopNews = Article::find($id);
-        if ($isArticleTopNews != null) {
-            Article::where('is_article_featured_home_page',true)->update([
-                'is_article_featured_home_page' => false,
-            ]);
-            DB::table('articles')->where('articles_id','=',$isArticleTopNews->articles_id)->update(['is_article_featured_home_page'=>"0"]);
+        $userID = Auth::id();
+        $orgIDHolder = DB::table('role_user')->where('user_id','=',$userID)->first('role_id');
+        $role_name  = DB::table('roles')->where('role_id','=',$orgIDHolder->role_id)->first();
+
+        if ($role_name->role == 'Super Admin') {
+            $isArticleTopNews = Article::find($id);
+            if ($isArticleTopNews != null) {
+                Article::where('is_article_featured_home_page',true)->update([
+                    'is_article_featured_home_page' => false,
+                ]);
+                DB::table('articles')->where('articles_id','=',$isArticleTopNews->articles_id)->update(['is_article_featured_home_page'=>"0"]);
+            }
+            return redirect('viewarticles')->with('status', 'Blog Post Form Data Has Been inserted');
         }
-        return redirect('viewarticles')->with('status', 'Blog Post Form Data Has Been inserted');
+        if ($role_name->role == 'Head of Student Services') {
+            $isArticleTopNews = Article::find($id);
+            if ($isArticleTopNews != null) {
+                Article::where('is_article_featured_home_page',true)->update([
+                    'is_article_featured_home_page' => false,
+                ]);
+                DB::table('articles')->where('articles_id','=',$isArticleTopNews->articles_id)->update(['is_article_featured_home_page'=>"0"]);
+            }
+            return redirect('adminArticles')->with('status', 'Blog Post Form Data Has Been inserted');
+        }
+        
     }
 
     public function delete($id)
