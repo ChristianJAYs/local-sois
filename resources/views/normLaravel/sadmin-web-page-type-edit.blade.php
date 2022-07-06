@@ -44,7 +44,7 @@
                 @foreach($selectedPageType as $selectPageType)
                 <div class="form-group">
                     <label for="page_type">Page Type :</label>
-                    <input type="text" id="page_type" name="type" placeholder= "{{$selectPageType->page_type}}" class="form-control" >
+                    <input type="text" id="page_type" name="page_type" placeholder= "{{$selectPageType->page_type}}" class="form-control" >
                 </div>
                 <div class="form-group">
                     <label for="page_description">Page Type Description : </label>
