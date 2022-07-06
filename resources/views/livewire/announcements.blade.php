@@ -120,6 +120,14 @@
                                                         </x-jet-danger-button>
                                                     </a>
                                                 </td>
+                                                @elseif($roleUser == 'Home Page Admin')
+                                                <td class="px-6 py-4 text-sm whitespace-no-wrap">
+                                                    <a href="{{ route('oadmin-announcement/delete',$item->announcements_id) }}">
+                                                        <x-jet-danger-button>
+                                                            {{__('Delete')}}
+                                                        </x-jet-danger-button>
+                                                    </a>
+                                                </td>
                                                 @endif
                                             </tr>
                                         @endforeach
@@ -132,7 +140,6 @@
                                     @endif
                                 @else
                                     @if($displayOrgAnnouncements->count())
-                                    hello
                                         @foreach($displayOrgAnnouncements as $item)
                                              <tr>
                                                 <td class="px-6 py-4 text-sm whitespace-no-wrap">
