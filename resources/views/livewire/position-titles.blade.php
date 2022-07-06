@@ -62,12 +62,18 @@
                                                         {{ __('Edit') }}
                                                     </x-jet-button>
                                                 </a>
-                                            @else
-                                                <a href="{{ route('admin-position-titles.edit',$item->position_title_id) }}">
+                                                @elseif($getUserRole == 'Head of Student Services')
+                                                    <a href="{{route('admin-position-titles.edit',$item->position_title_id)}}">
                                                     <x-jet-button>
                                                         {{ __('Edit') }}
                                                     </x-jet-button>
-                                                </a>
+                                                    </a>
+                                                @elseif($getUserRole == 'Home Page Admin')
+                                                    <a href="{{route('oadmin-position-titles.edit',$item->position_title_id)}}">
+                                                        <x-jet-button>
+                                                            {{ __('Edit') }}
+                                                        </x-jet-button>
+                                                    </a>
                                             @endif
                                                 <x-jet-danger-button wire:click="deletePositionTitleModal({{ $item->position_title_id }})">
                                                     {{__('Delete')}}

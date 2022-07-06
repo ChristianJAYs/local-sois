@@ -87,6 +87,11 @@
                                                         </x-jet-danger-button>
                                                     </a>
                                                 @else
+                                                    <!-- <a href="{{ route('articles.show',$item->articles_id) }}">
+                                                        <x-jet-button>
+                                                            {{__('Show Article')}}
+                                                        </x-jet-button>
+                                                    </a> -->
                                                     <a href="{{ route('admin-articles/delete',$item->articles_id) }}">
                                                         <x-jet-danger-button>
                                                             {{__('Delete')}}
