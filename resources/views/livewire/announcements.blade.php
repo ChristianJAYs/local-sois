@@ -56,8 +56,8 @@
                             <tr>
                                 <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Id</th>
                                 <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Announcement Title</th>
-                                <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Announcement Slug</th>
-                                <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Signature</th>
+                                <!-- <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Announcement Content</th> -->
+                                <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Slug</th>
                                 <!-- <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Signer Position</th> -->
                                 <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Expiration Data</th>
                                 <!-- <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">User Id</th> -->
@@ -78,11 +78,13 @@
                                                 <td class="px-6 py-4 text-sm whitespace-no-wrap">
                                                     {{ $item->announcement_title }}
                                                 </td>
+                                                <!-- <td class="px-6 py-4 text-sm whitespace-no-wrap">
+                                                    {{ $item->announcement_content }}
+                                                </td> -->
                                                 <td class="px-6 py-4 text-sm whitespace-no-wrap">
-                                                    {{ $item->announcement_slug }}
-                                                </td>
-                                                <td class="px-6 py-4 text-sm whitespace-no-wrap">
-                                                    {{ $item->signature }}
+                                                <a href="{{ url($item->announcement_slug) }}" class="text-indigo-600 hover:text-indigo-900" target="_blank">
+                                                   {{ $item->announcement_slug }}
+                                                </a>
                                                 </td>
                                                 <!-- <td class="px-6 py-4 text-sm whitespace-no-wrap">
                                                     {{ $item->signer_position }}
@@ -151,8 +153,10 @@
                                                 <!-- <td class="px-6 py-4 text-sm whitespace-no-wrap">
                                                     {{ $item->announcement_content }}
                                                 </td> -->
-                                                <td class="px-6 py-4 text-sm whitespace-no-wrap">
-                                                    {{ $item->signature }}
+                                                <<td class="px-6 py-4 text-sm whitespace-no-wrap">
+                                                <a href="{{ url($item->announcement_slug) }}" class="text-indigo-600 hover:text-indigo-900" target="_blank">
+                                                   {{ $item->announcement_slug }}
+                                                </a>
                                                 </td>
                                                 <!-- <td class="px-6 py-4 text-sm whitespace-no-wrap">
                                                     {{ $item->signer_position }}

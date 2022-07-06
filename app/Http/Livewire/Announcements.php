@@ -107,6 +107,7 @@ class Announcements extends Component
         private $roles;
         private $orgID;
         public $organizationDisplayID;
+        public $announcement_slug;
 
 
 
