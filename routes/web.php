@@ -66,6 +66,20 @@ Route::group(['middleware' => [
 
         Route::resource('admin-org-articles', 'App\Http\Controllers\OrgAccArticleCreate');
 
+
+
+        Route::get('admin-articles/updateImage/{id}','App\Http\Controllers\ArticleCreate@updateImage')->name('admin-articles/updateImage');
+        Route::post('admin-articles/updateImageProcess/{id}/{artID}','App\Http\Controllers\ArticleCreate@updateImageProcess')->name('admin-articles/updateImageProcess');
+        Route::get('admin-articles/featureNews/{id}','App\Http\Controllers\ArticleCreate@featureNews')->name('admin-articles/featureNews');
+
+        Route::get('admin-articles/unfeatureNews/{id}','App\Http\Controllers\ArticleCreate@unfeatureNews')->name('admin-articles/unfeatureNews');
+
+        Route::get('admin-articles/setAsTopNews/{id}','App\Http\Controllers\ArticleCreate@setAsTopNews')->name('admin-articles/setAsTopNews');
+        Route::get('admin-articles/NotsetAsTopNews/{id}','App\Http\Controllers\ArticleCreate@NotsetAsTopNews')->name('admin-articles/NotsetAsTopNews');
+        Route::get('admin-articles/delete/{id}','App\Http\Controllers\ArticleCreate@delete')->name('admin-articles/delete');
+
+
+
         Route::put('adminorganization/updateBanner/{id}','App\Http\Controllers\AdminOrganization@updateBnner')->name('adminorganization/updateBanner');
         Route::put('adminorganization/updateLogo/{id}','App\Http\Controllers\AdminOrganization@updateLogo')->name('adminorganization/updateLogo');
 
@@ -263,8 +277,11 @@ Route::group(['middleware' => [
 
         Route::get('user-selected-user/delete/{id}','App\Http\Controllers\UserCRUD@delete')->name('user-selected-user/delete');
 
+        Route::get('roles/delete/{id}','App\Http\Controllers\RoleController@delete')->name('roles/delete');
         
+        Route::get('roles/sync/{id}','App\Http\Controllers\RoleController@sync')->name('roles/sync');
 
+        Route::put('roles/syncPage/{id}','App\Http\Controllers\RoleController@rolesSync')->name('roles/syncPage');
 
 
 
