@@ -55,6 +55,8 @@ class SAAnnouncementCRUD extends Controller
         $exp_date = $request->exp_date;
         $exp_time = $request->exp_time;
 
+        $artSlug = str_replace(' ', '-', $announcement_title);
+
         $userID = Auth::id();
         $orgIDHolder = DB::table('role_user')->where('user_id','=',$userID)->first('organization_id');
         // dd($orgIDHolder);
@@ -65,6 +67,7 @@ class SAAnnouncementCRUD extends Controller
             'user_id' => $userID,
             'exp_date' =>$exp_date,
             'exp_time' =>$exp_time,
+            'announcement_slug' =>$artSlug,
             'status' => '1',
         ]);
        

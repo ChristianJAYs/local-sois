@@ -532,7 +532,7 @@
 
 <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
 
-<div class="w-full text-gray-700 bg-white dark-mode:text-gray-200 dark-mode:bg-gray-800">
+        <div class="w-full text-gray-700 bg-white dark-mode:text-gray-200 dark-mode:bg-gray-800">
      <div x-data="{ open: false }" class="flex flex-col max-w-screen-xl px-4 mx-auto md:items-center md:justify-between md:flex-row md:px-6 lg:px-8">
           <div class="p-4 flex flex-row items-center justify-between">
                <a href="{{ url('/')}}" class="flex text-lg font-semibold tracking-widest text-gray-900 uppercase rounded-lg dark-mode:text-white focus:outline-none focus:shadow-outline">
@@ -547,63 +547,150 @@
                </button>
           </div>
           <nav :class="{'flex': open, 'hidden': !open}" class="flex-col flex-grow pb-4 md:pb-0 hidden md:flex md:justify-end md:flex-row">
-               <a class="px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 md:ml-4 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" href="#">Home</a>
-               <a class="px-4 py-2 mt-2 text-sm font-semibold text-gray-900 bg-gray-200 rounded-lg dark-mode:bg-gray-700 dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" href="/news">News</a>
-               <a class="px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 md:ml-4 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" href="#">Contact</a>
-                                  <x-jet-dropdown align="right" width="60">
-                                      <x-slot name="trigger">
-                                          <span class="inline-flex rounded-md">
-                                              <button type="button" class="frontpage-nav-bar-design inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-opacity-0 hover:bg-yellow-50 hover:text-yellow-700 focus:outline-none focus:bg-yellow-50 focus:text-white transition text-white">
-                                                  Organization
-                                                  <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                                      <path fill-rule="evenodd" d="M10 3a1 1 0 01.707.293l3 3a1 1 0 01-1.414 1.414L10 5.414 7.707 7.707a1 1 0 01-1.414-1.414l3-3A1 1 0 0110 3zm-3.707 9.293a1 1 0 011.414 0L10 14.586l2.293-2.293a1 1 0 011.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                                  </svg>
-                                              </button>
-                                          </span>
-                                      </x-slot>
-                                      <x-slot name="content">
-                                          <div class="w-60">
-                                              <!-- Team Management -->
-                                              <div class="block px-4 py-2 text-xs text-gray-400">
-                                                  {{ __('PUP ORGANIZATIONS') }}
-                                              </div>
-                                              <!-- Team Settings -->
-                                              @foreach($orgLinks as $orgWebLinks)
-                                                  <x-jet-dropdown-link href="{{ url($orgWebLinks->organization_slug) }}" class="frontpage-nav-bar-design">
-                                                      {{ $orgWebLinks->organization_name }}
-                                                  </x-jet-dropdown-link>
-                                              @endforeach
-                                              <div class="border-t border-gray-100"></div>
-                                          </div>
-                                      </x-slot>
-                                  </x-jet-dropdown>
-
-               <a class="px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 md:ml-4 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" href="{{ url('/login') }}">Login</a>    
+               <a href="/">
+               <span class="inline-flex rounded-md">
+                   <button type="button" class="frontpage-nav-bar-design inline-flex items-center border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500  px-4 py-2 bg-transparent rounded-lg dark-mode:bg-gray-700 dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline>
+                    <i class="fas fa-home"></i>
+                       <span class="ml-1">Home</span>
+                   </button>
+               </span>
+               </a>
+               <a href="/news">
+               <span class="inline-flex rounded-md">
+                   <button type="button" class="px-4 py-2 mt-2 text-sm font-semibold text-gray-900 bg-gray-200 rounded-lg dark-mode:bg-gray-700 dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
+                    <i class="far fa-newspaper"></i>
+                       <span class="ml-1">News</span>
+                   </button>
+               </span>
+               </a>
+                <div class="Panel frontpage-nav-button">
+                    <span class="inline-flex rounded-md">
+                  <button class=" frontpage-nav-bar-design inline-flex items-center border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500  px-4 py-2 bg-transparent rounded-lg dark-mode:bg-gray-700 dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
+                      <i class="fas fa-users"></i>
+                                <span class="ml-1">Organization</span>
+                                <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 3a1 1 0 01.707.293l3 3a1 1 0 01-1.414 1.414L10 5.414 7.707 7.707a1 1 0 01-1.414-1.414l3-3A1 1 0 0110 3zm-3.707 9.293a1 1 0 011.414 0L10 14.586l2.293-2.293a1 1 0 011.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                </svg>
+                  </button>
+                    </span>
+                  <div id="myDropdown" class="dropdown-content">
+                    <div class="block px-4 py-2 text-xs text-gray-400">
+                        {{ __('PUP ORGANIZATIONS') }}
+                    </div>
+                    @foreach($orgLinks as $orgWebLinks)
+                        <a href="{{ url($orgWebLinks->organization_slug) }}" class="frontpage-nav-bar-design">{{ $orgWebLinks->organization_name }}</a>
+                    @endforeach
+                  </div>
+                </div>
+               <a href="{{ url('/login') }}">
+               <span class="inline-flex rounded-md">
+                   <button type="button" class="frontpage-nav-bar-design inline-flex items-center border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500  px-4 py-2 bg-transparent rounded-lg dark-mode:bg-gray-700 dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
+                    <i class="fas fa-sign-in-alt"></i>
+                       <span class="ml-1">Login</span>
+                   </button>
+               </span>
+               </a>
           </nav>
      </div>
 </div>
 
 
 
-
 @foreach($getDisplaySelectedAnnouncementsData as $selectedAnnouncements)
 @section('title', $selectedAnnouncements->announcement_title)
 <div class="grid grid-cols-12">
-     <div></div>
-     <div class="col-span-10">
-          <div class="flex flex-col">{{$selectedAnnouncements->announcement_title}}</div>
-          <div><p><?php echo htmlspecialchars_decode(stripslashes($selectedAnnouncements->announcement_content));  ?></p></div>
+     <div class="col-span-8 selected-announcement-main-content">
+            <div class="flex flex-col">
+                <p class="announcementTitle">
+                    {{$selectedAnnouncements->announcement_title}}
+                </p>
+            </div>
+            <div>
+                <p class="announcementContent">
+                    <?php echo htmlspecialchars_decode(stripslashes($selectedAnnouncements->announcement_content));  ?>
+                </p>
+            </div>
      </div>
-     <div></div>
+     <div class="col-span-4 flex flex-col">
+         <div class="announcement-announcement" style="margin-left: auto; overflow:auto;">
+             
+<div class="announcement-containter overflow-y-scroll scroller">
+          @foreach($getDisplayAnnouncementFeaturedHomepage as $HomepageAnnouncement)
+               <div class="annonuncement-links-homepage mt-5 hover:bg-gray-200">
+                    <a class="bg-gray-200 text-white hover:bg-gray-200 hover:text-black" href="{{$HomepageAnnouncement->announcement_title}}">
+                         <h2 style="color:black;" class="text-left text-4x1 font-medium">{{$HomepageAnnouncement->announcement_title}}</h2>
+                         <h5 style="color:gray;" class="text-left text-xs font-light">{{\Carbon\Carbon::parse($HomepageAnnouncement->created_at)->isoFormat('MMM Do YYYY')}}</h5>
+                    </a>
+               </div>
+          @endforeach
+          </div>
+
+         </div>
+     </div>
 </div>
 
+<div class="announcement-news-slider" style="background: #1a1b1b; ">
+    @foreach($getDsiplayArticleLatestOnCreatedPage as $homepageLatestNews)
+        <div class="article-newspage p-3 flex flex-col">
+            <a href="{{$homepageLatestNews->article_slug}}">
+                <div class="items-center justify-center" style="width: 100%;">
+                    @foreach($getDisplaySelectedNewsImageData as $newsImage)
+                        @if($newsImage->articles_id == $homepageLatestNews->articles_id)
+                            <img class="frontpage-image-announcement" style="object-fit:cover;" src="{{ asset('files/'.$newsImage->file) }}">
+                        @endif
+                    @endforeach
+                </div>
+                <div class="home-page-latest-news-slick">
+                    <h5 class="text-white">{{$homepageLatestNews->article_title}}</h5>
+                    <p style="font-size: 10px;">{{\Carbon\Carbon::parse($homepageLatestNews->created_at)->isoFormat('MMM Do YYYY')}}</p>
+                </div>
+            </a>
+        </div>
+    @endforeach
+</div>
 
 
 
 
 @endforeach
 
+<div data-aos="fade-up" style="background: #ffffff;">
+     <div class="grid grid-rows-2 " >
+          <div class="text-center"><p class="homepage-titles"><strong>Featured Events</strong></p></div>
+     </div>
+     <div class=" p-6 flex justify-center items-center" style="width: 100%;">
+          <div class=" mb-6"  style="width:95% ;">
+               <div class="homepage-events-slick">
+                    @foreach($getDisplayEventsHomepage as $HomepageEvents)
+                         <div>
+                         <a href="{{$HomepageEvents->article_slug}}">
+                             <div class="mr-5 ml-5 pl-5 pr-5 flex flex-col">
+                                   <div class="flex align-items justify-center items-center">
+                                   @foreach($getDisplaySelectedNewsImageData as $newsImage)
+                                        @if($newsImage->articles_id == $HomepageEvents->articles_id)
+                                             <div class="ml-2 mr-2">
+                                                  <img class=" transition hover:opacity-25 transition-opacity duration-1000 ease-out" style="object-fit:fill; height:20vh; width: 15vw;" src="{{ asset('files/'.$newsImage->file) }}">
+                                             </div>
+                                        @endif
+                                   @endforeach
+                                   </div>
+                                   <div class="" style="">
+                                        <h5 class="text-center text-sm" style="width: 15vw;">{{$HomepageEvents->article_title}}</h5>
+                                   </div>
+                             </div>
+                         </a>
+                         </div>
+                    @endforeach
+               </div>
+          </div>
+     </div>
+</div>
+
+
+@livewire('footers')
+
 @endif
+
 @endif
 
 <!--====  End of Selected Announcements Section comment  ====-->

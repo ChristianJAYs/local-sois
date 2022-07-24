@@ -1334,14 +1334,45 @@ padding: 40%;
 
 
 
+.announcementTitle{
+    font-family: 'Exo 2',sans-serif;
+    font-size: 30px;
+    color: #800000;
+    margin: 2em 0px 1em 0px;
+}
+
+.announcementContent{
+    font-family: 'Roboto',sans-serif;
+}
+
+.announcement-announcement{
+    margin-top: auto;
+    margin-bottom: auto;
+}
+.announcement-containter{
+    height: 30em;
+    margin-right: 3em;
+}
+
+.selected-announcement-main-content{
+    margin: 0px 5em 5em 5em;
+}
 
 
 
-
-
-
-
-
+.selected-announcement-image-announcement{
+    height: 30vh;
+}
+@media(max-width: 790px){
+    .selected-announcement-image-announcement{
+        height: 20vh;
+    }    
+}
+@media(max-width: 1024px){
+    .selected-announcement-image-announcement{
+        height: 20vh;
+    }    
+}
 
 
 
